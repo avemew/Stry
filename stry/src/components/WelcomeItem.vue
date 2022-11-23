@@ -8,9 +8,6 @@
         <slot name="heading"></slot>
       </h3>
       <slot>
-        <li>
-
-        </li>
       </slot>
     </div>
   </div>

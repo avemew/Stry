@@ -1,12 +1,66 @@
-<!--<script setup>-->
-<!--defineProps({-->
-<!--  msg: {-->
-<!--    type: String,-->
-<!--    required: true-->
-<!--  }-->
-<!--})-->
-<!--</script>-->
+<script>
+export default {
+  name: "Weather",
+  data() {
+    return {
+      weatherDataList: []
+    };
+  },
+  methods: {
+    getWeatherData() {
+      fetch("https://api.open-meteo.com/v1/forecast?latitude=53.09&longitude=8.77&hourly=temperature_2m")
+          .then(response => response.json())
+          .then(data => (this.weatherDataList = data));
+    },
 
+  }
+};
+</script>
 <template>
-
+  <div>
+    <h1>My Weather App</h1>
+    <button v-on:click="getWeatherData">Get Weather Data</button>
+    <div>{{weatherDataList}}</div>
+  </div>
 </template>
+
+<style scoped>
+.weather-data {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+  margin-left: 20px;
+  border-bottom: 2px solid #ccc;
+  padding: 20px;
+}
+
+.weather-icon {
+  flex-grow: 1;
+}
+
+.weather-stats {
+  flex-grow: 8;
+  text-align: left;
+  padding-left: 20px;
+}
+
+.weather-stats .location {
+  font-size: 30px;
+}
+
+.weather-temp {
+  flex-grow: 1;
+  font-size: 35px;
+}
+
+img {
+  width: 70px;
+}
+
+button {
+  padding:10px;
+  background-color: #1aa832;
+  color: white;
+  border: 1px solid #ccc;
+}
+</style>
