@@ -3,8 +3,9 @@ import App from './App.vue'
 import VueKonva from 'vue-konva';
 import './assets/main.css'
 
-createApp(App).mount('#app')
-App.use(VueKonva)
+const app = createApp(App)
+app.mount('#app')
+app.use(VueKonva)
 
 
 
