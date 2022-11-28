@@ -34,9 +34,7 @@ export default {
   },
   methods: {
     getTodaysUrl(){
-      let baseUrl = "https://api.open-meteo.com/v1/forecast?latitude=53.08&longitude=8.81&hourly=temperature_2m&start_date=";
       let truncatedDate = this.todayDate().slice(0,10);
-      //let url = baseUrl.concat(truncatedDate, "&end_date=", truncatedDate);
       return 'https://api.open-meteo.com/v1/forecast?latitude=53.08&longitude=8.81&hourly=temperature_2m&start_date=' + truncatedDate + '&end_date=' + truncatedDate;
     },
     getWeatherData() {
@@ -59,13 +57,24 @@ export default {
     todayDate(){
       const now = moment()
       return now.format("yy-MM-DDThh:00")
+    },
+    averageValue(){
+      let sum = 0;
+      let count = 0;
+
+      for (const item in this.weatherDataList) {
+        sum+=this.weatherDataList[item];
+        ++count;
+      }
+
+      return sum/count;
     }
   },
 };
 
 //canvas settings
-var canvas = document.getElementById('canvas')
-var context = canvas.getContext('2d')
+const canvas = document.getElementById('canvas');
+const context = canvas.getContext('2d')
 
 //TODO:
 //make this change based on average value
@@ -79,6 +88,8 @@ context.fillRect(0,0,canvas.width,canvas.height)
     <h1>My Weather App</h1>
 
     <button v-on:click="getWeatherData">Get Weather Data</button>
+
+    <div>{{ averageValue() }}</div>
 
     <div>{{ showWeatherByDate(todayDate())}}</div>
     <li v-for=" (item , index) in weatherDataList">
