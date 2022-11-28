@@ -77,15 +77,12 @@ function remapValue(value, input_min, input_max, output_min, output_max){
 }
 
 function polynomialInterpolationRemap(value){
-  //calculated via https://www.wolframalpha.com/input?key=&i=interpolating+polynomial+%7B-10%2C320%7D%2C%7B0%2C180%7D%2C%7B25%2C50%7D%2C%7B45%2C0%7D
+  //calculated via https://www.wolframalpha.com/input?key=&i=interpolating+polynomial+%7B-10%2C240%7D%2C%7B15%2C100%7D%2C%7B30%2C20%7D%2C%7B40%2C0%7D
   return (
-      -(  187 * Math.pow(value,6) / 126000000 )
-      +(  221 * Math.pow(value, 5)  / 2100000  )
-      -(  1493 * Math.pow(value, 4) / 1008000  )
-      -(  361 * Math.pow(value, 3) / 16800  )
-      +(  13253 * Math.pow(value, 2) / 50400  )
-      -(  953 * value / 280  )
-      +185
+      +(  19 * Math.pow(value, 3) / 7500  )
+      -(  41 * Math.pow(value, 2) / 500  )
+      -(  169 * value / 30  )
+      +(  972 / 5 )
   )
 }
 
@@ -93,8 +90,8 @@ function polynomialInterpolationRemap(value){
 const canvas = document.getElementById('canvas');
 const context = canvas.getContext('2d')
 
-//TODO:
-var hue = polynomialInterpolationRemap(30);
+//TODO: replace "40" with averageValue
+var hue = polynomialInterpolationRemap(40);
 context.fillStyle = 'hsl(' + [hue, '100%', '50%'] + ')';
 context.fillRect(0,0,canvas.width,canvas.height)
 
