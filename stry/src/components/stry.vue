@@ -2,39 +2,38 @@
 
 import moment from "moment";
 
-
 export default {
   name: "Weather",
   data() {
     return {
       weatherDataList: [],
       layout: [
-        {"x":0,"y":0,"w":2,"h":2,"i":"0"},
-        {"x":2,"y":0,"w":2,"h":4,"i":"1"},
-        {"x":4,"y":0,"w":2,"h":5,"i":"2"},
-        {"x":6,"y":0,"w":2,"h":3,"i":"3"},
-        {"x":8,"y":0,"w":2,"h":3,"i":"4"},
-        {"x":10,"y":0,"w":2,"h":3,"i":"5"},
-        {"x":0,"y":5,"w":2,"h":5,"i":"6"},
-        {"x":2,"y":5,"w":2,"h":5,"i":"7"},
-        {"x":4,"y":5,"w":2,"h":5,"i":"8"},
-        {"x":6,"y":3,"w":2,"h":4,"i":"9"},
-        {"x":8,"y":4,"w":2,"h":4,"i":"10"},
-        {"x":10,"y":4,"w":2,"h":4,"i":"11"},
-        {"x":0,"y":10,"w":2,"h":5,"i":"12"},
-        {"x":2,"y":10,"w":2,"h":5,"i":"13"},
-        {"x":4,"y":8,"w":2,"h":4,"i":"14"},
-        {"x":6,"y":8,"w":2,"h":4,"i":"15"},
-        {"x":8,"y":10,"w":2,"h":5,"i":"16"},
-        {"x":10,"y":4,"w":2,"h":2,"i":"17"},
-        {"x":0,"y":9,"w":2,"h":3,"i":"18"},
-        {"x":2,"y":6,"w":2,"h":2,"i":"19"}
+        {"x": 0, "y": 0, "w": 2, "h": 2, "i": "0"},
+        {"x": 2, "y": 0, "w": 2, "h": 4, "i": "1"},
+        {"x": 4, "y": 0, "w": 2, "h": 5, "i": "2"},
+        {"x": 6, "y": 0, "w": 2, "h": 3, "i": "3"},
+        {"x": 8, "y": 0, "w": 2, "h": 3, "i": "4"},
+        {"x": 10, "y": 0, "w": 2, "h": 3, "i": "5"},
+        {"x": 0, "y": 5, "w": 2, "h": 5, "i": "6"},
+        {"x": 2, "y": 5, "w": 2, "h": 5, "i": "7"},
+        {"x": 4, "y": 5, "w": 2, "h": 5, "i": "8"},
+        {"x": 6, "y": 3, "w": 2, "h": 4, "i": "9"},
+        {"x": 8, "y": 4, "w": 2, "h": 4, "i": "10"},
+        {"x": 10, "y": 4, "w": 2, "h": 4, "i": "11"},
+        {"x": 0, "y": 10, "w": 2, "h": 5, "i": "12"},
+        {"x": 2, "y": 10, "w": 2, "h": 5, "i": "13"},
+        {"x": 4, "y": 8, "w": 2, "h": 4, "i": "14"},
+        {"x": 6, "y": 8, "w": 2, "h": 4, "i": "15"},
+        {"x": 8, "y": 10, "w": 2, "h": 5, "i": "16"},
+        {"x": 10, "y": 4, "w": 2, "h": 2, "i": "17"},
+        {"x": 0, "y": 9, "w": 2, "h": 3, "i": "18"},
+        {"x": 2, "y": 6, "w": 2, "h": 2, "i": "19"}
       ],
     };
   },
   methods: {
-    getTodaysUrl(){
-      let truncatedDate = this.todayDate().slice(0,10);
+    getTodaysUrl() {
+      let truncatedDate = this.todayDate().slice(0, 10);
       return 'https://api.open-meteo.com/v1/forecast?latitude=53.08&longitude=8.81&hourly=temperature_2m&start_date=' + truncatedDate + '&end_date=' + truncatedDate;
     },
     getWeatherData() {
@@ -51,38 +50,45 @@ export default {
         return Object.assign(previousValue, {[currentValue]: tempArray.at(currentIndex)})
       }, {})
     },
-    showWeatherByDate (date){
+    showWeatherByDate(date) {
       return this.weatherDataList[date]
     },
-    todayDate(){
+    todayDate() {
       const now = moment()
       return now.format("yy-MM-DDThh:00")
     },
-    averageValue(){
+    averageValue() {
       let sum = 0;
       let count = 0;
 
       for (const item in this.weatherDataList) {
-        sum+=this.weatherDataList[item];
+        sum += this.weatherDataList[item];
         ++count;
       }
+      sum/=count;
 
-      return sum/count;
+      if(isNaN(sum)){
+        return 0;
+      }
+      return sum;
     }
   },
 };
 
-function remapValue(value, input_min, input_max, output_min, output_max){
-  return (value - input_min) * (output_max - output_min) / (input_max - input_min) + output_min;
-}
-
-function polynomialInterpolationRemap(value){
+function polynomialInterpolationRemap(value) {
   //calculated via https://www.wolframalpha.com/input?key=&i=interpolating+polynomial+%7B-10%2C240%7D%2C%7B15%2C100%7D%2C%7B30%2C20%7D%2C%7B40%2C0%7D
+  /*Set Values are:
+  -10°C - 240h  (deep blue)
+   15°C - 100h  (green)
+   30°C - 20 h  (orange)
+   40°C - 0  h  (deep red)
+   */
+
   return (
-      +(  19 * Math.pow(value, 3) / 7500  )
-      -(  41 * Math.pow(value, 2) / 500  )
-      -(  169 * value / 30  )
-      +(  972 / 5 )
+      + (19 * Math.pow(value, 3) / 7500)
+      - (41 * Math.pow(value, 2) / 500)
+      - (169 * value / 30)
+      + (972 / 5)
   )
 }
 
@@ -90,10 +96,9 @@ function polynomialInterpolationRemap(value){
 const canvas = document.getElementById('canvas');
 const context = canvas.getContext('2d')
 
-//TODO: replace "40" with averageValue
-var hue = polynomialInterpolationRemap(40);
+var hue = polynomialInterpolationRemap(25);
 context.fillStyle = 'hsl(' + [hue, '100%', '50%'] + ')';
-context.fillRect(0,0,canvas.width,canvas.height)
+context.fillRect(0, 0, canvas.width, canvas.height)
 
 </script>
 <template>
@@ -103,11 +108,11 @@ context.fillRect(0,0,canvas.width,canvas.height)
 
     <button v-on:click="getWeatherData">Get Weather Data</button>
 
-    <div>{{ averageValue() }}</div>
+    <div>Average Value: {{ averageValue() }}</div>
 
-    <div>{{ showWeatherByDate(todayDate())}}</div>
+    <div>{{ showWeatherByDate(todayDate()) }}</div>
     <li v-for=" (item , index) in weatherDataList">
-        {{index}} -  {{item}}
+      {{ index }} - {{ item }}
     </li>
 
   </div>
