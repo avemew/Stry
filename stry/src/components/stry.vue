@@ -72,13 +72,30 @@ export default {
   },
 };
 
+function remapValue(value, input_min, input_max, output_min, output_max){
+  return (value - input_min) * (output_max - output_min) / (input_max - input_min) + output_min;
+}
+
+function polynomialInterpolationRemap(value){
+  //calculated via https://www.wolframalpha.com/input?key=&i=interpolating+polynomial+%7B-10%2C320%7D%2C%7B0%2C180%7D%2C%7B25%2C50%7D%2C%7B45%2C0%7D
+  return (
+      -(  187 * Math.pow(value,6) / 126000000 )
+      +(  221 * Math.pow(value, 5)  / 2100000  )
+      -(  1493 * Math.pow(value, 4) / 1008000  )
+      -(  361 * Math.pow(value, 3) / 16800  )
+      +(  13253 * Math.pow(value, 2) / 50400  )
+      -(  953 * value / 280  )
+      +185
+  )
+}
+
 //canvas settings
 const canvas = document.getElementById('canvas');
 const context = canvas.getContext('2d')
 
 //TODO:
-//make this change based on average value
-context.fillStyle = 'rgb(255, 165, 0)'
+var hue = polynomialInterpolationRemap(30);
+context.fillStyle = 'hsl(' + [hue, '100%', '50%'] + ')';
 context.fillRect(0,0,canvas.width,canvas.height)
 
 </script>
