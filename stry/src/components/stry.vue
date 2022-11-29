@@ -65,12 +65,17 @@ export default {
         sum += this.weatherDataList[item];
         ++count;
       }
-      sum/=count;
+      sum /= count;
 
-      if(isNaN(sum)){
+      if (isNaN(sum)) {
         return 0;
       }
       return sum;
+    },
+    setBackground() {
+      let hue = polynomialInterpolationRemap(this.averageValue());
+      context.fillStyle = 'hsl(' + [hue, '100%', '50%'] + ')';
+      context.fillRect(0, 0, canvas.width, canvas.height);
     }
   },
 };
@@ -85,7 +90,7 @@ function polynomialInterpolationRemap(value) {
    */
 
   return (
-      + (19 * Math.pow(value, 3) / 7500)
+      +(19 * Math.pow(value, 3) / 7500)
       - (41 * Math.pow(value, 2) / 500)
       - (169 * value / 30)
       + (972 / 5)
@@ -96,17 +101,13 @@ function polynomialInterpolationRemap(value) {
 const canvas = document.getElementById('canvas');
 const context = canvas.getContext('2d')
 
-var hue = polynomialInterpolationRemap(25);
-context.fillStyle = 'hsl(' + [hue, '100%', '50%'] + ')';
-context.fillRect(0, 0, canvas.width, canvas.height)
-
 </script>
 <template>
   <div>
-
     <h1>My Weather App</h1>
 
     <button v-on:click="getWeatherData">Get Weather Data</button>
+    <button v-on:click="setBackground">set Background</button>
 
     <div>Average Value: {{ averageValue() }}</div>
 
