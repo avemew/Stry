@@ -5,6 +5,10 @@ import moment from "moment";
 const canvas = document.getElementById('canvas');
 const context = canvas.getContext('2d')
 
+//canvas settings
+const canvas = document.getElementById('canvas');
+const context = canvas.getContext('2d')
+
 export default {
   name: "Weather",
   data() {
@@ -14,12 +18,16 @@ export default {
   },
 
   methods: {
-    getTodayUrl() {
-      let truncatedDate = this.todayDate().slice(0, 10);
-      return 'https://api.open-meteo.com/v1/forecast?latitude=53.08&longitude=8.81&hourly=temperature_2m&start_date=' + truncatedDate + '&end_date=' + truncatedDate;
+    //Returns API Url for the current day
+    getTodaysUrl() {
+      let truncatedDate = this.todayDate().slice(0, 10); //cuts off the timestamp from todayDate
+      //builds URL-String with BaseURL and the truncatedDate
+      return 'https://api.open-meteo.com/v1/forecast?latitude=53.08&longitude=8.81&hourly=apparent_temperature&start_date=' + truncatedDate + '&end_date=' + truncatedDate;
     },
+    
     getWeatherData() {
-      fetch(this.getTodayUrl())
+      //fetches WeatherData from todays URL and stores it in weatherDataList
+      fetch(this.getTodaysUrl())
           .then(response => (response.json()))
           .then(data => (data["hourly"]))
           .then(data => this.getWeatherMap(data))
@@ -27,35 +35,47 @@ export default {
     },
     getWeatherMap(timeWeatherLists) {
       const timesArray = Array.from(timeWeatherLists["time"])
-      const tempArray = Array.from(timeWeatherLists["temperature_2m"])
+      const tempArray = Array.from(timeWeatherLists["apparent_temperature"])
       return timesArray.reduce((previousValue, currentValue, currentIndex) => {
         return Object.assign(previousValue, {[currentValue]: tempArray.at(currentIndex)})
       }, {})
     },
+
     showWeatherByDate(date) {
+      //used to display the weatherDataList on the Website
       return this.weatherDataList[date]
     },
+
+    //returns the current date+hour
     todayDate() {
       const now = moment()
       return now.format("yy-MM-DDThh:00")
     },
+
+    //calculates average Value of the weatherDataList
     averageValue() {
       let sum = 0;
       let count = 0;
 
+      //sum up all values, increment count every item
       for (const item in this.weatherDataList) {
         sum += this.weatherDataList[item];
         ++count;
       }
-      sum /= count;
+      sum /= count; //average
 
+      //protection for empty list case
       if (isNaN(sum)) {
         return 0;
       }
+
       return sum;
     },
+
     setBackground() {
-      let hue = polynomialInterpolationRemap(70);
+      //hue - color value; Color from Average Temp gets calculated via polynomialInterpolationRemap
+      let hue = polynomialInterpolationRemap(this.averageValue());
+      //color the background square with the given hue
       context.fillStyle = 'hsl(' + [hue, '100%', '50%'] + ')';
       context.fillRect(0, 0, canvas.width, canvas.height);
     },
@@ -64,6 +84,7 @@ export default {
 
 };
 
+//maps given value to color in hue spectrum
 function polynomialInterpolationRemap(value) {
   //calculated via https://www.wolframalpha.com/input?key=&i=interpolating+polynomial+%7B-10%2C240%7D%2C%7B15%2C100%7D%2C%7B30%2C20%7D%2C%7B40%2C0%7D
   /*Set Values are:
@@ -73,14 +94,15 @@ function polynomialInterpolationRemap(value) {
    40°C - 0  h  (deep red)
    */
 
-  if(value<=-10){
+  //Out of range protection
+  if (value <= -10) {
     return 240;
   }
-
-  if(value>=40){
+  if (value >= 40) {
     return 0;
   }
 
+  //polynomial Interpolation Function
   return (
       +(19 * Math.pow(value, 3) / 7500)
       - (41 * Math.pow(value, 2) / 500)
@@ -89,69 +111,31 @@ function polynomialInterpolationRemap(value) {
   )
 }
 
-
-
 </script>
 <template>
+  <body>
+    <div id="weatherData">
 
-  <div>
-    <header>
-    <h1>My Weather App</h1>
-  </header>
+      Average Value: {{ averageValue() }}
+      <br>
+      {{ showWeatherByDate(todayDate()) }}
 
-    <button v-on:click="getWeatherData">Get Weather Data</button>
-    <button v-on:click="setBackground">set Background</button>
-<body class="myList">
-    <div class="weather-data">Average Value: {{ averageValue() }}</div>
+      <li v-for=" (item , index) in weatherDataList">
+        {{ index }} - {{ item }}
+      </li>
 
-    <div class="weather-data">{{ showWeatherByDate(todayDate()) }}</div>
-    <li  class="weather-data" v-for=" (item , index) in weatherDataList">
-      {{ index }} - {{ item }}
-    </li>
-</body>
-  </div>
+    </div>
+  </body>
 </template>
 
 <style scoped>
-.myList{
-  background-color: rgb(0,0,0,0.01);
-  height: 100%;
-  margin: 0;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-
-}
-.weather-data {
-  display: flex;
-  flex: 1;
-  overflow: auto;
-  align-items: center;
-  margin-top: 2px;
-  margin-left: 20px;
-  border-bottom: 2px solid #ccc;
-  padding: 20px;
-  color: brown;
-
+h1 {
+  color: white;
 }
 
-.weather-icon {
-  flex-grow: 1;
-}
-
-.weather-stats {
-  flex-grow: 8;
-  text-align: left;
-  padding-left: 20px;
-}
-
-.weather-stats .location {
-  font-size: 30px;
-}
-
-.weather-temp {
-  flex-grow: 1;
-  font-size: 35px;
+#weatherData {
+  color: darkturquoise;
+  background-color: transparent;
 }
 
 img {
@@ -162,6 +146,7 @@ button {
   padding: 10px;
   background-color: #1aa832;
   color: white;
+  margin: 5px;
   border: 1px solid #ccc;
 }
 </style>
