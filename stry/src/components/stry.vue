@@ -1,9 +1,6 @@
 <script>
 
 import moment from "moment";
-//canvas settings
-const canvas = document.getElementById('canvas');
-const context = canvas.getContext('2d')
 
 //canvas settings
 const canvas = document.getElementById('canvas');
@@ -24,9 +21,9 @@ export default {
       //builds URL-String with BaseURL and the truncatedDate
       return 'https://api.open-meteo.com/v1/forecast?latitude=53.08&longitude=8.81&hourly=apparent_temperature&start_date=' + truncatedDate + '&end_date=' + truncatedDate;
     },
-    
+
     getWeatherData() {
-      //fetches WeatherData from todays URL and stores it in weatherDataList
+      //fetches WeatherData from today's URL and stores it in weatherDataList
       fetch(this.getTodaysUrl())
           .then(response => (response.json()))
           .then(data => (data["hourly"]))
@@ -114,17 +111,22 @@ function polynomialInterpolationRemap(value) {
 </script>
 <template>
   <body>
-    <div id="weatherData">
+  <div id="weatherData">
 
-      Average Value: {{ averageValue() }}
-      <br>
-      {{ showWeatherByDate(todayDate()) }}
+    <h1>My Weather App</h1>
 
-      <li v-for=" (item , index) in weatherDataList">
-        {{ index }} - {{ item }}
-      </li>
+    <button v-on:click="getWeatherData">Get Weather Data</button>
+    <button v-on:click="setBackground">set Background</button>
+    <br>
+    Average Value: {{ averageValue() }}
+    <br>
+    {{ showWeatherByDate(todayDate()) }}
 
-    </div>
+    <li v-for=" (item , index) in weatherDataList">
+      {{ index }} - {{ item }}
+    </li>
+
+  </div>
   </body>
 </template>
 
