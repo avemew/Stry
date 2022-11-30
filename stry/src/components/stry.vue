@@ -1,43 +1,25 @@
 <script>
 
 import moment from "moment";
+//canvas settings
+const canvas = document.getElementById('canvas');
+const context = canvas.getContext('2d')
 
 export default {
   name: "Weather",
   data() {
     return {
       weatherDataList: [],
-      layout: [
-        {"x": 0, "y": 0, "w": 2, "h": 2, "i": "0"},
-        {"x": 2, "y": 0, "w": 2, "h": 4, "i": "1"},
-        {"x": 4, "y": 0, "w": 2, "h": 5, "i": "2"},
-        {"x": 6, "y": 0, "w": 2, "h": 3, "i": "3"},
-        {"x": 8, "y": 0, "w": 2, "h": 3, "i": "4"},
-        {"x": 10, "y": 0, "w": 2, "h": 3, "i": "5"},
-        {"x": 0, "y": 5, "w": 2, "h": 5, "i": "6"},
-        {"x": 2, "y": 5, "w": 2, "h": 5, "i": "7"},
-        {"x": 4, "y": 5, "w": 2, "h": 5, "i": "8"},
-        {"x": 6, "y": 3, "w": 2, "h": 4, "i": "9"},
-        {"x": 8, "y": 4, "w": 2, "h": 4, "i": "10"},
-        {"x": 10, "y": 4, "w": 2, "h": 4, "i": "11"},
-        {"x": 0, "y": 10, "w": 2, "h": 5, "i": "12"},
-        {"x": 2, "y": 10, "w": 2, "h": 5, "i": "13"},
-        {"x": 4, "y": 8, "w": 2, "h": 4, "i": "14"},
-        {"x": 6, "y": 8, "w": 2, "h": 4, "i": "15"},
-        {"x": 8, "y": 10, "w": 2, "h": 5, "i": "16"},
-        {"x": 10, "y": 4, "w": 2, "h": 2, "i": "17"},
-        {"x": 0, "y": 9, "w": 2, "h": 3, "i": "18"},
-        {"x": 2, "y": 6, "w": 2, "h": 2, "i": "19"}
-      ],
     };
   },
+
   methods: {
-    getTodaysUrl() {
+    getTodayUrl() {
       let truncatedDate = this.todayDate().slice(0, 10);
       return 'https://api.open-meteo.com/v1/forecast?latitude=53.08&longitude=8.81&hourly=temperature_2m&start_date=' + truncatedDate + '&end_date=' + truncatedDate;
     },
     getWeatherData() {
-      fetch(this.getTodaysUrl())
+      fetch(this.getTodayUrl())
           .then(response => (response.json()))
           .then(data => (data["hourly"]))
           .then(data => this.getWeatherMap(data))
@@ -76,8 +58,10 @@ export default {
       let hue = polynomialInterpolationRemap(this.averageValue());
       context.fillStyle = 'hsl(' + [hue, '100%', '50%'] + ')';
       context.fillRect(0, 0, canvas.width, canvas.height);
-    }
+    },
+
   },
+
 };
 
 function polynomialInterpolationRemap(value) {
@@ -97,36 +81,50 @@ function polynomialInterpolationRemap(value) {
   )
 }
 
-//canvas settings
-const canvas = document.getElementById('canvas');
-const context = canvas.getContext('2d')
+
 
 </script>
 <template>
+
   <div>
+    <header>
     <h1>My Weather App</h1>
+  </header>
 
     <button v-on:click="getWeatherData">Get Weather Data</button>
     <button v-on:click="setBackground">set Background</button>
+<body class="myList">
+    <div class="weather-data">Average Value: {{ averageValue() }}</div>
 
-    <div>Average Value: {{ averageValue() }}</div>
-
-    <div>{{ showWeatherByDate(todayDate()) }}</div>
-    <li v-for=" (item , index) in weatherDataList">
+    <div class="weather-data">{{ showWeatherByDate(todayDate()) }}</div>
+    <li  class="weather-data" v-for=" (item , index) in weatherDataList">
       {{ index }} - {{ item }}
     </li>
-
+</body>
   </div>
 </template>
 
 <style scoped>
+.myList{
+  background-color: rgb(0,0,0,0.01);
+  height: 100%;
+  margin: 0;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+
+}
 .weather-data {
   display: flex;
+  flex: 1;
+  overflow: auto;
   align-items: center;
-  margin-top: 20px;
+  margin-top: 2px;
   margin-left: 20px;
   border-bottom: 2px solid #ccc;
   padding: 20px;
+  color: brown;
+
 }
 
 .weather-icon {
