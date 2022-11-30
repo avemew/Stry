@@ -2,33 +2,15 @@
 
 import moment from "moment";
 
+//canvas settings
+const canvas = document.getElementById('canvas');
+const context = canvas.getContext('2d')
+
 export default {
   name: "Weather",
   data() {
     return {
       weatherDataList: [],
-      layout: [
-        {"x": 0, "y": 0, "w": 2, "h": 2, "i": "0"},
-        {"x": 2, "y": 0, "w": 2, "h": 4, "i": "1"},
-        {"x": 4, "y": 0, "w": 2, "h": 5, "i": "2"},
-        {"x": 6, "y": 0, "w": 2, "h": 3, "i": "3"},
-        {"x": 8, "y": 0, "w": 2, "h": 3, "i": "4"},
-        {"x": 10, "y": 0, "w": 2, "h": 3, "i": "5"},
-        {"x": 0, "y": 5, "w": 2, "h": 5, "i": "6"},
-        {"x": 2, "y": 5, "w": 2, "h": 5, "i": "7"},
-        {"x": 4, "y": 5, "w": 2, "h": 5, "i": "8"},
-        {"x": 6, "y": 3, "w": 2, "h": 4, "i": "9"},
-        {"x": 8, "y": 4, "w": 2, "h": 4, "i": "10"},
-        {"x": 10, "y": 4, "w": 2, "h": 4, "i": "11"},
-        {"x": 0, "y": 10, "w": 2, "h": 5, "i": "12"},
-        {"x": 2, "y": 10, "w": 2, "h": 5, "i": "13"},
-        {"x": 4, "y": 8, "w": 2, "h": 4, "i": "14"},
-        {"x": 6, "y": 8, "w": 2, "h": 4, "i": "15"},
-        {"x": 8, "y": 10, "w": 2, "h": 5, "i": "16"},
-        {"x": 10, "y": 4, "w": 2, "h": 2, "i": "17"},
-        {"x": 0, "y": 9, "w": 2, "h": 3, "i": "18"},
-        {"x": 2, "y": 6, "w": 2, "h": 2, "i": "19"}
-      ],
     };
   },
   methods: {
@@ -79,7 +61,9 @@ export default {
       sum /= count; //average
 
       //protection for empty list case
-      if (isNaN(sum)) {return 0;}
+      if (isNaN(sum)) {
+        return 0;
+      }
 
       return sum;
     },
@@ -121,55 +105,41 @@ function polynomialInterpolationRemap(value) {
   )
 }
 
-//canvas settings
-const canvas = document.getElementById('canvas');
-const context = canvas.getContext('2d')
-
 </script>
 <template>
+  <body>
   <div>
+
     <h1>My Weather App</h1>
 
     <button v-on:click="getWeatherData">Get Weather Data</button>
     <button v-on:click="setBackground">set Background</button>
 
-    <div>Average Value: {{ averageValue() }}</div>
+    <div id="weatherData">
 
-    <div>{{ showWeatherByDate(todayDate()) }}</div>
-    <li v-for=" (item , index) in weatherDataList">
-      {{ index }} - {{ item }}
-    </li>
+      Average Value: {{ averageValue() }}
+      <br>
+      {{ showWeatherByDate(todayDate()) }}
+
+      <li v-for=" (item , index) in weatherDataList">
+        {{ index }} - {{ item }}
+      </li>
+
+    </div>
 
   </div>
+  </body>
 </template>
 
 <style scoped>
-.weather-data {
-  display: flex;
-  align-items: center;
-  margin-top: 20px;
-  margin-left: 20px;
-  border-bottom: 2px solid #ccc;
-  padding: 20px;
+
+h1 {
+  color: white;
 }
 
-.weather-icon {
-  flex-grow: 1;
-}
-
-.weather-stats {
-  flex-grow: 8;
-  text-align: left;
-  padding-left: 20px;
-}
-
-.weather-stats .location {
-  font-size: 30px;
-}
-
-.weather-temp {
-  flex-grow: 1;
-  font-size: 35px;
+#weatherData {
+  color: darkturquoise;
+  background-color: transparent;
 }
 
 img {
@@ -180,6 +150,7 @@ button {
   padding: 10px;
   background-color: #1aa832;
   color: white;
+  margin: 5px;
   border: 1px solid #ccc;
 }
 </style>
