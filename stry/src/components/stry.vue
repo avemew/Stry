@@ -1,6 +1,9 @@
 <script>
 
 import moment from "moment";
+//canvas settings
+const canvas = document.getElementById('canvas');
+const context = canvas.getContext('2d')
 
 //canvas settings
 const canvas = document.getElementById('canvas');
@@ -13,6 +16,7 @@ export default {
       weatherDataList: [],
     };
   },
+
   methods: {
     //Returns API Url for the current day
     getTodaysUrl() {
@@ -20,7 +24,7 @@ export default {
       //builds URL-String with BaseURL and the truncatedDate
       return 'https://api.open-meteo.com/v1/forecast?latitude=53.08&longitude=8.81&hourly=apparent_temperature&start_date=' + truncatedDate + '&end_date=' + truncatedDate;
     },
-
+    
     getWeatherData() {
       //fetches WeatherData from todays URL and stores it in weatherDataList
       fetch(this.getTodaysUrl())
@@ -74,8 +78,10 @@ export default {
       //color the background square with the given hue
       context.fillStyle = 'hsl(' + [hue, '100%', '50%'] + ')';
       context.fillRect(0, 0, canvas.width, canvas.height);
-    }
+    },
+
   },
+
 };
 
 //maps given value to color in hue spectrum
@@ -108,13 +114,6 @@ function polynomialInterpolationRemap(value) {
 </script>
 <template>
   <body>
-  <div>
-
-    <h1>My Weather App</h1>
-
-    <button v-on:click="getWeatherData">Get Weather Data</button>
-    <button v-on:click="setBackground">set Background</button>
-
     <div id="weatherData">
 
       Average Value: {{ averageValue() }}
@@ -126,13 +125,10 @@ function polynomialInterpolationRemap(value) {
       </li>
 
     </div>
-
-  </div>
   </body>
 </template>
 
 <style scoped>
-
 h1 {
   color: white;
 }
