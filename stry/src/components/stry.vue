@@ -18,7 +18,7 @@ export default {
     getTodaysUrl() {
       let truncatedDate = this.todayDate().slice(0, 10); //cuts off the timestamp from todayDate
       //builds URL-String with BaseURL and the truncatedDate
-      return 'https://api.open-meteo.com/v1/forecast?latitude=53.08&longitude=8.81&hourly=temperature_2m&start_date=' + truncatedDate + '&end_date=' + truncatedDate;
+      return 'https://api.open-meteo.com/v1/forecast?latitude=53.08&longitude=8.81&hourly=apparent_temperature&start_date=' + truncatedDate + '&end_date=' + truncatedDate;
     },
 
     getWeatherData() {
@@ -31,7 +31,7 @@ export default {
     },
     getWeatherMap(timeWeatherLists) {
       const timesArray = Array.from(timeWeatherLists["time"])
-      const tempArray = Array.from(timeWeatherLists["temperature_2m"])
+      const tempArray = Array.from(timeWeatherLists["apparent_temperature"])
       return timesArray.reduce((previousValue, currentValue, currentIndex) => {
         return Object.assign(previousValue, {[currentValue]: tempArray.at(currentIndex)})
       }, {})
