@@ -32,11 +32,15 @@ export default {
     };
   },
   methods: {
+    //Returns API Url for the current day
     getTodaysUrl() {
-      let truncatedDate = this.todayDate().slice(0, 10);
+      let truncatedDate = this.todayDate().slice(0, 10); //cuts off the timestamp from todayDate
+      //builds URL-String with BaseURL and the truncatedDate
       return 'https://api.open-meteo.com/v1/forecast?latitude=53.08&longitude=8.81&hourly=temperature_2m&start_date=' + truncatedDate + '&end_date=' + truncatedDate;
     },
+
     getWeatherData() {
+      //fetches WeatherData from todays URL and stores it in weatherDataList
       fetch(this.getTodaysUrl())
           .then(response => (response.json()))
           .then(data => (data["hourly"]))
@@ -50,36 +54,47 @@ export default {
         return Object.assign(previousValue, {[currentValue]: tempArray.at(currentIndex)})
       }, {})
     },
+
     showWeatherByDate(date) {
+      //used to display the weatherDataList on the Website
       return this.weatherDataList[date]
     },
+
+    //returns the current date+hour
     todayDate() {
       const now = moment()
       return now.format("yy-MM-DDThh:00")
     },
+
+    //calculates average Value of the weatherDataList
     averageValue() {
       let sum = 0;
       let count = 0;
 
+      //sum up all values, increment count every item
       for (const item in this.weatherDataList) {
         sum += this.weatherDataList[item];
         ++count;
       }
-      sum /= count;
+      sum /= count; //average
 
-      if (isNaN(sum)) {
-        return 0;
-      }
+      //protection for empty list case
+      if (isNaN(sum)) {return 0;}
+
       return sum;
     },
+
     setBackground() {
-      let hue = polynomialInterpolationRemap(70);
+      //hue - color value; Color from Average Temp gets calculated via polynomialInterpolationRemap
+      let hue = polynomialInterpolationRemap(this.averageValue());
+      //color the background square with the given hue
       context.fillStyle = 'hsl(' + [hue, '100%', '50%'] + ')';
       context.fillRect(0, 0, canvas.width, canvas.height);
     }
   },
 };
 
+//maps given value to color in hue spectrum
 function polynomialInterpolationRemap(value) {
   //calculated via https://www.wolframalpha.com/input?key=&i=interpolating+polynomial+%7B-10%2C240%7D%2C%7B15%2C100%7D%2C%7B30%2C20%7D%2C%7B40%2C0%7D
   /*Set Values are:
@@ -89,14 +104,15 @@ function polynomialInterpolationRemap(value) {
    40°C - 0  h  (deep red)
    */
 
-  if(value<=-10){
+  //Out of range protection
+  if (value <= -10) {
     return 240;
   }
-
-  if(value>=40){
+  if (value >= 40) {
     return 0;
   }
 
+  //polynomial Interpolation Function
   return (
       +(19 * Math.pow(value, 3) / 7500)
       - (41 * Math.pow(value, 2) / 500)
