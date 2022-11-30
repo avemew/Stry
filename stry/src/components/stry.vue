@@ -55,7 +55,7 @@ export default {
       return sum;
     },
     setBackground() {
-      let hue = polynomialInterpolationRemap(this.averageValue());
+      let hue = polynomialInterpolationRemap(70);
       context.fillStyle = 'hsl(' + [hue, '100%', '50%'] + ')';
       context.fillRect(0, 0, canvas.width, canvas.height);
     },
@@ -72,6 +72,14 @@ function polynomialInterpolationRemap(value) {
    30°C - 20 h  (orange)
    40°C - 0  h  (deep red)
    */
+
+  if(value<=-10){
+    return 240;
+  }
+
+  if(value>=40){
+    return 0;
+  }
 
   return (
       +(19 * Math.pow(value, 3) / 7500)
