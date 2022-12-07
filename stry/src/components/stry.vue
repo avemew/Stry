@@ -19,7 +19,7 @@ export default {
   },
   mounted: function () {
     window.setInterval(() => {
-      $('body').ripples("drop", 500, 500, 25, 0.5);
+      $('body').ripples("drop", getRandomX(), getRandomY(), 25, 0.5);
     }, 1000)
   },
   methods: {
@@ -114,6 +114,14 @@ function polynomialInterpolationRemap(value) {
       - (169 * value / 30)
       + (972 / 5)
   )
+}
+
+function getRandomX(){
+  return Math.floor(Math.random() * screen.width);
+}
+
+function getRandomY(){
+  return Math.floor(Math.random() * screen.height);
 }
 
 </script>
