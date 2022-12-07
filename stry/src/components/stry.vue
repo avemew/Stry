@@ -1,5 +1,9 @@
 <script>
 
+function myFunction() {
+  alert("Page is loaded");
+}
+
 import moment from "moment";
 
 //canvas settings
@@ -13,7 +17,11 @@ export default {
       weatherDataList: [],
     };
   },
-
+  mounted: function () {
+    window.setInterval(() => {
+      $('body').ripples("drop", 500, 500, 25, 0.5);
+    }, 1000)
+  },
   methods: {
     //Returns API Url for the current day
     getTodaysUrl() {
@@ -110,7 +118,7 @@ function polynomialInterpolationRemap(value) {
 
 </script>
 <template>
-  <body>
+  <body onload="myFunction()">
   <div id="weatherData">
 
     <h1>My Weather App</h1>
@@ -138,6 +146,8 @@ h1 {
 #weatherData {
   color: darkturquoise;
   background-color: transparent;
+  margin: 0;
+  padding: 0;
 }
 
 img {
