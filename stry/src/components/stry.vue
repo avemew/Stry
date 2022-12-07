@@ -15,19 +15,53 @@ export default {
   data() {
     return {
       weatherDataList: [],
+      rainDataList: [],
     };
   },
+
+
+
   mounted: function () {
     window.setInterval(() => {
+      if(0>0){
       $('body').ripples("drop", getRandomX(), getRandomY(), 25, 0.5);
+    }
     }, 1000)
   },
+
+
   methods: {
     //Returns API Url for the current day
     getTodaysUrl() {
       let truncatedDate = this.todayDate().slice(0, 10); //cuts off the timestamp from todayDate
       //builds URL-String with BaseURL and the truncatedDate
       return 'https://api.open-meteo.com/v1/forecast?latitude=53.08&longitude=8.81&hourly=apparent_temperature&start_date=' + truncatedDate + '&end_date=' + truncatedDate;
+    },
+    getTodayUrlRain(){
+      let truncatedDateRain = this.todayDate().slice(0,10); //cuts off the timestamp from todayDate
+      //builds URL-String with BaseURL and the truncatedDate
+      return 'https://api.open-meteo.com/v1/forecast?latitude=53.08&longitude=8.81&hourly=rain&start_date=' + truncatedDateRain + '&end_date=' + truncatedDateRain;
+    },
+
+    getRainData() {
+      //fetches WeatherData from today's URL and stores it in weatherDataList
+      fetch(this.getTodayUrlRain())
+          .then(response => (response.json()))
+          .then(data => (data["hourly"]))
+          .then(data => this.getRainMap(data))
+          .then(data => (this.rainDataList = data))
+    },
+
+
+
+    getRainMap(timeWeatherLists) {
+      const timesArray = Array.from(timeWeatherLists["time"])
+      const tempArray = Array.from(timeWeatherLists["rain"])
+
+      return timesArray.reduce((previousValue, currentValue, currentIndex) => {
+        return Object.assign(previousValue, {[currentValue]: tempArray.at(currentIndex)})
+
+      }, {})
     },
 
     getWeatherData() {
@@ -41,6 +75,7 @@ export default {
     getWeatherMap(timeWeatherLists) {
       const timesArray = Array.from(timeWeatherLists["time"])
       const tempArray = Array.from(timeWeatherLists["apparent_temperature"])
+
       return timesArray.reduce((previousValue, currentValue, currentIndex) => {
         return Object.assign(previousValue, {[currentValue]: tempArray.at(currentIndex)})
       }, {})
@@ -49,6 +84,11 @@ export default {
     showWeatherByDate(date) {
       //used to display the weatherDataList on the Website
       return this.weatherDataList[date]
+    },
+
+    showRainByDate(date) {
+      //used to display the weatherDataList on the Website
+      return this.rainDataList[date]
     },
 
     //returns the current date+hour
@@ -137,6 +177,8 @@ function getRandomY(){
     Average Value: {{ averageValue() }}
     <br>
     {{ showWeatherByDate(todayDate()) }}
+    {{ showRainByDate(todayDate())}}
+    
 
     <li v-for=" (item , index) in weatherDataList">
       {{ index }} - {{ item }}
