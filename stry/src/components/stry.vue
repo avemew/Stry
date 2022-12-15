@@ -4,6 +4,7 @@ import moment from "moment";
 //canvas settings
 const canvas = document.getElementById('canvas');
 const context = canvas.getContext('2d')
+const today = new Date();
 
 export default {
   name: "Weather",
@@ -22,11 +23,13 @@ export default {
 
   mounted: function () {
     window.setInterval(() => {
-      //if(0>0){
+      //if(this.weatherDataList[today.getHours()]>0){
       $('body').ripples("drop", getRandomX(), getRandomY(), calculateSize(this.rainAverageValue()+5), 1);
       //}
     }, calculateTimeout(1))
   },
+
+
 
   methods: {
     //Returns API Url for the current day
@@ -187,6 +190,8 @@ function calculateTimeout(rainInMm) {
 <!--    <h1>Average Value: {{ rainAverageValue() }}</h1>-->
 
   </header>
+  <!--   DEBUGGING VALUES        -->
+  <p>rain thing :{{this.weatherDataList[7]}}</p>
 
 </template>
 
