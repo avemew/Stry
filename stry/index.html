@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.ripples/0.5.3/jquery.ripples.min.js"></script>
+    <link rel="stylesheet" href="src/assets/main.css">
     <title>Temperature-Color</title>
 </head>
 <style>
@@ -45,13 +46,6 @@
 <canvas id="canvas"></canvas>
 <div class="background"></div> <!--Ripples get applied because of this-->
 
-<script>
-    //ripple settings
-    $("body").ripples({
-        resolution: 1024,
-        perturbance: 1,
-        interactive: false,
-    });
-</script>
+<script src="./script.js"></script>
 </body>
 </html>
