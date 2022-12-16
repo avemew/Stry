@@ -96,7 +96,7 @@ export default {
     getTodayUrlRain() {
       let truncatedDateRain = this.todayDate().slice(0, 10); //cuts off the timestamp from todayDate
       //builds URL-String with BaseURL and the truncatedDate
-      return 'https://api.open-meteo.com/v1/forecast?latitude=53.08&longitude=8.81&hourly=rain&start_date=' + truncatedDateRain + '&end_date=' + truncatedDateRain;
+      return 'https://api.open-meteo.com/v1/forecast?latitude=53.08&longitude=8.81&hourly=apparent_temperature&start_date=' + truncatedDateRain + '&end_date=' + truncatedDateRain;
     },
     getRainmap(rainlists) {
       const timesArray = Array.from(rainlists["time"])
@@ -191,7 +191,7 @@ function calculateTimeout(rainInMm) {
 
   </header>
   <!--   DEBUGGING VALUES        -->
-  <p>rain thing :{{this.weatherDataList[7]}}</p>
+  <p>rain thing :{{this.rainDataList[33]}}</p>
 
 </template>
 
