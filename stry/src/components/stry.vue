@@ -112,22 +112,15 @@
       },
       getTempMap(timeWeatherLists) {
         const timesArray = Array.from(timeWeatherLists["time"])
-        const tempArray = Array.from(timeWeatherLists["apparent_temperature"])
+        const tempArray = Array.from(timeWeatherLists["temperature_2m"])
 
         return timesArray.reduce((previousValue, currentValue, currentIndex) => {
           return Object.assign(previousValue, {[currentValue]: tempArray.at(currentIndex)})
         }, {})
       },
-      showWeatherByDate(date) {
-        //used to display the weatherDataList on the Website
-        return this.weatherDataList[date]
-      },
-
-
-
       //Rain Data
       getTodayUrlRain() {
-        const date = this.todayDate();
+        const date = this.todayDate().slice(0, 10);
         //builds URL-String with BaseURL and the truncatedDate
         return `https://api.open-meteo.com/v1/gfs?latitude=53.08&longitude=8.81&hourly=precipitation&forecast_days=1&start_date=${date}&end_date=${date}&timezone=Europe%2FBerlin`;
       },
@@ -148,7 +141,7 @@
             .then((precipitationMapData) => {
               console.log(precipitationMapData)
               this.precipitationDataList = precipitationMapData
-            })  
+            })
       },
     },
   };
