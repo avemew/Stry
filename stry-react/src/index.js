@@ -7,14 +7,14 @@ import {ClockDisplay} from './functions/clock';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
-  <React.StrictMode>
-      <body>
-
-        <div id="time">
-            <ClockDisplay text="Timestamp" />
-        </div>
-
-      </body>
-    <App />
-  </React.StrictMode>
+    <React.StrictMode>
+        <head>
+        </head>
+        <body>
+            <div id="time">
+                <ClockDisplay text="Timestamp"/>
+            </div>
+        <App/>
+        </body>
+    </React.StrictMode>
 );

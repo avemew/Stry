@@ -19,15 +19,6 @@ body {
   min-width: 100vh;
   min-height: 100vh;
   background-color: gray;
-  background-image: url(../public/logo512.png);
-  background-size: cover;
-  background-position: 50% 0;
-}
-
-.background {
-  width: 100vw;
-  height: 100vh;
-  background-size: cover;
 }
 
 #time {
