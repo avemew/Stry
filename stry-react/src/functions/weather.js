@@ -1,10 +1,15 @@
+
+import {getTodaysUrl} from "./dates";
+
 export const getWeatherData = () => {
     //fetches WeatherData from today's URL and stores it in weatherDataList
-    fetch(this.getTodaysUrl())
+    return fetch(getTodaysUrl())
         .then(response => (response.json()))
-        .then(data => (data["hourly"]))
-        .then(data => this.getWeatherMap(data))
-        .then(data => (this.weatherDataList = data));
+        .then(apiData => (apiData["hourly"]))
+        .then(apiDataHourly => getWeatherMap(apiDataHourly))
+        .then((TempMapData) => {
+            return TempMapData;
+        })
 }
 
 export const getWeatherMap = (timeWeatherLists) => {

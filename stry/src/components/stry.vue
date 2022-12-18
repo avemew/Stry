@@ -185,8 +185,7 @@
 <!--    <h1>Average Value: {{ rainAverageValue() }}</h1>-->
 
   </header>
-  <!--   DEBUGGING VALUES        -->
-  <p>rain thing :{{this.precipitationDataList[33]}}</p>
+
 
 </template>
 
