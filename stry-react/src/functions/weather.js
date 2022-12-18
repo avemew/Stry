@@ -1,4 +1,3 @@
-
 import {getTodaysUrl} from "./dates";
 
 export const getWeatherData = () => {

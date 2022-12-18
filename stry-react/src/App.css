@@ -1,3 +1,8 @@
+@font-face {
+  font-family: aBlackLives;
+  src: url(../public/aBlackLives.woff);
+}
+
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -8,23 +13,28 @@
   background: transparent;
 }
 
-#canvas {
-  position: absolute;
-  z-index: -1;
-  width: 100%;
-  height: 100%;
-}
-
 body {
   margin: 0;
   padding: 0;
-  width: 100vw;
-  height: 100vh;
+  min-width: 100vh;
+  min-height: 100vh;
   background-color: gray;
+  background-image: url(../public/logo512.png);
+  background-size: cover;
+  background-position: 50% 0;
 }
 
 .background {
-  width: 100%;
+  width: 100vw;
   height: 100vh;
   background-size: cover;
+}
+
+#time {
+  font-size: 12vw;
+  font-family: aBlackLives, sans-serif;
+  text-align: center;
+  alignment-baseline: center;
+  padding-top: 40vh;
+  color: white;
 }

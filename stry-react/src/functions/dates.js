@@ -3,9 +3,9 @@ import moment from "moment";
 //returns date in format: yy-MM-DDThh:00
 export const todayDate = () => {
     const now = moment()
-    return now.format("yy-MM-DDThh:00")
-}
 
+    return now.format("yy-MM-DDTHH:00")
+}
 
 //constructs URL from base string and todays date
 export const getTodaysUrl = () => {
