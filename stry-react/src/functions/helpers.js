@@ -28,16 +28,21 @@ export const polynomialInterpolationRemap = (value) => {
 }
 
 export const setBackground = (weatherDataList) => {
-
-    console.log(weatherDataList[todayDate()]);
-
-    //hue - color value; Color from Average Temp gets calculated via polynomialInterpolationRemap
+    //hue - color value - Color from Average Temp gets calculated via polynomialInterpolationRemap
     let hue = polynomialInterpolationRemap(weatherDataList[todayDate()]);
+
     //color the background square with the given hue
     let myColor = 'hsl(' + [hue, '100%', '50%'] + ')';
 
-    let stylesheets = document.styleSheets;
+    //gets current stylesheet
     let sheet = document.styleSheets[0];
 
-    sheet.insertRule("body { background: " + myColor + " !important; }", 0);
+    //css version support checks
+    //--> dynamically adds css rule
+    if("insertRule" in sheet) {
+        sheet.insertRule("body { background: " + myColor + " !important; }", 0);
+    }
+    else if("addRule" in sheet) {
+        sheet.addRule("body", "background: " + myColor + " !important;", 0);
+    }
 }
