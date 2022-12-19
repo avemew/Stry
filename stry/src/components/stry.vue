@@ -4,6 +4,7 @@ import moment from "moment";
 //canvas settings
 const canvas = document.getElementById('canvas');
 const context = canvas.getContext('2d')
+let body = document.getElementById('body')
 const today = new Date();
 
 export default {
@@ -49,7 +50,8 @@ export default {
     getWeatherMap(timeWeatherLists) {
       const timesArray = Array.from(timeWeatherLists["time"])
       const tempArray = Array.from(timeWeatherLists["apparent_temperature"])
-
+console.log(timesArray)
+console.log(tempArray)
       return timesArray.reduce((previousValue, currentValue, currentIndex) => {
         return Object.assign(previousValue, {[currentValue]: tempArray.at(currentIndex)})
       }, {})
@@ -66,6 +68,7 @@ export default {
     },
 
     //calculates average Value of the weatherDataList
+
     tempAverageValue() {
       let sum = 0;
       let count = 0;
@@ -91,27 +94,35 @@ export default {
       //color the background square with the given hue
       context.fillStyle = 'hsl(' + [hue, '100%', '50%'] + ')';
       context.fillRect(0, 0, canvas.width, canvas.height);
+
+      //using html 'body' for coloring
+
     },
     //Rain Data
     getTodayUrlRain() {
       let truncatedDateRain = this.todayDate().slice(0, 10); //cuts off the timestamp from todayDate
       //builds URL-String with BaseURL and the truncatedDate
-      return 'https://api.open-meteo.com/v1/forecast?latitude=53.08&longitude=8.81&hourly=rain&start_date=' + truncatedDateRain + '&end_date=' + truncatedDateRain;
+      // console.log(url)
+      return 'https://api.open-meteo.com/v1/forecast?latitude=53.08&longitude=8.81&hourly=rain&start_date=' + truncatedDateRain + '&end_date=' + truncatedDateRain
     },
     getRainmap(rainlists) {
       const timesArray = Array.from(rainlists["time"])
       const rainArray = Array.from(rainlists["rain"])
-      // console.log(rainArray)
-
+      console.log(rainArray)
+// console.log(rainArray)
       return timesArray.reduce((previousValue, currentValue, currentIndex) => {
         return Object.assign(previousValue, {[currentValue]: rainArray.at(currentIndex)})
       }, {})
     },
     getRainData() {
-      //fetches WeatherData from today's URL and stores it in weatherDataList
+      //fetches rain from today's URL and stores it in weatherDataList
       fetch(this.getTodayUrlRain())
-          .then(response => (response.json()))
-          .then(data => (data["hourly"]))
+          .then( response => (response.json()
+          ))
+          .then(data => {
+            // console.log(data["hourly"])
+            return data["hourly"]
+          })
           .then(data => this.getRainmap(data))
           .then(data => (this.rainDataList = data))
     },
