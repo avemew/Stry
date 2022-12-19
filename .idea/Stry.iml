@@ -9,5 +9,7 @@
     <orderEntry type="library" name="jquery.ripples" level="application" />
     <orderEntry type="library" name="jquery" level="application" />
     <orderEntry type="library" name="jquery.ripples" level="application" />
+    <orderEntry type="library" name="blotter" level="application" />
+    <orderEntry type="library" name="liquidDistortMaterial" level="application" />
   </component>
 </module>

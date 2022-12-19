@@ -23,7 +23,6 @@ export const calculateSize = (rainInMm) => {
 //calculates timout in ms according to precipitation in mm
 //TODO: AFTER debug testing --> implement linear mapping inside the if-statements
 export const calculateTimeout = (rainInMm) => {
-    console.log(rainInMm);
 
     if (rainInMm < 0.1) { //mapping from [0 - 0.1) bzw. leichter Sprühregen
         return 50;

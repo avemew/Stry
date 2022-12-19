@@ -7,6 +7,10 @@ export const todayDate = () => {
     return now.format("yy-MM-DDTHH:00")
 }
 
+export function getTimeStamp() {
+    return moment().format("HH:mm");
+}
+
 //constructs URL from base string and todays date
 export const getTodaysUrl = () => {
     let truncatedDate = todayDate().slice(0, 10); //cuts off the timestamp from todayDate
@@ -22,4 +26,12 @@ export const getTodayUrlRain = () => {
 
     //builds URL-String with BaseURL and the truncatedDate
     return `https://api.open-meteo.com/v1/gfs?latitude=53.08&longitude=8.81&hourly=precipitation&forecast_days=1&start_date=${truncatedDate}&end_date=${truncatedDate}&timezone=Europe%2FBerlin`;
+}
+
+export const getTodayUrlWind = () => {
+    //const truncatedDateRain = todayDate().slice(0, 10); //cuts off the timestamp from todayDate
+    let truncatedDate = todayDate().slice(0, 10); //cuts off the timestamp from todayDate
+
+    //builds URL-String with BaseURL and the truncatedDate
+    return `https://api.open-meteo.com/v1/gfs?latitude=53.08&longitude=8.81&hourly=windspeed_10m&forecast_days=1&start_date=${truncatedDate}&end_date=${truncatedDate}`;
 }

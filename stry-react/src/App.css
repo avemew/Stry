@@ -3,6 +3,24 @@
   src: url(../public/aBlackLives.woff);
 }
 
+@keyframes squigglevision {
+  0% {
+    filter: url("#turbulence-1");
+  }
+  25% {
+    filter: url("#turbulence-2");
+  }
+  50% {
+    filter: url("#turbulence-3");
+  }
+  75% {
+    filter: url("#turbulence-4");
+  }
+  100% {
+    filter: url("#turbulence-5");
+  }
+}
+
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -14,11 +32,19 @@
 }
 
 body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: squigglevision 0.4s infinite alternate;
   margin: 0;
   padding: 0;
-  min-width: 100vh;
+  min-width: 100vw;
   min-height: 100vh;
   background-color: gray;
+}
+
+svg {
+  display: none;
 }
 
 .jquery-ripples canvas {

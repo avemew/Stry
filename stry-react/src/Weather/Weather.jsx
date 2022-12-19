@@ -26,9 +26,13 @@ export const Weather = () => {
     const [weatherDataList, setWeatherDataList] = useState([]);
     const [precipitationDataList, setPrecipitationDataList] = useState({});
 
+    const [lock, setLock] = useState(false);
+
     const date = todayDate(); //Date in format: yy-MM-DDThh:00 - string
 
     useEffect(() => {
+
+        setLock(true);
 
             async function fetchData() {
 
@@ -38,14 +42,17 @@ export const Weather = () => {
                 setBackground(weatherDataList); //calculated hue value and adds css rule
 
                 //if there is no function waiting for its timeout already:
-                if(!myTimeout) {
+                if (!myTimeout) {
                     //create new timeout
                     myTimeout = window.setTimeout(() => {
                         //this block gets executed once the timer runs out:
 
                         //if there is precipitation, create ripples
+                        //TODO: Check if multiple ripples are cause by use effect
                         if (precipitationDataList) {
                             $('body').ripples("drop", getRandomX(), getRandomY(), safeCalcSize(precipitationDataList), 1);
+                            console.log("rain")
+                            setLock(false);
                         }
 
                         //clears current timeout
@@ -53,6 +60,7 @@ export const Weather = () => {
                     }, safeCalcTimeout(precipitationDataList)) //sets the time in ms the function inside waits
                 }
             }
+
             fetchData();
         }, [precipitationDataList]
     )
@@ -60,25 +68,25 @@ export const Weather = () => {
 
 //TODO: Test out rain intensities and change mapping
 //TODO: replace this value in the methods below with precipitationDataList[todayDate()] again
-let debugPrecipitation = 25;
+let debugPrecipitation = 2.4;
 
 //uses isNaN check to make sure the value calculated is valid
 function safeCalcTimeout(precipitationDataList) {
     if (!isNaN(calculateTimeout(precipitationDataList[todayDate()]))) {
         let timeout = calculateTimeout(debugPrecipitation);
 
-        console.log("Timeout: "+ timeout);
+        //console.log("Timeout: "+ timeout);
         return timeout * 0.5;
     } else {
         return 100;
     }
 }
 
-function safeCalcSize(precipitationDataList){
+function safeCalcSize(precipitationDataList) {
     if (!isNaN(calculateSize(precipitationDataList[todayDate()]))) {
         let size = calculateSize(debugPrecipitation);
 
-        console.log("Size: "+ size);
+        //console.log("Size: " + size);
         return size;
     } else {
         return 25;
