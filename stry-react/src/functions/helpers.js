@@ -32,7 +32,7 @@ export const setBackground = (weatherDataList) => {
     let hue = polynomialInterpolationRemap(weatherDataList[todayDate()]);
 
     //color the background square with the given hue
-    let myColor = 'hsl(' + [hue, '100%', '50%'] + ')';
+    let myColor = 'hsl(' + [hue, '100%', '40%'] + ')';
 
     //gets current stylesheet
     let sheet = document.styleSheets[0];

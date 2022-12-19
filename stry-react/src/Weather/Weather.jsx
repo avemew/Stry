@@ -60,7 +60,7 @@ export const Weather = () => {
 
 //TODO: Test out rain intensities and change mapping
 //TODO: replace this value in the methods below with precipitationDataList[todayDate()] again
-let debugPrecipitation = 2;
+let debugPrecipitation = 25;
 
 //uses isNaN check to make sure the value calculated is valid
 function safeCalcTimeout(precipitationDataList) {
@@ -68,7 +68,7 @@ function safeCalcTimeout(precipitationDataList) {
         let timeout = calculateTimeout(debugPrecipitation);
 
         console.log("Timeout: "+ timeout);
-        return timeout;
+        return timeout * 0.5;
     } else {
         return 100;
     }
