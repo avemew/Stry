@@ -1,13 +1,5 @@
-//calculates size of ripples according to precipitation in mm
-//see https://www.wolframalpha.com/input?i2d=true&i=interpolating+polynomial+%7B0%2C0.1%7D%5C%2844%29%7B10%2C25%7D
 import {todayDate} from "./dates";
 
-//TODO: Implement correct mapping
-export const calculateSize = (rainInMm) => {
-    return 25;
-}
-
-//calculates timout in ms according to precipitation in mm
 /*
 source for categories: https://www.merkur.de/welt/niederschlag-wetter-arten-menge-messen-definition-vorhersage-90162102.html#:~:text=leichter%20Regen%3A%20<%202%2C5,Regen%3A%20≥%2050%2C0%20mm
 
@@ -21,7 +13,73 @@ sehr starker Regen:   ≥ 50,0 mm
 
  */
 
-//TODO: Implement correct mapping
+//calculates size of ripples according to precipitation in mm
+//TODO: AFTER debug testing --> implement linear mapping inside the if-statements
+export const calculateSize = (rainInMm) => {
+
+    if(rainInMm < 0.1){ //mapping from [0 - 0.1) bzw. leichter Sprühregen
+        return 1;
+    }
+
+    if(rainInMm < 0.5){ //mapping from [0.1 - 0.5) bzw. mäßiger Sprühregen
+        return 1;
+    }
+
+    if(rainInMm < 1.0){ //mapping from [0.5 - 1.0) bzw. starker Sprühregen
+        return 1.5;
+    }
+
+    if(rainInMm < 2.5){ //mapping from [1.0 - 2.5) bzw. leichter Regen
+        return 5;
+    }
+
+    if(rainInMm < 10){ //mapping from [2.5 - 10) bzw. mäßiger Regen
+        return 15;
+    }
+
+    if(rainInMm < 50){ //mapping from [10 - 50) bzw. starker Regen
+        return 25;
+    }
+
+    if(rainInMm >= 50){ //mapping from [50 - ∞) bzw. sehr starker Regen
+        return 30;
+    }
+
+    return 25;
+}
+
+//calculates timout in ms according to precipitation in mm
+//TODO: AFTER debug testing --> implement linear mapping inside the if-statements
 export const calculateTimeout = (rainInMm) => {
-    return Math.round(6588.81 - 607.87 * 12);
+    console.log(rainInMm);
+
+    if(rainInMm < 0.1){ //mapping from [0 - 0.1) bzw. leichter Sprühregen
+        return 350;
+    }
+
+    if(rainInMm < 0.5){ //mapping from [0.1 - 0.5) bzw. mäßiger Sprühregen
+        return 400;
+    }
+
+    if(rainInMm < 1.0){ //mapping from [0.5 - 1.0) bzw. starker Sprühregen
+        return 200;
+    }
+
+    if(rainInMm < 2.5){ //mapping from [1.0 - 2.5) bzw. leichter Regen
+        return 800;
+    }
+
+    if(rainInMm < 10){ //mapping from [2.5 - 10) bzw. mäßiger Regen
+        return 500;
+    }
+
+    if(rainInMm < 50){ //mapping from [10 - 50) bzw. starker Regen
+        return 250;
+    }
+
+    if(rainInMm >= 50){ //mapping from [50 - ∞) bzw. sehr starker Regen
+        return 125;
+    }
+
+    return 5000;
 }

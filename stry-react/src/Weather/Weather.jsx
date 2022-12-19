@@ -44,7 +44,7 @@ export const Weather = () => {
                         //this block gets executed once the timer runs out:
 
                         //if there is precipitation, create ripples
-                        if (precipitationDataList && precipitationDataList[todayDate()] > 0) {
+                        if (precipitationDataList) {
                             $('body').ripples("drop", getRandomX(), getRandomY(), safeCalcSize(precipitationDataList), 1);
                         }
 
@@ -58,10 +58,14 @@ export const Weather = () => {
     )
 }
 
+//TODO: Test out rain intensities and change mapping
+//TODO: replace this value in the methods below with precipitationDataList[todayDate()] again
+let debugPrecipitation = 2;
+
 //uses isNaN check to make sure the value calculated is valid
 function safeCalcTimeout(precipitationDataList) {
     if (!isNaN(calculateTimeout(precipitationDataList[todayDate()]))) {
-        let timeout = calculateTimeout(precipitationDataList[todayDate()]);
+        let timeout = calculateTimeout(debugPrecipitation);
 
         console.log("Timeout: "+ timeout);
         return timeout;
@@ -72,7 +76,7 @@ function safeCalcTimeout(precipitationDataList) {
 
 function safeCalcSize(precipitationDataList){
     if (!isNaN(calculateSize(precipitationDataList[todayDate()]))) {
-        let size = calculateSize(precipitationDataList[todayDate()]);
+        let size = calculateSize(debugPrecipitation);
 
         console.log("Size: "+ size);
         return size;

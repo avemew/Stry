@@ -21,7 +21,9 @@ body {
   background-color: gray;
 }
 
-.jquery-ripples canvas { filter: opacity(65%); }
+.jquery-ripples canvas {
+  filter: opacity(100%);
+}
 
 #time {
   font-size: 12vw;
