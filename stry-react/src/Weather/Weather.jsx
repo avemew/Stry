@@ -8,6 +8,7 @@ import {useEffect} from "react";
 import {getWeatherData} from "../functions/weather";
 import {setBackground} from "../functions/helpers";
 import React from "react";
+import ripples from "jquery.ripples";
 
 //stores Timeout id to ensure that there's only 1 timeout waiting for execution
 let myTimeout = null;
@@ -19,6 +20,7 @@ export const Weather = () => {
         resolution: 1024,
         perturbance: 0,
         interactive: false,
+
     });
 
     const [weatherDataList, setWeatherDataList] = useState([]);
@@ -43,12 +45,12 @@ export const Weather = () => {
 
                         //if there is precipitation, create ripples
                         if (precipitationDataList && precipitationDataList[todayDate()] > 0) {
-                            $('body').ripples("drop", getRandomX(), getRandomY(), 25, 1);
+                            $('body').ripples("drop", getRandomX(), getRandomY(), safeCalcSize(precipitationDataList), 1);
                         }
 
                         //clears current timeout
                         myTimeout = null;
-                    }, calcTimeout(precipitationDataList)) //sets the time in ms the function inside waits
+                    }, safeCalcTimeout(precipitationDataList)) //sets the time in ms the function inside waits
                 }
             }
             fetchData();
@@ -56,7 +58,8 @@ export const Weather = () => {
     )
 }
 
-function calcTimeout(precipitationDataList) {
+//uses isNaN check to make sure the value calculated is valid
+function safeCalcTimeout(precipitationDataList) {
     if (!isNaN(calculateTimeout(precipitationDataList[todayDate()]))) {
         let timeout = calculateTimeout(precipitationDataList[todayDate()]);
 
@@ -64,6 +67,17 @@ function calcTimeout(precipitationDataList) {
         return timeout;
     } else {
         return 100;
+    }
+}
+
+function safeCalcSize(precipitationDataList){
+    if (!isNaN(calculateSize(precipitationDataList[todayDate()]))) {
+        let size = calculateSize(precipitationDataList[todayDate()]);
+
+        console.log("Size: "+ size);
+        return size;
+    } else {
+        return 25;
     }
 }
 
