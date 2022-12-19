@@ -3,6 +3,24 @@
   src: url(../public/aBlackLives.woff);
 }
 
+@keyframes turbulence {
+  0% {
+    filter: url("#turbulence-1");
+  }
+  25% {
+    filter: url("#turbulence-2");
+  }
+  50% {
+    filter: url("#turbulence-3");
+  }
+  75% {
+    filter: url("#turbulence-4");
+  }
+  100% {
+    filter: url("#turbulence-5");
+  }
+}
+
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -14,6 +32,7 @@
 }
 
 body {
+  animation: turbulence 0.45s infinite linear;
   margin: 0;
   padding: 0;
   min-width: 100vh;
@@ -27,5 +46,5 @@ body {
   text-align: center;
   alignment-baseline: center;
   padding-top: 40vh;
-  color: white;
+  color: rgba(255,255,255,80%);
 }
