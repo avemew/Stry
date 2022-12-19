@@ -12,7 +12,6 @@ export const Wind = () => {
        async function fetchData(){
            setWindDataList(await getWindData());
        }
-       console.log(windDataList);
        fetchData();
     },[windDataList])
 
