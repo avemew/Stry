@@ -56,7 +56,9 @@ export const Weather = () => {
                             $('body').ripples("drop", getRandomX(), getRandomY(), safeCalcSize(precipitationDataList), 1);
                             console.log("rain")
 
-                            setRainOpacity(precipitationDataList); //sets background value according to rain intensity
+                            if(!isNaN(precipitationDataList[todayDate()])){
+                                setRainOpacity(precipitationDataList); //sets background value according to rain intensity
+                            }
 
                             setLock(false);
                         }
@@ -77,7 +79,8 @@ function safeCalcTimeout(precipitationDataList) {
     if (!isNaN(calculateTimeout(precipitationDataList[todayDate()]))) {
         let timeout = calculateTimeout(precipitationDataList[todayDate()]);
 
-        //console.log("Timeout: "+ timeout);
+        console.log("Rain in mm: "+ precipitationDataList[todayDate()]);
+        console.log("Timeout: "+ timeout);
         return timeout * 0.5;
     } else {
         return 100;

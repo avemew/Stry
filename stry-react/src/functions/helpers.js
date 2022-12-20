@@ -62,13 +62,17 @@ export function setRainOpacity(precipitationDataList){
     } else if(rainInMm < 1)                            //(0-1) --> 0.222222 * x + 0.377778
     {
         myOpacity = 0.222222 * rainInMm + 0.377778;
+        myOpacity = Math.round(myOpacity * 1000) / 1000;    //rundet auf 2 dezimalstellen
     } else if(rainInMm < 25)                           //[1-25) --> 0.0166667 * x + 0.583333
     {
         myOpacity = 0.0166667 * rainInMm + 0.583333
+        myOpacity = Math.round(myOpacity * 1000) / 1000;    //rundet auf 2 dezimalstellen
     } else  if(rainInMm >= 25)                         //[25-x] --> 1
     {
         myOpacity = 1;
     }
+
+    console.log("opacity" +myOpacity)
 
     //gets current stylesheet
     let sheet = document.styleSheets[0];
