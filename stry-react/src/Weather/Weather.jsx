@@ -36,6 +36,7 @@ export const Weather = () => {
             setLock(true);
 
             async function fetchData() {
+
                 if (todayDate() !== fetchTimestamp) {
 
                     setPrecipitationDataList(await getPrecipitationData()); //awaits api data for precipitation
