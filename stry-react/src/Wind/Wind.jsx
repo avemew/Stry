@@ -3,14 +3,28 @@ import React, {useEffect, useState} from "react";
 import {getWindData} from "../functions/wind";
 import {todayDate} from "../functions/dates";
 
+let windTimeout = null;
 
 export const Wind = () => {
 
     const [windDataList, setWindDataList] = useState({});
+    const [fetchTimestamp, setFetchTimestamp] = useState("");
 
     useEffect(() => {
+
         async function fetchData() {
-            setWindDataList(await getWindData());
+            if(todayDate()!==fetchTimestamp) {
+
+                setWindDataList(await getWindData());
+                setFetchTimestamp(todayDate);
+
+            } else {
+
+                let tempWindDataList = windDataList
+                setWindDataList(null);
+                setWindDataList(tempWindDataList);
+
+            }
         }
 
         fetchData();
@@ -69,7 +83,6 @@ Orkan	            ab 118km/h      -   95
  */
 function getCurrentWind(windDataList) {
     let currentWindSpeed = windDataList[todayDate()]
-    console.log(currentWindSpeed)
 
     if(isNaN(currentWindSpeed)){ return 0; }    //NaN-Check
 

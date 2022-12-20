@@ -25,21 +25,33 @@ export const Weather = () => {
 
     const [weatherDataList, setWeatherDataList] = useState([]);
     const [precipitationDataList, setPrecipitationDataList] = useState({});
-    const [precipitationSnowDataList, setPrecipitationSnowDataList] = useState({});
 
     const [lock, setLock] = useState(false);
+    const [fetchTimestamp, setFetchTimestamp] = useState("");
 
     const date = todayDate(); //Date in format: yy-MM-DDThh:00 - string
 
     useEffect(() => {
 
-        setLock(true);
+            setLock(true);
 
             async function fetchData() {
+                if (todayDate() !== fetchTimestamp) {
 
-                setPrecipitationDataList(await getPrecipitationData()); //awaits api data for precipitation
-                setPrecipitationSnowDataList(await getPrecipitationData());
-                setWeatherDataList(await getWeatherData()); //awaits api data for temperature
+                    setPrecipitationDataList(await getPrecipitationData()); //awaits api data for precipitation
+                    setWeatherDataList(await getWeatherData()); //awaits api data for temperature
+                    setFetchTimestamp(todayDate())
+
+                } else {
+                    let tempPrecipitationDataList = precipitationDataList
+                    setPrecipitationDataList(null);
+                    setPrecipitationDataList(tempPrecipitationDataList);
+
+                    let tempWeatherDataList = weatherDataList
+                    setWeatherDataList(null);
+                    setWeatherDataList(tempWeatherDataList);
+                }
+
                 setBackground(weatherDataList); //calculated hue value and adds css rule
 
                 //if there is no function waiting for its timeout already:
@@ -53,9 +65,8 @@ export const Weather = () => {
                         if (precipitationDataList) {
                             //ripple spawning:
                             $('body').ripples("drop", getRandomX(), getRandomY(), safeCalcSize(precipitationDataList), 1);
-                            //console.log("rain")
 
-                            if(!isNaN(precipitationDataList[todayDate()])){
+                            if (!isNaN(precipitationDataList[todayDate()])) {
                                 setRainOpacity(precipitationDataList); //sets background value according to rain intensity
                             }
 
@@ -78,8 +89,6 @@ function safeCalcTimeout(precipitationDataList) {
     if (!isNaN(calculateTimeout(precipitationDataList[todayDate()]))) {
         let timeout = calculateTimeout(precipitationDataList[todayDate()]);
 
-        //console.log("Rain in mm: "+ precipitationDataList[todayDate()]);
-        //console.log("Timeout: "+ timeout);
         return timeout * 0.5;
     } else {
         return 100;
@@ -90,7 +99,6 @@ function safeCalcSize(precipitationDataList) {
     if (!isNaN(calculateSize(precipitationDataList[todayDate()]))) {
         let size = calculateSize(precipitationDataList[todayDate()]);
 
-        //console.log("Size: " + size);
         return size;
     } else {
         return 25;

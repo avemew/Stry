@@ -2,6 +2,7 @@ import './App.css';
 import Weather from './Weather/Weather';
 import {ClockDisplay} from "./ClockDisplay/ClockDisplay";
 import {Wind} from "./Wind/Wind";
+import {Snow} from "./Snow/Snow";
 
 function App() {
 
@@ -15,6 +16,7 @@ function App() {
             <Weather/>
             <Wind/>
             <ClockDisplay/>
+            <Snow/>
         </>
     );
 }
