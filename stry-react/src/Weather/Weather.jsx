@@ -25,6 +25,7 @@ export const Weather = () => {
 
     const [weatherDataList, setWeatherDataList] = useState([]);
     const [precipitationDataList, setPrecipitationDataList] = useState({});
+    const [precipitationSnowDataList, setPrecipitationSnowDataList] = useState({});
 
     const [lock, setLock] = useState(false);
 
@@ -37,8 +38,9 @@ export const Weather = () => {
             async function fetchData() {
 
                 setPrecipitationDataList(await getPrecipitationData()); //awaits api data for precipitation
+                setPrecipitationSnowDataList(await getPrecipitationData());
                 setWeatherDataList(await getWeatherData()); //awaits api data for temperature
-
+                //console.log(precipitationSnowDataList[todayDate()]);
                 setBackground(weatherDataList); //calculated hue value and adds css rule
 
                 //if there is no function waiting for its timeout already:
