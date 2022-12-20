@@ -1,4 +1,4 @@
-import {getTodayUrlRain, getTodayUrlSnow} from "./dates";
+import {getTodayUrlRain, getTodayUrlSnow, todayDate} from "./dates";
 
 //returns map of timestamp and precipitation specifically rain
 export const getPrecipitationMap = (rainlists) => {
@@ -46,4 +46,11 @@ export const getSnowData = async () => {
         .then((precipitationSnowMapData) => {
             return precipitationSnowMapData;
         })
+}
+
+function getCurrentWind(windDataList){
+    if(isNaN(windDataList[todayDate()])){
+        return 0;
+    }
+    return windDataList[todayDate()]*0.25;
 }

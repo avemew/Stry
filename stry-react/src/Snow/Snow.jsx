@@ -35,13 +35,27 @@ export const Snow = () => {
 }
 
 const mapSnowFall = (snowDataList) => {
-    let snowValue = snowDataList[todayDate()];
+    // let snowValue = snowDataList[todayDate()];
+let snowValue = 3;
+console.log(snowValue)
+    if (!isNaN(snowValue)){
 
-    if (isNaN(snowValue) || snowValue <= 0) {
-        return 0;
-    }
+    switch (true){
+
+        case snowValue ===0 :
+            return 0
+        case snowValue < 0.83:
+            return 50
+        case snowValue < 1.6:
+            return 100
+        case snowValue < 3.3:
+            return 150
+        case snowValue >= 3.3:
+            return 250
+    }}
 
     //TODO: MAPPING
-
-    return 25;
+// console.log('snowValue=')
+// console.log(snowValue)
+    return 0;
 }

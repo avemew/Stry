@@ -46,7 +46,6 @@ export const Weather = () => {
                     //reload useEffect in 250ms intervals
                     setTimeout(() =>{
                         resetList? setResetList(false):setResetList(true);
-                        console.log(resetList)
                     },250)
                 }
 
