@@ -12,7 +12,7 @@ export const Snow = () => {
 
     useEffect(() => {
             async function fetchData() {
-                if(todayDate()!==fetchTimestamp) {
+                if (todayDate() !== fetchTimestamp) {
 
                     setSnowDataList(await getSnowData());
                     setFetchTimestamp(todayDate())
@@ -35,27 +35,25 @@ export const Snow = () => {
 }
 
 const mapSnowFall = (snowDataList) => {
-    // let snowValue = snowDataList[todayDate()];
-let snowValue = 3;
-console.log(snowValue)
-    if (!isNaN(snowValue)){
+    let snowValue = snowDataList[todayDate()];
 
-    switch (true){
+    console.log(snowValue)
+    if (!isNaN(snowValue)) {
 
-        case snowValue ===0 :
-            return 0
-        case snowValue < 0.83:
-            return 50
-        case snowValue < 1.6:
-            return 100
-        case snowValue < 3.3:
-            return 150
-        case snowValue >= 3.3:
-            return 250
-    }}
+        switch (true) {
 
-    //TODO: MAPPING
-// console.log('snowValue=')
-// console.log(snowValue)
+            case snowValue === 0 :
+                return 0
+            case snowValue < 0.83:
+                return 50
+            case snowValue < 1.6:
+                return 100
+            case snowValue < 3.3:
+                return 150
+            case snowValue >= 3.3:
+                return 250
+        }
+    }
+
     return 0;
 }

@@ -47,10 +47,3 @@ export const getSnowData = async () => {
             return precipitationSnowMapData;
         })
 }
-
-function getCurrentWind(windDataList){
-    if(isNaN(windDataList[todayDate()])){
-        return 0;
-    }
-    return windDataList[todayDate()]*0.25;
-}
