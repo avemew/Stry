@@ -34,7 +34,7 @@ export const getTodayUrlWind = () => {
     let truncatedDate = todayDate().slice(0, 10); //cuts off the timestamp from todayDate
 
     //builds URL-String with BaseURL and the truncatedDate
-    return `https://api.open-meteo.com/v1/gfs?latitude=53.08&longitude=8.81&hourly=windspeed_10m&forecast_days=1&start_date=${truncatedDate}&end_date=${truncatedDate}`;
+    return `https://api.open-meteo.com/v1/gfs?latitude=53.08&longitude=8.81&hourly=windspeed_10m&forecast_days=1&start_date=${truncatedDate}&end_date=${truncatedDate}&timezone=Europe%2FBerlin`;
 }
 
 //snow data api
@@ -42,6 +42,8 @@ export const getTodayUrlSnow = () => {
     //const truncatedDateRain = todayDate().slice(0, 10); //cuts off the timestamp from todayDate
     let truncatedDate = todayDate().slice(0, 10); //cuts off the timestamp from todayDate
 
+    console.log(`https://api.open-meteo.com/v1/gfs?latitude=53.08&longitude=8.81&hourly=snowfall&forecast_days=1&start_date=${truncatedDate}&end_date=${truncatedDate}&timezone=Europe%2FBerlin`)
+
     //builds URL-String with BaseURL and the truncatedDate
-    return `https://api.open-meteo.com/v1/gfs?latitude=53.08&longitude=8.81&hourly=snowfall&forecast_days=1&start_date=${truncatedDate}&end_date=${truncatedDate}`;
+    return `https://api.open-meteo.com/v1/gfs?latitude=53.08&longitude=8.81&hourly=snowfall&forecast_days=1&start_date=${truncatedDate}&end_date=${truncatedDate}&timezone=Europe%2FBerlin`;
 }
