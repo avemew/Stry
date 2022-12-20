@@ -26,14 +26,13 @@ export const Weather = () => {
     const [weatherDataList, setWeatherDataList] = useState([]);
     const [precipitationDataList, setPrecipitationDataList] = useState({});
 
-    const [lock, setLock] = useState(false);
+    //failsafe and reload, no real data
+    const [resetList, setResetList] = useState(true);
     const [fetchTimestamp, setFetchTimestamp] = useState("");
 
     const date = todayDate(); //Date in format: yy-MM-DDThh:00 - string
 
     useEffect(() => {
-
-            setLock(true);
 
             async function fetchData() {
 
@@ -44,13 +43,11 @@ export const Weather = () => {
                     setFetchTimestamp(todayDate())
 
                 } else {
-                    let tempPrecipitationDataList = precipitationDataList
-                    setPrecipitationDataList(null);
-                    setPrecipitationDataList(tempPrecipitationDataList);
-
-                    let tempWeatherDataList = weatherDataList
-                    setWeatherDataList(null);
-                    setWeatherDataList(tempWeatherDataList);
+                    //reload useEffect in 250ms intervals
+                    setTimeout(() =>{
+                        resetList? setResetList(false):setResetList(true);
+                        console.log(resetList)
+                    },250)
                 }
 
                 setBackground(weatherDataList); //calculated hue value and adds css rule
@@ -70,8 +67,6 @@ export const Weather = () => {
                             if (!isNaN(precipitationDataList[todayDate()])) {
                                 setRainOpacity(precipitationDataList); //sets background value according to rain intensity
                             }
-
-                            setLock(false);
                         }
 
                         //clears current timeout
@@ -81,7 +76,7 @@ export const Weather = () => {
             }
 
             fetchData();
-        }, [precipitationDataList]
+        }, [precipitationDataList, resetList]
     )
 }
 
