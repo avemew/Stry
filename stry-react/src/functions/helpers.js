@@ -72,7 +72,7 @@ export function setRainOpacity(precipitationDataList){
         myOpacity = 1;
     }
 
-    console.log("opacity" +myOpacity)
+    //console.log("opacity" +myOpacity)
 
     //gets current stylesheet
     let sheet = document.styleSheets[0];

@@ -5,6 +5,11 @@ import {Wind} from "./Wind/Wind";
 
 function App() {
 
+    //setup page reload every 10 minutes
+    setTimeout(() => {
+        document.location.reload();
+    }, 600000);
+
     return (
         <>
             <Weather/>

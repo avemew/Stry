@@ -40,7 +40,6 @@ export const Weather = () => {
                 setPrecipitationDataList(await getPrecipitationData()); //awaits api data for precipitation
                 setPrecipitationSnowDataList(await getPrecipitationData());
                 setWeatherDataList(await getWeatherData()); //awaits api data for temperature
-                //console.log(precipitationSnowDataList[todayDate()]);
                 setBackground(weatherDataList); //calculated hue value and adds css rule
 
                 //if there is no function waiting for its timeout already:
@@ -54,7 +53,7 @@ export const Weather = () => {
                         if (precipitationDataList) {
                             //ripple spawning:
                             $('body').ripples("drop", getRandomX(), getRandomY(), safeCalcSize(precipitationDataList), 1);
-                            console.log("rain")
+                            //console.log("rain")
 
                             if(!isNaN(precipitationDataList[todayDate()])){
                                 setRainOpacity(precipitationDataList); //sets background value according to rain intensity
@@ -79,8 +78,8 @@ function safeCalcTimeout(precipitationDataList) {
     if (!isNaN(calculateTimeout(precipitationDataList[todayDate()]))) {
         let timeout = calculateTimeout(precipitationDataList[todayDate()]);
 
-        console.log("Rain in mm: "+ precipitationDataList[todayDate()]);
-        console.log("Timeout: "+ timeout);
+        //console.log("Rain in mm: "+ precipitationDataList[todayDate()]);
+        //console.log("Timeout: "+ timeout);
         return timeout * 0.5;
     } else {
         return 100;
