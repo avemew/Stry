@@ -6,7 +6,7 @@ import {getPrecipitationData} from "../functions/precipitation";
 import {todayDate} from "../functions/dates";
 import {useEffect} from "react";
 import {getWeatherData} from "../functions/weather";
-import {setBackground} from "../functions/helpers";
+import {setBackground, setRainOpacity} from "../functions/helpers";
 import React from "react";
 import ripples from "jquery.ripples";
 
@@ -48,10 +48,14 @@ export const Weather = () => {
                         //this block gets executed once the timer runs out:
 
                         //if there is precipitation, create ripples
-                        //TODO: Check if multiple ripples are cause by use effect
+                        //TODO: Check if multiple ripples are caused by use effect
                         if (precipitationDataList) {
+                            //ripple spawning:
                             $('body').ripples("drop", getRandomX(), getRandomY(), safeCalcSize(precipitationDataList), 1);
                             console.log("rain")
+
+                            setRainOpacity(precipitationDataList); //sets background value according to rain intensity
+
                             setLock(false);
                         }
 
@@ -66,14 +70,10 @@ export const Weather = () => {
     )
 }
 
-//TODO: Test out rain intensities and change mapping
-//TODO: replace this value in the methods below with precipitationDataList[todayDate()] again
-let debugPrecipitation = 2.4;
-
 //uses isNaN check to make sure the value calculated is valid
 function safeCalcTimeout(precipitationDataList) {
     if (!isNaN(calculateTimeout(precipitationDataList[todayDate()]))) {
-        let timeout = calculateTimeout(debugPrecipitation);
+        let timeout = calculateTimeout(precipitationDataList[todayDate()]);
 
         //console.log("Timeout: "+ timeout);
         return timeout * 0.5;
@@ -84,7 +84,7 @@ function safeCalcTimeout(precipitationDataList) {
 
 function safeCalcSize(precipitationDataList) {
     if (!isNaN(calculateSize(precipitationDataList[todayDate()]))) {
-        let size = calculateSize(debugPrecipitation);
+        let size = calculateSize(precipitationDataList[todayDate()]);
 
         //console.log("Size: " + size);
         return size;

@@ -5,7 +5,7 @@ source for categories: https://www.merkur.de/welt/niederschlag-wetter-arten-meng
 
 leichter Sprühregen:  < 0,1 mm
 mäßiger Sprühregen:   ≥ 0,1 mm
-starker Sprühregen:   ≥ 0,5 mm -todo
+starker Sprühregen:   ≥ 0,5 mm
 leichter Regen:       < 2,5 mm
 mäßiger Regen:        ≥ 2,5 mm - < 10,0 mm
 starker Regen:        ≥ 10,0 mm
@@ -21,42 +21,16 @@ export const calculateSize = (rainInMm) => {
 }
 
 //calculates timout in ms according to precipitation in mm
-//TODO: AFTER debug testing --> implement linear mapping inside the if-statements
+//see: https://www.wolframalpha.com/input?i2d=true&i=interpolating+polynomial+%7B0.1%2C1500%7D%5C%2844%29%7B50%2C250%7D
 export const calculateTimeout = (rainInMm) => {
 
-    if (rainInMm < 0.1) { //mapping from [0 - 0.1) bzw. leichter Sprühregen
-        return 50;
-    }
+    /*
+    function with set values:
+    0.1 = 1500
+    50  = 250
+     */
+    let timeout = 1502.51 - 25.0501 * rainInMm;
 
-    if (rainInMm < 0.5) { //mapping from [0.1 - 0.5) bzw. mäßiger Sprühregen
-        return Math.round(875 * rainInMm - 37.5);
-    }
-
-    if (rainInMm < 1.0) { //mapping from [0.5 - 1.0) bzw. starker Sprühregen
-        return Math.round(100 * rainInMm + 350);
-    }
-
-    if (rainInMm < 2.5) { //mapping from [1.0 - 2.5) bzw. leichter Regen
-        return Math.round(470 - 20 * rainInMm);
-    }
-
-    if (rainInMm < 10) { //mapping from [2.5 - 10) bzw. mäßiger Regen
-        return Math.round(436.667 - 6.66667 * rainInMm);
-    }
-
-    if (rainInMm < 50) { //mapping from [10 - 50) bzw. starker Regen
-        return Math.round( (775 / 2) - ((7 * rainInMm) / 4));
-    }
-
-    if (rainInMm >= 50) { //mapping from [50 - ∞) bzw. sehr starker Regen
-        let returnValue = Math.round(660 - ((36 * rainInMm)/5));
-
-        if(returnValue < 120){
-            return 120;
-        }
-
-        return returnValue;
-    }
-
-    return 5000;
+    //safecheck for timeout < 250, prevents too small & negative values
+    return timeout < 250? 250 : timeout;
 }

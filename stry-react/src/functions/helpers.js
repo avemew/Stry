@@ -46,3 +46,39 @@ export const setBackground = (weatherDataList) => {
         sheet.addRule("body", "background: " + myColor + " !important;", 0);
     }
 }
+
+
+//sets background value according to rain intensity by inserting css rule
+//see: https://www.wolframalpha.com/input?i2d=true&i=interpolating+polynomial+%7B0.1%2C0.4%7D%5C%2844%29%7B50%2C1%7D
+export function setRainOpacity(precipitationDataList){
+
+    let rainInMm = precipitationDataList[todayDate()];
+
+    let myOpacity = 0;
+
+    if(rainInMm <= 0)                                  //0 and negative --> o opacity
+    {
+        myOpacity = 0;
+    } else if(rainInMm < 1)                            //(0-1) --> 0.222222 * x + 0.377778
+    {
+        myOpacity = 0.222222 * rainInMm + 0.377778;
+    } else if(rainInMm < 25)                           //[1-25) --> 0.0166667 * x + 0.583333
+    {
+        myOpacity = 0.0166667 * rainInMm + 0.583333
+    } else  if(rainInMm >= 25)                         //[25-x] --> 1
+    {
+        myOpacity = 1;
+    }
+
+    //gets current stylesheet
+    let sheet = document.styleSheets[0];
+
+    //css version support checks
+    //--> dynamically adds css rule
+    if("insertRule" in sheet) {
+        sheet.insertRule(".jquery-ripples canvas { filter: " + "opacity(" + myOpacity +") !important; }", 0);
+    }
+    else if("addRule" in sheet) {
+        sheet.addRule(".jquery-ripples canvas", "filter: " + "opacity(" + myOpacity +") !important;", 0);
+    }
+}
