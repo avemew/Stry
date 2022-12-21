@@ -16,14 +16,15 @@
     },
 
     created() {
-      this.getWeatherData()
       this.setBackground()
       this.getPrecipitationData()
+      this.getTempData()
     },
 
     mounted: function () {
+      const date = this.todayDate();
       window.setInterval(() => {
-        if(this.precipitationDataList["2022-12-05T22:00"] > 0){ // this.todayDate()
+        if(this.precipitationDataList[date] > 0){ // this.todayDate()
           $('body').ripples("drop", this.getRandomX(), this.getRandomY(), this.calculateSize(this.rainAverageValue()+5), 1);
         }
       }, this.calculateTimeout(1))
@@ -47,31 +48,7 @@
         return Math.round((-6.68687 * Math.pow(rainInMm, 3) + 19.0424 * Math.pow(rainInMm, 2) + 488.163 * rainInMm + 1) / 3); //see https://www.wolframalpha.com/input?i2d=true&i=interpolating+polynomial+%7B0%2C1%7D%5C%2844%29%7B0.1%2C50%7D%5C%2844%29%7B2%2C1000%7D%5C%2844%29%7B10%2C100%7D
       },
       //Returns API Url for the current day
-      getTodaysUrl() {
-        let truncatedDate = this.todayDate().slice(0, 10); //cuts off the timestamp from todayDate
-        //builds URL-String with BaseURL and the truncatedDate
-        return 'https://api.open-meteo.com/v1/forecast?latitude=53.08&longitude=8.81&hourly=apparent_temperature&start_date=' + truncatedDate + '&end_date=' + truncatedDate;
-      },
-      getWeatherData() {
-        //fetches WeatherData from today's URL and stores it in weatherDataList
-        fetch(this.getTodaysUrl())
-            .then(response => (response.json()))
-            .then(data => (data["hourly"]))
-            .then(data => this.getWeatherMap(data))
-            .then(data => (this.weatherDataList = data));
-      },
-      getWeatherMap(timeWeatherLists) {
-        const timesArray = Array.from(timeWeatherLists["time"])
-        const tempArray = Array.from(timeWeatherLists["apparent_temperature"])
 
-        return timesArray.reduce((previousValue, currentValue, currentIndex) => {
-          return Object.assign(previousValue, {[currentValue]: tempArray.at(currentIndex)})
-        }, {})
-      },
-      showWeatherByDate(date) {
-        //used to display the weatherDataList on the Website
-        return this.weatherDataList[date]
-      },
 
       //returns the current date+hour
       todayDate() {
@@ -80,24 +57,7 @@
       },
 
       //calculates average Value of the weatherDataList
-      tempAverageValue() {
-        let sum = 0;
-        let count = 0;
 
-        //sum up all values, increment count every item
-        for (const item in this.weatherDataList) {
-          sum += this.weatherDataList[item];
-          ++count;
-        }
-        sum /= count; //average
-
-        //protection for empty list case
-        if (isNaN(sum)) {
-          return 0;
-        }
-
-        return sum;
-      },
 
       //maps given value to color in hue spectrum
       polynomialInterpolationRemap(value) {
@@ -128,15 +88,39 @@
 
       setBackground() {
         //hue - color value; Color from Average Temp gets calculated via polynomialInterpolationRemap
-        let hue = this.polynomialInterpolationRemap(this.tempAverageValue());
+        let hue = this.polynomialInterpolationRemap(this.weatherDataList[this.todayDate()]);
         //color the background square with the given hue
         context.fillStyle = 'hsl(' + [hue, '100%', '50%'] + ')';
         context.fillRect(0, 0, canvas.width, canvas.height);
       },
+
+      //Temperature Data
+      getTodaysUrlTemp() {
+        //this URL provides data within a day of the current day already and thus does not require further formatting
+        return `https://api.open-meteo.com/v1/gfs?latitude=53.08&longitude=8.81&hourly=temperature_2m&forecast_days=1&timezone=Europe%2FBerlin`;
+      },
+      getTempData() {
+        //fetches WeatherData from today's URL and stores it in weatherDataList
+        fetch(this.getTodaysUrlTemp())
+            .then(response => response.json())
+            .then(apiData => apiData["hourly"])
+            .then(apiDataHourly => this.getTempMap(apiDataHourly))
+            .then((temperatureMapData) => {
+              console.log(temperatureMapData)
+              this.weatherDataList = temperatureMapData
+            })
+      },
+      getTempMap(timeWeatherLists) {
+        const timesArray = Array.from(timeWeatherLists["time"])
+        const tempArray = Array.from(timeWeatherLists["temperature_2m"])
+
+        return timesArray.reduce((previousValue, currentValue, currentIndex) => {
+          return Object.assign(previousValue, {[currentValue]: tempArray.at(currentIndex)})
+        }, {})
+      },
       //Rain Data
       getTodayUrlRain() {
-        const truncatedDateRain = this.todayDate().slice(0, 10); //cuts off the timestamp from todayDate
-        const date = "2022-12-05"
+        const date = this.todayDate().slice(0, 10);
         //builds URL-String with BaseURL and the truncatedDate
         return `https://api.open-meteo.com/v1/gfs?latitude=53.08&longitude=8.81&hourly=precipitation&forecast_days=1&start_date=${date}&end_date=${date}&timezone=Europe%2FBerlin`;
       },
@@ -157,31 +141,14 @@
             .then((precipitationMapData) => {
               console.log(precipitationMapData)
               this.precipitationDataList = precipitationMapData
-            })  
-      },
-      rainAverageValue() {
-        let sum = 0;
-        let count = 0;
-
-        //sum up all values, increment count every item
-        for (const item in this.precipitationDataList) {
-          sum += this.precipitationDataList[item];
-          ++count;
-        }
-        sum /= count; //average
-
-        //protection for empty list case
-        if (isNaN(sum)) {
-          return 0;
-        }
-        return sum;
+            })
       },
     },
   };
 </script>
 <template>
   <header>
-    <h1>Average Value: {{ tempAverageValue() }}</h1>
+    <h1>Average Value: {{}}</h1>
 <!--    <h1>Average Value: {{ rainAverageValue() }}</h1>-->
 
   </header>
