@@ -84,6 +84,8 @@ Orkan	            ab 118km/h      -   95
 function getCurrentWind(windDataList) {
     let currentWindSpeed = windDataList[todayDate()]
 
+    //TODO Debug wind here
+
     if(isNaN(currentWindSpeed)){ return 0; }    //NaN-Check
 
     if (currentWindSpeed <= 5) { return 0; }    //Windstille & leiser Zug

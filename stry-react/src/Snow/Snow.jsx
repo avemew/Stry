@@ -37,6 +37,8 @@ export const Snow = () => {
 const mapSnowFall = (snowDataList) => {
     let snowValue = snowDataList[todayDate()];
 
+    //TODO Debug snow here
+
     console.log(snowValue)
     if (!isNaN(snowValue)) {
 
