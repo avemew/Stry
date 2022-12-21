@@ -10,6 +10,8 @@ export const Snow = () => {
     const [snowDataList, setSnowDataList] = useState({});
     const [fetchTimestamp, setFetchTimestamp] = useState("");
 
+    const [resetList, setResetList] = useState(true);
+
     useEffect(() => {
             async function fetchData() {
                 if (todayDate() !== fetchTimestamp) {
@@ -18,9 +20,12 @@ export const Snow = () => {
                     setFetchTimestamp(todayDate())
 
                 } else {
-                    let tempSnowDataList = snowDataList
-                    setSnowDataList(null);
-                    setSnowDataList(tempSnowDataList);
+
+                    //reload useEffect in 250ms intervals
+                    setTimeout(() =>{
+                        resetList? setResetList(false):setResetList(true);
+                    },250)
+
                 }
 
             }
@@ -40,6 +45,7 @@ const mapSnowFall = (snowDataList) => {
     //TODO Debug snow here
 
     console.log(snowValue)
+
     if (!isNaN(snowValue)) {
 
         switch (true) {
