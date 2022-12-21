@@ -10,6 +10,8 @@ export const Wind = () => {
     const [windDataList, setWindDataList] = useState({});
     const [fetchTimestamp, setFetchTimestamp] = useState("");
 
+    const [resetList, setResetList] = useState(true);
+
     useEffect(() => {
 
         async function fetchData() {
@@ -20,9 +22,10 @@ export const Wind = () => {
 
             } else {
 
-                let tempWindDataList = windDataList
-                setWindDataList(null);
-                setWindDataList(tempWindDataList);
+                //reload useEffect in 250ms intervals
+                setTimeout(() =>{
+                    resetList? setResetList(false):setResetList(true);
+                },250)
 
             }
         }
