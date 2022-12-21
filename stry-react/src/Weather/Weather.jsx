@@ -13,6 +13,11 @@ import ripples from "jquery.ripples";
 //stores Timeout id to ensure that there's only 1 timeout waiting for execution
 let myTimeout = null;
 
+export let debugRainInMm   = 0; //wertebereich: 0.1-50+      mapping: /functions/calculate.js:6
+export let debugSnowInCm   = 0; //wertebereich: 0.1-3.3+     mapping: /Snow/Snow.jsx:44
+export let debugTemperature= 0; //wertebereich: -10-45+      mapping: /functions/helpers.js:6
+export let debugWindInKmh  = 0; //wertebereich:  6-118       mapping: /Wind/Wind.jsx:70
+
 export const Weather = () => {
 
     //RIPPLE SETTINGS
@@ -59,7 +64,7 @@ export const Weather = () => {
 
                         //if there is precipitation, create ripples
                         //TODO: Check if multiple ripples are caused by use effect
-                        if (precipitationDataList) {
+                        if (precipitationDataList && debugRainInMm>0) {
                             //ripple spawning:
                             $('body').ripples("drop", getRandomX(), getRandomY(), safeCalcSize(precipitationDataList), 1);
 
@@ -81,18 +86,18 @@ export const Weather = () => {
 
 //uses isNaN check to make sure the value calculated is valid
 function safeCalcTimeout(precipitationDataList) {
-    if (!isNaN(calculateTimeout(precipitationDataList[todayDate()]))) {
-        let timeout = calculateTimeout(precipitationDataList[todayDate()]);
+    if (!isNaN(calculateTimeout(debugRainInMm))) {
+        let timeout = calculateTimeout(debugRainInMm);
 
-        return timeout * 0.5;
+        return timeout * 0.25;
     } else {
         return 100;
     }
 }
 
 function safeCalcSize(precipitationDataList) {
-    if (!isNaN(calculateSize(precipitationDataList[todayDate()]))) {
-        let size = calculateSize(precipitationDataList[todayDate()]);
+    if (!isNaN(calculateSize(debugRainInMm))) {
+        let size = calculateSize(debugRainInMm);
 
         return size;
     } else {

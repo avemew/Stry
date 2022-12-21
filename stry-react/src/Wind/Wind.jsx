@@ -1,4 +1,4 @@
-import {currentWindSpeed} from "../Weather/Weather";
+import {currentWindSpeed, debugWindInKmh} from "../Weather/Weather";
 import React, {useEffect, useState} from "react";
 import {getWindData} from "../functions/wind";
 import {todayDate} from "../functions/dates";
@@ -85,7 +85,7 @@ orkanartiger Sturm	103 - 117km/h   -   85
 Orkan	            ab 118km/h      -   95
  */
 function getCurrentWind(windDataList) {
-    let currentWindSpeed = windDataList[todayDate()]
+    let currentWindSpeed = debugWindInKmh
 
     //TODO Debug wind here
 

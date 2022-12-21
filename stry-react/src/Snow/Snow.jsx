@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom'
 import Snowfall from 'react-snowfall'
 import {getSnowData} from "../functions/precipitation";
 import {todayDate} from "../functions/dates";
+import {debugSnowInCm} from "../Weather/Weather";
 
 export const Snow = () => {
 
@@ -39,8 +40,16 @@ export const Snow = () => {
     )
 }
 
+/*
+Quelle: https://www.dwd.de/DE/wetter/warnungen_aktuell/kriterien/warnkriterien.html
+
+leichter Schneefall: (0, 0.83]
+Schneefall: (0.83, 1.6]
+starker Schneefall: (1.6, 3.3]
+extremer Schneefall: (3.3, infinite]
+ */
 const mapSnowFall = (snowDataList) => {
-    let snowValue = snowDataList[todayDate()];
+    let snowValue = debugSnowInCm;
 
     //TODO Debug snow here
 

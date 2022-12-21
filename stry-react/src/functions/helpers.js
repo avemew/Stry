@@ -1,5 +1,6 @@
 //maps given value to color in hue spectrum
 import {todayDate} from "./dates";
+import {debugTemperature} from "../Weather/Weather";
 
 export const polynomialInterpolationRemap = (value) => {
     //calculated via https://www.wolframalpha.com/input?key=&i=interpolating+polynomial+%7B-10%2C240%7D%2C%7B15%2C100%7D%2C%7B30%2C20%7D%2C%7B40%2C0%7D
@@ -29,7 +30,7 @@ export const polynomialInterpolationRemap = (value) => {
 
 export const setBackground = (weatherDataList) => {
     //hue - color value - Color from Average Temp gets calculated via polynomialInterpolationRemap
-    let hue = polynomialInterpolationRemap(weatherDataList[todayDate()]);   //TODO Debug temp here
+    let hue = polynomialInterpolationRemap(debugTemperature);   //TODO Debug temp here
 
     //color the background square with the given hue
     let myColor = 'hsl(' + [hue, '100%', '40%'] + ')';
