@@ -1,4 +1,4 @@
-import {todayDate} from "./dates";
+import {todayDate} from "./bremen-dates";
 
 /*
 source for categories: https://www.merkur.de/welt/niederschlag-wetter-arten-menge-messen-definition-vorhersage-90162102.html#:~:text=leichter%20Regen%3A%20<%202%2C5,Regen%3A%20≥%2050%2C0%20mm

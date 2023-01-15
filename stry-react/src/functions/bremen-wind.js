@@ -1,6 +1,7 @@
-import {getTodayUrlWind} from "./dates";
+import {getTodayUrlWind} from "./bremen-dates";
 
-//returns map of timestamp and apparent_temperature
+//mapping timestamp and wind speed from the API
+
 export const getWindMap = (windLists) => {
 
     const timesArray = Array.from(windLists["time"]) //reads the api array of timestamps and creates an array

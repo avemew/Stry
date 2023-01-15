@@ -1,7 +1,7 @@
 import {currentWindSpeed} from "../Weather/Weather";
 import React, {useEffect, useState} from "react";
-import {getWindData} from "../functions/wind";
-import {todayDate} from "../functions/dates";
+import {getWindData} from "../functions/bremen-wind";
+import {todayDate} from "../functions/times";
 
 let windTimeout = null;
 

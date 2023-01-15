@@ -2,8 +2,8 @@ import styles from "./Snow.component.css"
 import React, {useEffect, useState} from 'react'
 import ReactDOM from 'react-dom'
 import Snowfall from 'react-snowfall'
-import {getSnowData} from "../functions/precipitation";
-import {todayDate} from "../functions/dates";
+import {getSnowData} from "../functions/bremen-precipitation";
+import {todayDate} from "../functions/times";
 
 export const Snow = () => {
 

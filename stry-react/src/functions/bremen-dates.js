@@ -1,17 +1,7 @@
-import moment from "moment";
+import {todayDate} from "./times";
+import {getTimeStamp} from "./times";
 
-//returns date in format: yy-MM-DDThh:00
-export const todayDate = () => {
-    const now = moment()
-
-    return now.format("yy-MM-DDTHH:00")
-}
-
-export function getTimeStamp() {
-    return moment().format("HH:mm");
-}
-
-//constructs URL from base string and todays date
+//constructs URL Bremen from base string and todays date
 export const getTodaysUrl = () => {
     let truncatedDate = todayDate().slice(0, 10); //cuts off the timestamp from todayDate
 

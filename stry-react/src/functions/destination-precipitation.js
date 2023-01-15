@@ -1,7 +1,8 @@
-import {getTodayUrlRain, getTodayUrlSnow, todayDate} from "./dates";
+import {getTodayUrlRainDestination, getTodayUrlSnowDestination} from "./destination-dates";
+import {todayDate} from "./times";
 
 //returns map of timestamp and precipitation specifically rain
-export const getPrecipitationMap = (rainlists) => {
+export const getPrecipitationMapDestination = (rainlists) => {
 
     const timesArray = Array.from(rainlists["time"]) //reads the api array of timestamps and creates an array
     const rainArray = Array.from(rainlists["precipitation"]) //reads the api array of precipitation in mms and creates an array
@@ -12,12 +13,12 @@ export const getPrecipitationMap = (rainlists) => {
     }, {});
 }
 
-export const getPrecipitationData = async () => {
-    //fetches WeatherData from today's URL and stores it in weatherDataList 
-    return fetch(getTodayUrlRain())
+export const getPrecipitationDataDestination = async () => {
+    //fetches WeatherData from today's URL and stores it in weatherDataList
+    return fetch(getTodayUrlRainDestination())
         .then(response => response.json())
         .then(apiData => apiData["hourly"])
-        .then(apiDataHourly => getPrecipitationMap(apiDataHourly))
+        .then(apiDataHourly => getPrecipitationMapDestination(apiDataHourly))
         .then((precipitationMapData) => {
             return precipitationMapData;
         })
@@ -26,7 +27,7 @@ export const getPrecipitationData = async () => {
 
 
 //returns map of timestamp and precipitation specifically Snow
-export const getSnowMap = (snowlists) => {
+export const getSnowMapDestination = (snowlists) => {
 
     const timesArray = Array.from(snowlists["time"]) //reads the api array of timestamps and creates an array
     const rainArray = Array.from(snowlists["snowfall"]) //reads the api array of precipitation in mms and creates an array
@@ -37,13 +38,14 @@ export const getSnowMap = (snowlists) => {
     }, {});
 }
 
-export const getSnowData = async () => {
+export const getSnowDataDestination = async () => {
     //fetches WeatherData from today's URL and stores it in weatherDataList
-    return fetch(getTodayUrlSnow())
+    return fetch(getTodayUrlSnowDestination())
         .then(response => response.json())
         .then(apiData => apiData["hourly"])
-        .then(apiDataHourly => getSnowMap(apiDataHourly))
+        .then(apiDataHourly => getSnowMapDestination(apiDataHourly))
         .then((precipitationSnowMapData) => {
             return precipitationSnowMapData;
         })
 }
+
