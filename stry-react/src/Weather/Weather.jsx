@@ -13,6 +13,8 @@ import rightPage from "../RightPage";
 import leftPage from "../LeftPage";
 
 //stores Timeout id to ensure that there's only 1 timeout waiting for execution
+let myTimeout = null;
+
 export const Weather = () => {
 
 
