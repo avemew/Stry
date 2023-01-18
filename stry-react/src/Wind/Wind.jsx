@@ -37,28 +37,54 @@ export const Wind = () => {
         <div>
 
         <svg>
-
-            <filter id="turbulence-1">
+            {/*right*/}
+            <filter id="turbulence-right-1">
                 <feTurbulence type="fractalNoise" baseFrequency="0.001" numOctaves="1" data-filterid="3"/>
                 <feDisplacementMap xChannelSelector="R" yChannelSelector="G" in="SourceGraphic" scale={getCurrentWind(windDataList)}/>
             </filter>
 
-            <filter id="turbulence-2">
+            <filter id="turbulence-right-2">
                 <feTurbulence type="fractalNoise" baseFrequency="0.0015" numOctaves="1" data-filterid="3"/>
                 <feDisplacementMap xChannelSelector="R" yChannelSelector="G" in="SourceGraphic" scale={getCurrentWind(windDataList)}/>
             </filter>
 
-            <filter id="turbulence-3">
+            <filter id="turbulence-right-3">
                 <feTurbulence type="fractalNoise" baseFrequency="0.002" numOctaves="1" data-filterid="3"/>
                 <feDisplacementMap xChannelSelector="R" yChannelSelector="G" in="SourceGraphic" scale={getCurrentWind(windDataList)}/>
             </filter>
 
-            <filter id="turbulence-4">
+            <filter id="turbulence-right-4">
                 <feTurbulence type="fractalNoise" baseFrequency="0.0025" numOctaves="1" data-filterid="3"/>
                 <feDisplacementMap xChannelSelector="R" yChannelSelector="G" in="SourceGraphic" scale={getCurrentWind(windDataList)}/>
             </filter>
 
-            <filter id="turbulence-5">
+            <filter id="turbulence-right-5">
+                <feTurbulence type="fractalNoise" baseFrequency="0.003" numOctaves="1" data-filterid="3"/>
+                <feDisplacementMap xChannelSelector="R" yChannelSelector="G" in="SourceGraphic" scale={getCurrentWind(windDataList)}/>
+            </filter>
+
+        {/*left*/}
+            <filter id="turbulence-left-1">
+                <feTurbulence type="fractalNoise" baseFrequency="0.001" numOctaves="1" data-filterid="3"/>
+                <feDisplacementMap xChannelSelector="R" yChannelSelector="G" in="SourceGraphic" scale={getCurrentWind(windDataList)}/>
+            </filter>
+
+            <filter id="turbulence-left-2">
+                <feTurbulence type="fractalNoise" baseFrequency="0.0015" numOctaves="1" data-filterid="3"/>
+                <feDisplacementMap xChannelSelector="R" yChannelSelector="G" in="SourceGraphic" scale={getCurrentWind(windDataList)}/>
+            </filter>
+
+            <filter id="turbulence-left-3">
+                <feTurbulence type="fractalNoise" baseFrequency="0.002" numOctaves="1" data-filterid="3"/>
+                <feDisplacementMap xChannelSelector="R" yChannelSelector="G" in="SourceGraphic" scale={getCurrentWind(windDataList)}/>
+            </filter>
+
+            <filter id="turbulence-left-4">
+                <feTurbulence type="fractalNoise" baseFrequency="0.0025" numOctaves="1" data-filterid="3"/>
+                <feDisplacementMap xChannelSelector="R" yChannelSelector="G" in="SourceGraphic" scale={getCurrentWind(windDataList)}/>
+            </filter>
+
+            <filter id="turbulence-left-5">
                 <feTurbulence type="fractalNoise" baseFrequency="0.003" numOctaves="1" data-filterid="3"/>
                 <feDisplacementMap xChannelSelector="R" yChannelSelector="G" in="SourceGraphic" scale={getCurrentWind(windDataList)}/>
             </filter>

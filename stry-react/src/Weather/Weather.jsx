@@ -9,20 +9,22 @@ import {getWeatherData} from "../functions/bremen-weather";
 import {setBackground, setRainOpacity} from "../functions/helpers";
 import React from "react";
 import ripples from "jquery.ripples";
+import rightPage from "../RightPage";
+import leftPage from "../LeftPage";
 
 //stores Timeout id to ensure that there's only 1 timeout waiting for execution
-let myTimeout = null;
-
 export const Weather = () => {
 
 
     //RIPPLE SETTINGS
-    $("container").ripples({
+
+    $('div').ripples({
         resolution: 1024,
         perturbance: 0,
         interactive: false,
 
     });
+
 
     const [weatherDataList, setWeatherDataList] = useState([]);
     const [precipitationDataList, setPrecipitationDataList] = useState({});
@@ -63,7 +65,7 @@ export const Weather = () => {
                         if (precipitationDataList) {
                             //ripple spawning:
                             // console.log("its raining")
-                            $('container').ripples("drop", getRandomX(), getRandomY(), safeCalcSize(precipitationDataList), 1);
+                            $('div').ripples("drop", getRandomX(), getRandomY(), safeCalcSize(precipitationDataList), 1);
 
                             if (!isNaN(precipitationDataList[todayDate()])) {
                                 setRainOpacity(precipitationDataList); //sets background value according to rain intensity

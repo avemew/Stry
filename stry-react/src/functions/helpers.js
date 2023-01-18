@@ -38,16 +38,21 @@ export const setBackground = (weatherDataList) => {
 
     //gets current stylesheet
 
-    let sheet = document.getElementsByClassName('right')
+    // let sheet = document.styleSheets[0]
 
+    let rightColor = document.getElementById('right')
+    rightColor.style.backgroundColor = myColor
+
+    let leftColor = document.getElementById('left')
+    leftColor.style.backgroundColor = myColor
     //css version support checks
     //--> dynamically adds css rule
-    if("insertRule" in sheet) {
-        sheet.insertRule("body { background: " + myColor + " !important; }", 0);
-    }
-    else if("addRule" in sheet) {
-        sheet.addRule("body", "background: " + myColor + " !important;", 0);
-    }
+    // if("insertRule" in sheet) {
+    //     sheet.insertRule("body { background: " + myColor + " !important; }", 0);
+    // }
+    // else if("addRule" in sheet) {
+    //     sheet.addRule("body", "background: " + myColor + " !important;", 0);
+    // }
 }
 
 
@@ -79,6 +84,7 @@ export function setRainOpacity(precipitationDataList){
 
     //gets current stylesheet
     let sheet = document.styleSheets[0];
+    let rightPage = document.getElementById('right')
 
     //css version support checks
     //--> dynamically adds css rule

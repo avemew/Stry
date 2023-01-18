@@ -4,21 +4,39 @@
 }
 
 @keyframes squigglevision {
+  /*right*/
   0% {
-    filter: url("#turbulence-1");
+    filter: url("#turbulence-right-1");
   }
   25% {
-    filter: url("#turbulence-2");
+    filter: url("#turbulence-right-2");
   }
   50% {
-    filter: url("#turbulence-3");
+    filter: url("#turbulence-right-3");
   }
   75% {
-    filter: url("#turbulence-4");
+    filter: url("#turbulence-right-4");
   }
   100% {
-    filter: url("#turbulence-5");
+    filter: url("#turbulence-right-5");
+  /*  left*/
+
+  }0% {
+    filter: url("#turbulence-left-1");
   }
+  25% {
+    filter: url("#turbulence-left-2");
+  }
+  50% {
+    filter: url("#turbulence-left-3");
+  }
+  75% {
+    filter: url("#turbulence-left-4");
+  }
+  100% {
+    filter: url("#turbulence-left-5");
+  }
+
 }
 
 #app {
@@ -30,15 +48,19 @@
   padding: 0;
   background: transparent;
 }
+
 .right {
   float: right;
-  width: 300px;
+  width: 500px;
+  height : 800px;
   border: 3px solid #73AD21;
+  animation: squigglevision 0.4s infinite alternate;
   padding: 10px;
 }
 .left {
   float: left;
-  width: 300px;
+  width: 500px;
+  height : 800px;
   border: 3px solid #73AD21;
   padding: 10px;
 }
@@ -47,7 +69,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  animation: squigglevision 0.4s infinite alternate;
+
   margin: 0;
   padding: 0;
   min-width: 512px;

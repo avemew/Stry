@@ -5,20 +5,20 @@ import {Wind} from "./Wind/Wind";
 import {Snow} from "./Snow/Snow";
 
 
-
-
 function RightPage() {
 
     return (
 
-       <div className={'right'}>
-        <Weather/>
-        <Wind/>
-        <ClockDisplay/>
-           <div >
-        <Snow/>
-           </div>
-        </div>
+
+            <div id={'right'} className={'right'}>
+                <Weather/>
+                <Wind/>
+                <ClockDisplay/>
+                <div>
+                    <Snow/>
+                </div>
+            </div>
+
     );
 }
 

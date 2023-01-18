@@ -12,9 +12,12 @@ function LeftPage() {
     return (
 
 
-       <div className={'left'}>
+        <div id={'left'} className={'left'}>
 
-          this is left page
+            <Weather/>
+            <Wind/>
+            <ClockDisplay/>
+
         </div>
     );
 }
