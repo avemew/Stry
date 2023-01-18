@@ -30,6 +30,18 @@
   padding: 0;
   background: transparent;
 }
+.right {
+  float: right;
+  width: 300px;
+  border: 3px solid #73AD21;
+  padding: 10px;
+}
+.left {
+  float: left;
+  width: 300px;
+  border: 3px solid #73AD21;
+  padding: 10px;
+}
 
 body {
   display: flex;
@@ -38,7 +50,7 @@ body {
   animation: squigglevision 0.4s infinite alternate;
   margin: 0;
   padding: 0;
-  min-width: 100vw;
+  min-width: 512px;
   min-height: 100vh;
   background-color: gray;
 }

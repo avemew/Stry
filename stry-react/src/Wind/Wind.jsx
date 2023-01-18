@@ -34,6 +34,7 @@ export const Wind = () => {
     }, [windDataList])
 
     return (
+        <div>
 
         <svg>
 
@@ -63,6 +64,7 @@ export const Wind = () => {
             </filter>
 
         </svg>
+        </div>
     );
 }
 

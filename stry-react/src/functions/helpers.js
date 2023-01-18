@@ -1,5 +1,7 @@
 //maps given value to color in hue spectrum
 import {todayDate} from "./times";
+import RightPage from "../RightPage";
+import LeftPage from "../LeftPage";
 
 export const polynomialInterpolationRemap = (value) => {
     //calculated via https://www.wolframalpha.com/input?key=&i=interpolating+polynomial+%7B-10%2C240%7D%2C%7B15%2C100%7D%2C%7B30%2C20%7D%2C%7B40%2C0%7D
@@ -35,7 +37,8 @@ export const setBackground = (weatherDataList) => {
     let myColor = 'hsl(' + [hue, '100%', '40%'] + ')';
 
     //gets current stylesheet
-    let sheet = document.styleSheets[0];
+
+    let sheet = document.getElementsByClassName('right')
 
     //css version support checks
     //--> dynamically adds css rule
@@ -52,7 +55,7 @@ export const setBackground = (weatherDataList) => {
 //see: https://www.wolframalpha.com/input?i2d=true&i=interpolating+polynomial+%7B0.1%2C0.4%7D%5C%2844%29%7B50%2C1%7D
 export function setRainOpacity(precipitationDataList){
 
-    let rainInMm = precipitationDataList[todayDate()];
+    let rainInMm = 50;
 
     let myOpacity = 0;
 

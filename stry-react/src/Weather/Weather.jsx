@@ -15,8 +15,9 @@ let myTimeout = null;
 
 export const Weather = () => {
 
+
     //RIPPLE SETTINGS
-    $("body").ripples({
+    $("container").ripples({
         resolution: 1024,
         perturbance: 0,
         interactive: false,
@@ -61,16 +62,18 @@ export const Weather = () => {
                         //TODO: Check if multiple ripples are caused by use effect
                         if (precipitationDataList) {
                             //ripple spawning:
-                            $('body').ripples("drop", getRandomX(), getRandomY(), safeCalcSize(precipitationDataList), 1);
+                            // console.log("its raining")
+                            $('container').ripples("drop", getRandomX(), getRandomY(), safeCalcSize(precipitationDataList), 1);
 
                             if (!isNaN(precipitationDataList[todayDate()])) {
                                 setRainOpacity(precipitationDataList); //sets background value according to rain intensity
+                                // console.log("its not raining")
                             }
                         }
 
                         //clears current timeout
                         myTimeout = null;
-                    }, safeCalcTimeout(precipitationDataList)) //sets the time in ms the function inside waits
+                    }, 50)//sets the time in ms the function inside waits
                 }
             }
 

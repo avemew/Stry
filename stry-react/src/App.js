@@ -1,8 +1,11 @@
 import './App.css';
-import Weather from './Weather/Weather';
-import {ClockDisplay} from "./ClockDisplay/ClockDisplay";
-import {Wind} from "./Wind/Wind";
-import {Snow} from "./Snow/Snow";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import LeftPage from "./LeftPage";
+import RightPage from "./RightPage";
+import React from "react";
+// import RightPage from "./LeftPage";
+// import LeftPage1 from "./RightPage";
+
 
 function App() {
 
@@ -12,12 +15,19 @@ function App() {
     }, 600000);
 
     return (
-        <>
-            <Weather/>
-            <Wind/>
-            <ClockDisplay/>
-            <Snow/>
-        </>
+
+        <div className={'container'}>
+            <div className={'row'}>
+
+                <div className={'col-md'}>
+                    <LeftPage/>
+                </div>
+                <div className={'col-md'}>
+                    <RightPage/>
+                </div>
+            </div>
+        </div>
+
     );
 }
 
