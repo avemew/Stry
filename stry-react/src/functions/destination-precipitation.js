@@ -15,6 +15,7 @@ export const getPrecipitationMapDestination = (rainlists) => {
 
 export const getPrecipitationDataDestination = async () => {
     //fetches WeatherData from today's URL and stores it in weatherDataList
+
     return fetch(getTodayUrlRainDestination())
         .then(response => response.json())
         .then(apiData => apiData["hourly"])

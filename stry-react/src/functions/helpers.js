@@ -31,10 +31,13 @@ export const polynomialInterpolationRemap = (value) => {
 
 export const setBackground = (weatherDataList) => {
     //hue - color value - Color from Average Temp gets calculated via polynomialInterpolationRemap
-    let hue = polynomialInterpolationRemap(weatherDataList[todayDate()]);   //TODO Debug temp here
+    let hueRight = polynomialInterpolationRemap(weatherDataList[todayDate()]);
+    let hueLeft = polynomialInterpolationRemap(weatherDataList[todayDate()]);
+
 
     //color the background square with the given hue
-    let myColor = 'hsl(' + [hue, '100%', '40%'] + ')';
+    let colorRight = 'hsl(' + [hueRight, '100%', '40%'] + ')';
+    let colorLeft = 'hsl(' + [hueRight, '100%', '40%'] + ')';
 
     //gets current stylesheet
 
