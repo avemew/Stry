@@ -1,9 +1,9 @@
 import './App.css';
 import Weather from "./Weather/Weather";
 import {Wind} from "./Wind/Wind";
-import {ClockDisplay} from "./ClockDisplay/ClockDisplay";
+import {ClockDisplayBremen, ClockDisplayCairo} from "./ClockDisplay/ClockDisplayBremen";
 import {Snow} from "./Snow/Snow";
-
+import {WeatherCairo} from "./Weather/Weather";
 
 function LeftPage() {
     document.getElementsByTagName("")
@@ -12,11 +12,16 @@ function LeftPage() {
     return (
 
 
-            <div id={'left'} className={'left'}>
 
-                <Weather/>
+            <div id={'left'} className={'left'}>
+                <div>
+                    <h2 className={'city'}>
+                        Cairo
+                    </h2>
+                </div>
+                <WeatherCairo/>
                 <Wind/>
-                <ClockDisplay/>
+                <ClockDisplayCairo/>
 
             </div>
     );

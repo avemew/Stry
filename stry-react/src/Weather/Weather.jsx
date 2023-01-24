@@ -6,12 +6,13 @@ import {getPrecipitationData} from "../functions/bremen-precipitation";
 import {todayDate} from "../functions/times";
 import {useEffect} from "react";
 import {getWeatherData} from "../functions/bremen-weather";
-import {setBackground, setRainOpacity} from "../functions/helpers";
+import {setBackground, setBackgroundLeft, setRainOpacity} from "../functions/helpers";
 import {getPrecipitationDataDestination} from "../functions/destination-precipitation";
 import React from "react";
 import ripples from "jquery.ripples";
 import rightPage from "../RightPage";
 import leftPage from "../LeftPage";
+import {getWeatherDataDestination} from "../functions/destination-weather";
 
 //stores Timeout id to ensure that there's only 1 timeout waiting for execution
 let myTimeoutRight = null;
@@ -28,19 +29,12 @@ export const Weather = () => {
         interactive: false,
 
     });
-    $('div#left.left').ripples({
-        resolution: 1024,
-        perturbance: 0,
-        interactive: false,
 
-    });
 
 
     const [weatherDataListRight, setWeatherDataListRight] = useState([]);
     const [precipitationDataListRight, setPrecipitationDataListRight] = useState({});
 
-    const [weatherDataListLeft, setWeatherDataListLeft] = useState([]);
-    const [precipitationDataListLeft, setPrecipitationDataListLeft] = useState({});
 
     //failsafe and reload, no real data
     const [reset, setReset] = useState(true);
@@ -56,6 +50,7 @@ export const Weather = () => {
 
                     setPrecipitationDataListRight(await getPrecipitationData()); //awaits api data for precipitation
                     setWeatherDataListRight(await getWeatherData()); //awaits api data for temperature
+                    // console.log(weatherDataListRight)
                     setFetchTimestamp(todayDate())
 
                 } else {
@@ -66,7 +61,7 @@ export const Weather = () => {
                 }
 
                 setBackground(weatherDataListRight); //calculated hue value and adds css rule
-                setBackground(weatherDataListLeft); //calculated hue value and adds css rule
+            ; //calculated hue value and adds css rule
 
                 //if there is no function waiting for its timeout already:
                 if (!myTimeoutRight) {
@@ -97,13 +92,56 @@ export const Weather = () => {
         }, [precipitationDataListRight, reset]
     )
     //left use effect
+
+}
+
+//uses isNaN check to make sure the value calculated is valid
+function safeCalcTimeout(precipitationDataList) {
+    if (!isNaN(calculateTimeout(precipitationDataList[todayDate()]))) {
+        let timeout = calculateTimeout(precipitationDataList[todayDate()]);
+
+        return timeout * 0.5;
+    } else {
+        return 100;
+    }
+}
+
+function safeCalcSize(precipitationDataList) {
+    if (!isNaN(calculateSize(precipitationDataList[todayDate()]))) {
+        let size = calculateSize(precipitationDataList[todayDate()]);
+
+        return size;
+    } else {
+        return 25;
+    }
+}
+
+
+
+export const WeatherCairo = () => {
+
+    $('div#left.left').ripples({
+        resolution: 1024,
+        perturbance: 0,
+        interactive: false,
+
+    });
+    const [weatherDataListLeft, setWeatherDataListLeft] = useState([]);
+    const [precipitationDataListLeft, setPrecipitationDataListLeft] = useState({});
+
+    const [reset, setReset] = useState(true);
+    const [fetchTimestamp, setFetchTimestamp] = useState("");
+
+
+
     useEffect(() => {
             async function fetchData() {
 
                 if (todayDate() !== fetchTimestamp) {
 
                     setPrecipitationDataListLeft(await getPrecipitationDataDestination()); //awaits api data for precipitation
-                    setWeatherDataListLeft(await getWeatherData()); //awaits api data for temperature
+                    setWeatherDataListLeft(await getWeatherDataDestination()); //awaits api data for temperature
+                    // console.log(weatherDataListLeft)
                     setFetchTimestamp(todayDate())
 
                 } else {
@@ -112,6 +150,7 @@ export const Weather = () => {
                         reset ? setReset(false) : setReset(true);
                     }, 250)
                 }
+                setBackgroundLeft(weatherDataListLeft)
 
                 //if there is no function waiting for its timeout already:
                 if (!myTimeoutLeft) {
@@ -144,25 +183,4 @@ export const Weather = () => {
     )
 }
 
-//uses isNaN check to make sure the value calculated is valid
-function safeCalcTimeout(precipitationDataList) {
-    if (!isNaN(calculateTimeout(precipitationDataList[todayDate()]))) {
-        let timeout = calculateTimeout(precipitationDataList[todayDate()]);
-
-        return timeout * 0.5;
-    } else {
-        return 100;
-    }
-}
-
-function safeCalcSize(precipitationDataList) {
-    if (!isNaN(calculateSize(precipitationDataList[todayDate()]))) {
-        let size = calculateSize(precipitationDataList[todayDate()]);
-
-        return size;
-    } else {
-        return 25;
-    }
-}
-
-export default Weather;
+export default Weather

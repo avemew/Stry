@@ -32,12 +32,11 @@ export const polynomialInterpolationRemap = (value) => {
 export const setBackground = (weatherDataList) => {
     //hue - color value - Color from Average Temp gets calculated via polynomialInterpolationRemap
     let hueRight = polynomialInterpolationRemap(weatherDataList[todayDate()]);
-    let hueLeft = polynomialInterpolationRemap(weatherDataList[todayDate()]);
+
 
 
     //color the background square with the given hue
     let colorRight = 'hsl(' + [hueRight, '100%', '40%'] + ')';
-    let colorLeft = 'hsl(' + [hueRight, '100%', '40%'] + ')';
 
     //gets current stylesheet
 
@@ -56,6 +55,14 @@ export const setBackground = (weatherDataList) => {
     // else if("addRule" in sheet) {
     //     sheet.addRule("body", "background: " + myColor + " !important;", 0);
     // }
+}
+export const setBackgroundLeft = (weatherDataList) => {
+    let hueLeft = polynomialInterpolationRemap(weatherDataList[todayDate()]);
+    let colorLeft = 'hsl(' + [hueLeft, '100%', '40%'] + ')';
+    let leftColor = document.getElementById('left')
+    leftColor.style.backgroundColor = colorLeft
+
+
 }
 
 
@@ -87,7 +94,7 @@ export function setRainOpacity(precipitationDataList){
 
     //gets current stylesheet
     let sheet = document.styleSheets[0];
-    let rightPage = document.getElementById('right')
+    // let rightPage = document.getElementById('right')
 
     //css version support checks
     //--> dynamically adds css rule
