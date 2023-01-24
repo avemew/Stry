@@ -16,7 +16,7 @@ function App() {
 
     return (
 
-        <div className={'container'}>
+
             <div className={'row'}>
 
                 <div className={'col-md'}>
@@ -26,7 +26,6 @@ function App() {
                     <RightPage/>
                 </div>
             </div>
-        </div>
 
     );
 }
