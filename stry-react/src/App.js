@@ -6,7 +6,6 @@ import React from "react";
 // import RightPage from "./LeftPage";
 // import LeftPage1 from "./RightPage";
 
-
 function App() {
 
     //setup page reload every 10 minutes
@@ -16,16 +15,15 @@ function App() {
 
     return (
 
-
-            <div className={'row'}>
-
-                <div className={'col-md'}>
-                    <LeftPage/>
-                </div>
-                <div className={'col-md'}>
-                    <RightPage/>
-                </div>
+        <div className={'row'}>
+            <div className={'col-md'}>
+                <LeftPage/>
             </div>
+            <div className={'col-md'}>
+                <RightPage/>
+            </div>
+            <img src="/Scale.png"/>
+        </div>
 
     );
 }

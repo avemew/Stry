@@ -78,7 +78,6 @@ body {
   justify-content: center;
   align-items: center;
   width: 100vw;
-
   margin: 0;
   padding: 0;
   min-width: 512px;
@@ -92,6 +91,15 @@ svg {
 
 .jquery-ripples canvas {
   filter: opacity(100%);
+}
+
+canvas{
+  padding: 0;
+}
+
+img{
+  position: fixed;
+  bottom: 0;
 }
 
 .time {
