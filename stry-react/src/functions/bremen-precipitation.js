@@ -20,6 +20,7 @@ export const getPrecipitationData = async () => {
         .then(apiData => apiData["hourly"])
         .then(apiDataHourly => getPrecipitationMap(apiDataHourly))
         .then((precipitationMapData) => {
+            // console.log(precipitationMapData)
             return precipitationMapData;
         })
 }

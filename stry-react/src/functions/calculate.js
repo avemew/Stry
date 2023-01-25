@@ -32,5 +32,5 @@ export const calculateTimeout = (rainInMm) => {
     let timeout = 1502.51 - 25.0501 * rainInMm;
 
     //safecheck for timeout < 250, prevents too small & negative values
-    return timeout < 250? 250 : timeout;
+    return timeout < 250 ? 250 : timeout;
 }

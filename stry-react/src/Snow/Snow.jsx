@@ -35,7 +35,7 @@ export const Snow = () => {
     )
     // snowflakeCount={mapSnowFall(snowDataList)}
     return (
-        <Snowfall style={{
+        <Snowfall snowflakeCount={mapSnowFall(snowDataList)} style={{
             position: 'fixed',
             width: '50vw',
             height: '100vh',
@@ -56,7 +56,7 @@ const mapSnowFall = (snowDataList) => {
         switch (true) {
 
             case snowValue === 0 :
-                return 200
+                return 0
             case snowValue < 0.83:
                 return 50
             case snowValue < 1.6:

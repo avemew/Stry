@@ -21,8 +21,9 @@ function LeftPage() {
                 </div>
                 <WeatherCairo/>
                 <Wind/>
+                <div>
                 <ClockDisplayCairo/>
-
+                </div>
             </div>
     );
 }

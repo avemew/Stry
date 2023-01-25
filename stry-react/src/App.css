@@ -3,7 +3,7 @@
   src: url(../public/aBlackLives.woff);
 }
 
-@keyframes squigglevision {
+@keyframes squigglevisionRight {
   /*right*/
   0% {
     filter: url("#turbulence-right-1");
@@ -19,11 +19,14 @@
   }
   100% {
     filter: url("#turbulence-right-5");
-  /*  left*/
-
-  }0% {
-    filter: url("#turbulence-left-1");
   }
+}
+
+@keyframes squigglevisionLeft {
+  /*  left*/
+  0% {
+     filter: url("#turbulence-left-1");
+   }
   25% {
     filter: url("#turbulence-left-2");
   }
@@ -36,7 +39,6 @@
   100% {
     filter: url("#turbulence-left-5");
   }
-
 }
 
 #app {
@@ -51,21 +53,24 @@
 
 .right {
   float: right;
-  width: 49vw;
-  height : 100vw;
-  border: 3px solid #73AD21;
-  animation: squigglevision 0.4s infinite alternate;
-  padding: 10px;
+  width: 50vw;
+  height : 100vh;
+  animation: squigglevisionRight 0.4s infinite alternate;
 }
+
 .left {
   float: left;
-  width: 49vw;
-  height : 100vw;
-  border: 3px solid #73AD21;
-  padding: 10px;
+  width: 50vw;
+  height : 100vh;
+  animation: squigglevisionLeft 0.4s infinite alternate;
 }
+
 right-side {
   display: block;
+}
+
+div.col-md{
+  padding: 0;
 }
 
 body {

@@ -1,6 +1,13 @@
 import $ from "jquery";
 import {useState} from "react";
-import {getRandomX, getRandomY} from "../functions/random";
+import {
+    getRandomX,
+    getRandomXLeft,
+    getRandomXRight,
+    getRandomY,
+    getRandomYLeft,
+    getRandomYRight
+} from "../functions/random";
 import {calculateSize, calculateTimeout} from "../functions/calculate";
 import {getPrecipitationData} from "../functions/bremen-precipitation";
 import {todayDate} from "../functions/times";
@@ -20,27 +27,24 @@ let myTimeoutLeft = null;
 
 export const Weather = () => {
 
-
     //RIPPLE SETTINGS
-
     $('div#right.right').ripples({
         resolution: 1024,
         perturbance: 0,
         interactive: false,
-
     });
 
-
-
     const [weatherDataListRight, setWeatherDataListRight] = useState([]);
-    const [precipitationDataListRight, setPrecipitationDataListRight] = useState({});
+    const [weatherDataListLeft, setWeatherDataListLeft] = useState([]);
 
+    const [precipitationDataListRight, setPrecipitationDataListRight] = useState({});
 
     //failsafe and reload, no real data
     const [reset, setReset] = useState(true);
     const [fetchTimestamp, setFetchTimestamp] = useState("");
 
     const date = todayDate(); //Date in format: yy-MM-DDThh:00 - string
+
     //right use effect
     useEffect(() => {
 
@@ -50,6 +54,8 @@ export const Weather = () => {
 
                     setPrecipitationDataListRight(await getPrecipitationData()); //awaits api data for precipitation
                     setWeatherDataListRight(await getWeatherData()); //awaits api data for temperature
+                    setWeatherDataListLeft(await getWeatherDataDestination()); //awaits api data for temperature
+
                     // console.log(weatherDataListRight)
                     setFetchTimestamp(todayDate())
 
@@ -60,8 +66,8 @@ export const Weather = () => {
                     }, 250)
                 }
 
-                setBackground(weatherDataListRight); //calculated hue value and adds css rule
-            ; //calculated hue value and adds css rule
+                setBackground(weatherDataListRight, weatherDataListLeft); //calculated hue value and adds css rule
+             //calculated hue value and adds css rule
 
                 //if there is no function waiting for its timeout already:
                 if (!myTimeoutRight) {
@@ -74,7 +80,7 @@ export const Weather = () => {
                         if (precipitationDataListRight) {
                             //ripple spawning:
                             // console.log("its raining")
-                            $('div#right.right').ripples("drop", getRandomX(), getRandomY(), safeCalcSize(precipitationDataListRight), 1);
+                            $('div#right.right').ripples("drop", getRandomXRight(), getRandomYRight(), safeCalcSize(precipitationDataListRight), safeCalcTimeout(precipitationDataListRight));
 
                             if (!isNaN(precipitationDataListRight[todayDate()])) {
                                 setRainOpacity(precipitationDataListRight); //sets background value according to rain intensity
@@ -126,7 +132,6 @@ export const WeatherCairo = () => {
         interactive: false,
 
     });
-    const [weatherDataListLeft, setWeatherDataListLeft] = useState([]);
     const [precipitationDataListLeft, setPrecipitationDataListLeft] = useState({});
 
     const [reset, setReset] = useState(true);
@@ -140,7 +145,6 @@ export const WeatherCairo = () => {
                 if (todayDate() !== fetchTimestamp) {
 
                     setPrecipitationDataListLeft(await getPrecipitationDataDestination()); //awaits api data for precipitation
-                    setWeatherDataListLeft(await getWeatherDataDestination()); //awaits api data for temperature
                     // console.log(weatherDataListLeft)
                     setFetchTimestamp(todayDate())
 
@@ -150,7 +154,6 @@ export const WeatherCairo = () => {
                         reset ? setReset(false) : setReset(true);
                     }, 250)
                 }
-                setBackgroundLeft(weatherDataListLeft)
 
                 //if there is no function waiting for its timeout already:
                 if (!myTimeoutLeft) {
@@ -163,7 +166,7 @@ export const WeatherCairo = () => {
                         if (precipitationDataListLeft) {
                             //ripple spawning:
                             // console.log("its raining")
-                            $('div#left.left').ripples("drop", getRandomX(), getRandomY(), safeCalcSize(precipitationDataListLeft), 1);
+                            $('div#left.left').ripples("drop", getRandomXLeft(), getRandomYLeft(), safeCalcSize(precipitationDataListLeft), safeCalcTimeout(precipitationDataListLeft));
 
                             if (!isNaN(precipitationDataListLeft[todayDate()])) {
                                 setRainOpacity(precipitationDataListLeft); //sets background value according to rain intensity

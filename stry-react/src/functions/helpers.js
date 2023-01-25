@@ -29,24 +29,22 @@ export const polynomialInterpolationRemap = (value) => {
     )
 }
 
-export const setBackground = (weatherDataList) => {
+export const setBackground = (weatherDataListRight, weatherDataListLeft) => {
     //hue - color value - Color from Average Temp gets calculated via polynomialInterpolationRemap
-    let hueRight = polynomialInterpolationRemap(weatherDataList[todayDate()]);
+    let hueRight = polynomialInterpolationRemap(weatherDataListRight[todayDate()]);
+    let hueLeft = polynomialInterpolationRemap(weatherDataListLeft[todayDate()]);
 
-
-
-    //color the background square with the given hue
     let colorRight = 'hsl(' + [hueRight, '100%', '40%'] + ')';
+    let colorLeft = 'hsl(' + [hueLeft, '100%', '40%'] + ')';
 
     //gets current stylesheet
-
     // let sheet = document.styleSheets[0]
-
     let rightColor = document.getElementById('right')
-    rightColor.style.backgroundColor = myColor
+    rightColor.style.backgroundColor = colorRight
 
     let leftColor = document.getElementById('left')
-    leftColor.style.backgroundColor = myColor
+    leftColor.style.backgroundColor = colorLeft
+
     //css version support checks
     //--> dynamically adds css rule
     // if("insertRule" in sheet) {
@@ -61,8 +59,6 @@ export const setBackgroundLeft = (weatherDataList) => {
     let colorLeft = 'hsl(' + [hueLeft, '100%', '40%'] + ')';
     let leftColor = document.getElementById('left')
     leftColor.style.backgroundColor = colorLeft
-
-
 }
 
 
@@ -70,7 +66,7 @@ export const setBackgroundLeft = (weatherDataList) => {
 //see: https://www.wolframalpha.com/input?i2d=true&i=interpolating+polynomial+%7B0.1%2C0.4%7D%5C%2844%29%7B50%2C1%7D
 export function setRainOpacity(precipitationDataList){
 
-    let rainInMm = 50;
+    let rainInMm = precipitationDataList[todayDate()];
 
     let myOpacity = 0;
 
