@@ -123,18 +123,20 @@ function getCurrentWind(windDataList) {
 
     if(isNaN(currentWindSpeed)){ return 0; }    //NaN-Check
 
+    console.log("Windspeed:" + currentWindSpeed);
+
     if (currentWindSpeed <= 5) { return 0; }    //Windstille & leiser Zug
-    if (currentWindSpeed <= 11) { return 4; }   //leichte Brise
-    if (currentWindSpeed <= 19) { return 6; }   //schwache Brise
-    if (currentWindSpeed <= 28) { return 8; }   //mäßige Brise
-    if (currentWindSpeed <= 38) { return 12; }  //frische Brise
-    if (currentWindSpeed <= 49) { return 22; }  //starker Wind
-    if (currentWindSpeed <= 61) { return 30; }  //steifer Wind
-    if (currentWindSpeed <= 74) { return 42; }  //stürmischer Wind
-    if (currentWindSpeed <= 88) { return 61; }  //Sturm
-    if (currentWindSpeed <= 102) { return 75; } //schwerer Sturm
-    if (currentWindSpeed <= 117) { return 85; } //orkanartiger Sturm
-    if (currentWindSpeed >= 118) { return 95; } //Orkan
+    if (currentWindSpeed <= 11) { return 6; }   //leichte Brise
+    if (currentWindSpeed <= 19) { return 8; }   //schwache Brise
+    if (currentWindSpeed <= 28) { return 10; }   //mäßige Brise
+    if (currentWindSpeed <= 38) { return 14; }  //frische Brise
+    if (currentWindSpeed <= 49) { return 24; }  //starker Wind
+    if (currentWindSpeed <= 61) { return 32; }  //steifer Wind
+    if (currentWindSpeed <= 74) { return 44; }  //stürmischer Wind
+    if (currentWindSpeed <= 88) { return 63; }  //Sturm
+    if (currentWindSpeed <= 102) { return 77; } //schwerer Sturm
+    if (currentWindSpeed <= 117) { return 87; } //orkanartiger Sturm
+    if (currentWindSpeed >= 118) { return 97; } //Orkan
 
     return 0;
 }

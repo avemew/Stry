@@ -94,18 +94,22 @@ svg {
   filter: opacity(100%);
 }
 
-#time {
+.time {
   font-size: 12vw;
   font-family: aBlackLives, sans-serif;
   text-align: center;
+  vertical-align: center;
   alignment-baseline: center;
-  padding-top: 40vh;
   color: white;
   opacity: 75%;
 }
+
 .city
 {
+  font-size: 5vw;
+  font-family: aBlackLives, sans-serif;
   text-align: center;
-
+  color: white;
+  opacity: 75%;
 }
 
