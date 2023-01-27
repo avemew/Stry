@@ -1,7 +1,7 @@
 import {currentWindSpeed} from "../Weather/Weather";
 import React, {useEffect, useState} from "react";
 import {getWindData} from "../functions/bremen-wind";
-import {todayDate} from "../functions/times";
+import {arrivalDateRounded, todayDate} from "../functions/times";
 import {getWindDataDestination} from "../functions/destination-wind";
 
 let windTimeout = null;
@@ -44,53 +44,53 @@ export const Wind = () => {
             {/*right*/}
             <filter id="turbulence-right-1">
                 <feTurbulence type="fractalNoise" baseFrequency="0.001" numOctaves="1" data-filterid="3"/>
-                <feDisplacementMap xChannelSelector="R" yChannelSelector="G" in="SourceGraphic" scale={getCurrentWind(windDataList)}/>
+                <feDisplacementMap xChannelSelector="R" yChannelSelector="G" in="SourceGraphic" scale={getCurrentWind(windDataList, "right")}/>
             </filter>
 
             <filter id="turbulence-right-2">
                 <feTurbulence type="fractalNoise" baseFrequency="0.0015" numOctaves="1" data-filterid="3"/>
-                <feDisplacementMap xChannelSelector="R" yChannelSelector="G" in="SourceGraphic" scale={getCurrentWind(windDataList)}/>
+                <feDisplacementMap xChannelSelector="R" yChannelSelector="G" in="SourceGraphic" scale={getCurrentWind(windDataList, "right")}/>
             </filter>
 
             <filter id="turbulence-right-3">
                 <feTurbulence type="fractalNoise" baseFrequency="0.002" numOctaves="1" data-filterid="3"/>
-                <feDisplacementMap xChannelSelector="R" yChannelSelector="G" in="SourceGraphic" scale={getCurrentWind(windDataList)}/>
+                <feDisplacementMap xChannelSelector="R" yChannelSelector="G" in="SourceGraphic" scale={getCurrentWind(windDataList, "right")}/>
             </filter>
 
             <filter id="turbulence-right-4">
                 <feTurbulence type="fractalNoise" baseFrequency="0.0025" numOctaves="1" data-filterid="3"/>
-                <feDisplacementMap xChannelSelector="R" yChannelSelector="G" in="SourceGraphic" scale={getCurrentWind(windDataList)}/>
+                <feDisplacementMap xChannelSelector="R" yChannelSelector="G" in="SourceGraphic" scale={getCurrentWind(windDataList, "right")}/>
             </filter>
 
             <filter id="turbulence-right-5">
                 <feTurbulence type="fractalNoise" baseFrequency="0.003" numOctaves="1" data-filterid="3"/>
-                <feDisplacementMap xChannelSelector="R" yChannelSelector="G" in="SourceGraphic" scale={getCurrentWind(windDataList)}/>
+                <feDisplacementMap xChannelSelector="R" yChannelSelector="G" in="SourceGraphic" scale={getCurrentWind(windDataList, "right")}/>
             </filter>
 
         {/*left*/}
             <filter id="turbulence-left-1">
                 <feTurbulence type="fractalNoise" baseFrequency="0.001" numOctaves="1" data-filterid="3"/>
-                <feDisplacementMap xChannelSelector="R" yChannelSelector="G" in="SourceGraphic" scale={getCurrentWind(windDataDestinationList)}/>
+                <feDisplacementMap xChannelSelector="R" yChannelSelector="G" in="SourceGraphic" scale={getCurrentWind(windDataDestinationList, "left")}/>
             </filter>
 
             <filter id="turbulence-left-2">
                 <feTurbulence type="fractalNoise" baseFrequency="0.0015" numOctaves="1" data-filterid="3"/>
-                <feDisplacementMap xChannelSelector="R" yChannelSelector="G" in="SourceGraphic" scale={getCurrentWind(windDataDestinationList)}/>
+                <feDisplacementMap xChannelSelector="R" yChannelSelector="G" in="SourceGraphic" scale={getCurrentWind(windDataDestinationList, "left")}/>
             </filter>
 
             <filter id="turbulence-left-3">
                 <feTurbulence type="fractalNoise" baseFrequency="0.002" numOctaves="1" data-filterid="3"/>
-                <feDisplacementMap xChannelSelector="R" yChannelSelector="G" in="SourceGraphic" scale={getCurrentWind(windDataDestinationList)}/>
+                <feDisplacementMap xChannelSelector="R" yChannelSelector="G" in="SourceGraphic" scale={getCurrentWind(windDataDestinationList, "left")}/>
             </filter>
 
             <filter id="turbulence-left-4">
                 <feTurbulence type="fractalNoise" baseFrequency="0.0025" numOctaves="1" data-filterid="3"/>
-                <feDisplacementMap xChannelSelector="R" yChannelSelector="G" in="SourceGraphic" scale={getCurrentWind(windDataDestinationList)}/>
+                <feDisplacementMap xChannelSelector="R" yChannelSelector="G" in="SourceGraphic" scale={getCurrentWind(windDataDestinationList, "left")}/>
             </filter>
 
             <filter id="turbulence-left-5">
                 <feTurbulence type="fractalNoise" baseFrequency="0.003" numOctaves="1" data-filterid="3"/>
-                <feDisplacementMap xChannelSelector="R" yChannelSelector="G" in="SourceGraphic" scale={getCurrentWind(windDataDestinationList)}/>
+                <feDisplacementMap xChannelSelector="R" yChannelSelector="G" in="SourceGraphic" scale={getCurrentWind(windDataDestinationList, "left")}/>
             </filter>
 
         </svg>
@@ -116,8 +116,14 @@ schwerer Sturm	    89 - 102km/h    -   75
 orkanartiger Sturm	103 - 117km/h   -   85
 Orkan	            ab 118km/h      -   95
  */
-function getCurrentWind(windDataList) {
-    let currentWindSpeed = windDataList[todayDate()]
+function getCurrentWind(windDataList, side) {
+    let currentWindSpeed;
+
+    if(side === "left"){
+        currentWindSpeed = windDataList[arrivalDateRounded()]
+    } else{
+        currentWindSpeed = windDataList[todayDate()]
+    }
 
     //TODO Debug wind here
 

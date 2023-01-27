@@ -14,17 +14,17 @@ function App() {
     }, 600000);
 
     return (
-
-        <div className={'row'}>
-            <div className={'col-md'}>
-                <LeftPage/>
-            </div>
-            <div className={'col-md'}>
-                <RightPage/>
+        <div>
+            <div className={'row'}>
+                <div className={'col-md'}>
+                    <LeftPage/>
+                </div>
+                <div className={'col-md'}>
+                    <RightPage/>
+                </div>
             </div>
             <img src="/Scale.png"/>
         </div>
-
     );
 }
 

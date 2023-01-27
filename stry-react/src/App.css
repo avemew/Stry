@@ -98,12 +98,18 @@ canvas{
 }
 
 img{
-  position: fixed;
-  bottom: 0;
+  position: absolute;
+  left: 0;
+  bottom: 0px;
+  width: 100%;
+  height: 20px;
+  background-position: center;
 }
 
 .time {
-  font-size: 12vw;
+  position: relative;
+  top: 30vh;
+  font-size: 8vw;
   font-family: aBlackLives, sans-serif;
   text-align: center;
   vertical-align: center;
@@ -114,7 +120,9 @@ img{
 
 .city
 {
-  font-size: 5vw;
+  position: relative;
+  top: 30vh;
+  font-size: 6vw;
   font-family: aBlackLives, sans-serif;
   text-align: center;
   color: white;
