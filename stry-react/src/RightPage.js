@@ -1,6 +1,6 @@
 import './App.css';
 import Weather, {WeatherCairo} from './Weather/Weather';
-import {ClockDisplayBremen} from "./ClockDisplay/ClockDisplayBremen";
+import {ClockDisplayBremen} from "./ClockDisplay/ClockDisplay";
 import {Wind} from "./Wind/Wind";
 import {Snow} from "./Snow/Snow";
 
@@ -16,6 +16,7 @@ function RightPage() {
             <div>
                 <h2 className={'city'}>
                     Bremen
+                    [BRE]
                 </h2>
             </div>
 

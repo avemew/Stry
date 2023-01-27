@@ -1,5 +1,7 @@
 import styles from "./ClockDisplay.component.css"
 import Clock from 'react-live-clock';
+import moment from "moment/moment";
+import {arrivalDate} from "../functions/times";
 
 export const ClockDisplayBremen = () => {
     return (
@@ -11,7 +13,7 @@ export const ClockDisplayBremen = () => {
 export const ClockDisplayCairo = () => {
     return (
         <h1 className={"time"}>
-            <Clock format={'HH:mm'} ticking={true} timezone={'Africa/Cairo'}/>
+            <Clock date={arrivalDate()} format={'HH:mm'} ticking={true} timezone={'Africa/Cairo'}/>
         </h1>
     )
 }

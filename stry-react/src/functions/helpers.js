@@ -1,5 +1,5 @@
 //maps given value to color in hue spectrum
-import {todayDate} from "./times";
+import {arrivalDate, arrivalDateRounded, todayDate} from "./times";
 import RightPage from "../RightPage";
 import LeftPage from "../LeftPage";
 
@@ -32,7 +32,7 @@ export const polynomialInterpolationRemap = (value) => {
 export const setBackground = (weatherDataListRight, weatherDataListLeft) => {
     //hue - color value - Color from Average Temp gets calculated via polynomialInterpolationRemap
     let hueRight = polynomialInterpolationRemap(weatherDataListRight[todayDate()]);
-    let hueLeft = polynomialInterpolationRemap(weatherDataListLeft[todayDate()]);
+    let hueLeft = polynomialInterpolationRemap(weatherDataListLeft[arrivalDateRounded()]);
 
     let colorRight = 'hsl(' + [hueRight, '100%', '40%'] + ')';
     let colorLeft = 'hsl(' + [hueLeft, '100%', '40%'] + ')';
@@ -64,9 +64,13 @@ export const setBackgroundLeft = (weatherDataList) => {
 
 //sets background value according to rain intensity by inserting css rule
 //see: https://www.wolframalpha.com/input?i2d=true&i=interpolating+polynomial+%7B0.1%2C0.4%7D%5C%2844%29%7B50%2C1%7D
-export function setRainOpacity(precipitationDataList){
-
-    let rainInMm = precipitationDataList[todayDate()];
+export function setRainOpacity(precipitationDataList, side){
+    let rainInMm
+    if(side==="left"){
+        rainInMm = precipitationDataList[arrivalDateRounded()];
+    } else {
+        rainInMm = precipitationDataList[todayDate()];
+    }
 
     let myOpacity = 0;
 

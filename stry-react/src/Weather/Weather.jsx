@@ -10,7 +10,7 @@ import {
 } from "../functions/random";
 import {calculateSize, calculateTimeout} from "../functions/calculate";
 import {getPrecipitationData} from "../functions/bremen-precipitation";
-import {todayDate} from "../functions/times";
+import {arrivalDateRounded, todayDate} from "../functions/times";
 import {useEffect} from "react";
 import {getWeatherData} from "../functions/bremen-weather";
 import {setBackground, setBackgroundLeft, setRainOpacity} from "../functions/helpers";
@@ -55,8 +55,7 @@ export const Weather = () => {
                     setPrecipitationDataListRight(await getPrecipitationData()); //awaits api data for precipitation
                     setWeatherDataListRight(await getWeatherData()); //awaits api data for temperature
                     setWeatherDataListLeft(await getWeatherDataDestination()); //awaits api data for temperature
-
-                    // console.log(weatherDataListRight)
+                    
                     setFetchTimestamp(todayDate())
 
                 } else {
@@ -67,7 +66,6 @@ export const Weather = () => {
                 }
 
                 setBackground(weatherDataListRight, weatherDataListLeft); //calculated hue value and adds css rule
-             //calculated hue value and adds css rule
 
                 //if there is no function waiting for its timeout already:
                 if (!myTimeoutRight) {
@@ -78,13 +76,11 @@ export const Weather = () => {
                         //if there is precipitation, create ripples
                         //TODO: Check if multiple ripples are caused by use effect
                         if (precipitationDataListRight) {
-                            //ripple spawning:
-                            // console.log("its raining")
+
                             $('div#right.right').ripples("drop", getRandomXRight(), getRandomYRight(), safeCalcSize(precipitationDataListRight), safeCalcTimeout(precipitationDataListRight));
 
                             if (!isNaN(precipitationDataListRight[todayDate()])) {
-                                setRainOpacity(precipitationDataListRight); //sets background value according to rain intensity
-                                // console.log("its not raining")
+                                setRainOpacity(precipitationDataListRight, "right"); //sets background value according to rain intensity
                             }
                         }
 
@@ -97,7 +93,6 @@ export const Weather = () => {
             fetchData();
         }, [precipitationDataListRight, reset]
     )
-    //left use effect
 
 }
 
@@ -137,8 +132,7 @@ export const WeatherCairo = () => {
     const [reset, setReset] = useState(true);
     const [fetchTimestamp, setFetchTimestamp] = useState("");
 
-
-
+    //left use effect
     useEffect(() => {
             async function fetchData() {
 
@@ -168,8 +162,8 @@ export const WeatherCairo = () => {
                             // console.log("its raining")
                             $('div#left.left').ripples("drop", getRandomXLeft(), getRandomYLeft(), safeCalcSize(precipitationDataListLeft), safeCalcTimeout(precipitationDataListLeft));
 
-                            if (!isNaN(precipitationDataListLeft[todayDate()])) {
-                                setRainOpacity(precipitationDataListLeft); //sets background value according to rain intensity
+                            if (!isNaN(precipitationDataListLeft[arrivalDateRounded()])) {
+                                setRainOpacity(precipitationDataListLeft, "left"); //sets background value according to rain intensity
                                 // console.log("its not raining")
                             }
                         }
