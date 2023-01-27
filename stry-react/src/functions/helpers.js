@@ -91,7 +91,9 @@ export function setRainOpacity(precipitationDataList, side){
         myOpacity = 1;
     }
 
-    console.log("opacity" +myOpacity)
+    if(side==="right"){
+        console.log("Right opacity=" + myOpacity)
+    }
 
     //gets current stylesheet
     let sheet = document.styleSheets[0];
@@ -99,10 +101,18 @@ export function setRainOpacity(precipitationDataList, side){
 
     //css version support checks
     //--> dynamically adds css rule
-    if("insertRule" in sheet) {
-        sheet.insertRule(".jquery-ripples canvas { filter: " + "opacity(" + myOpacity +") !important; }", 0);
-    }
-    else if("addRule" in sheet) {
-        sheet.addRule(".jquery-ripples canvas", "filter: " + "opacity(" + myOpacity +") !important;", 0);
+    if(side ==="left"){
+        if("insertRule" in sheet) {
+            sheet.insertRule("div#left.left.jquery-ripples canvas { filter: " + "opacity(" + myOpacity +") !important; }", 0);
+        }
+        else if("addRule" in sheet) {
+            sheet.addRule("div#left.left.jquery-ripples canvas", "filter: " + "opacity(" + myOpacity +") !important;", 0);
+        }
+    } else {
+        if ("insertRule" in sheet) {
+            sheet.insertRule("div#right.right.jquery-ripples canvas { filter: " + "opacity(" + myOpacity + ") !important; }", 0);
+        } else if ("addRule" in sheet) {
+            sheet.addRule("div#right.right.jquery-ripples canvas", "filter: " + "opacity(" + myOpacity + ") !important;", 0);
+        }
     }
 }

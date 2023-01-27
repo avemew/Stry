@@ -1,5 +1,5 @@
 //LEFT
-export const rainInMmLeft = 5;
+export const rainInMmLeft = 0;
 
 export const windInKmhLeft = 0;
 

@@ -81,7 +81,7 @@ export const Weather = () => {
                             //console.log("its raining")
                             $('div#right.right').ripples("drop", getRandomXRight(), getRandomYRight(), safeCalcSize(precipitationDataListRight, "right"), safeCalcTimeout(precipitationDataListRight, "right"));
 
-                            if (!isNaN(precipitationDataListRight[arrivalDateRounded()])) {
+                            if (!isNaN(precipitationDataListRight[todayDate()])) {
                                 setRainOpacity(precipitationDataListRight, "right"); //sets background value according to rain intensity
                                 // console.log("its not raining")
                             }
@@ -130,7 +130,6 @@ export const WeatherCairo = () => {
         resolution: 1024,
         perturbance: 0,
         interactive: false,
-
     });
     const [precipitationDataListLeft, setPrecipitationDataListLeft] = useState({});
 
