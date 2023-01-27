@@ -106,6 +106,16 @@ img{
   background-position: center;
 }
 
+img.airplane{
+  position: absolute;
+  left: 22.5%;
+  bottom: 15%;
+  background-position: center;
+  width: 55%;
+  height: 30%;
+  opacity: 75%;
+}
+
 .time {
   position: relative;
   top: 30vh;

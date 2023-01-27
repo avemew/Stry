@@ -24,6 +24,7 @@ function App() {
                 </div>
             </div>
             <img src="/Scale.png"/>
+            <img className={"airplane"} src={"/render.gif"}/>
         </div>
     );
 }
