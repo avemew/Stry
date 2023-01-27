@@ -2,6 +2,7 @@
 import {arrivalDate, arrivalDateRounded, todayDate} from "./times";
 import RightPage from "../RightPage";
 import LeftPage from "../LeftPage";
+import {rainInMmLeft, rainInMmRight, temperatureInCLeft, temperatureInCRight} from "../DebugValues";
 
 export const polynomialInterpolationRemap = (value) => {
     //calculated via https://www.wolframalpha.com/input?key=&i=interpolating+polynomial+%7B-10%2C240%7D%2C%7B15%2C100%7D%2C%7B30%2C20%7D%2C%7B40%2C0%7D
@@ -31,8 +32,8 @@ export const polynomialInterpolationRemap = (value) => {
 
 export const setBackground = (weatherDataListRight, weatherDataListLeft) => {
     //hue - color value - Color from Average Temp gets calculated via polynomialInterpolationRemap
-    let hueRight = polynomialInterpolationRemap(weatherDataListRight[todayDate()]);
-    let hueLeft = polynomialInterpolationRemap(weatherDataListLeft[arrivalDateRounded()]);
+    let hueRight = polynomialInterpolationRemap(temperatureInCRight);
+    let hueLeft = polynomialInterpolationRemap(temperatureInCLeft);
 
     let colorRight = 'hsl(' + [hueRight, '100%', '40%'] + ')';
     let colorLeft = 'hsl(' + [hueLeft, '100%', '40%'] + ')';
@@ -67,9 +68,9 @@ export const setBackgroundLeft = (weatherDataList) => {
 export function setRainOpacity(precipitationDataList, side){
     let rainInMm
     if(side==="left"){
-        rainInMm = precipitationDataList[arrivalDateRounded()];
+        rainInMm = rainInMmLeft;
     } else {
-        rainInMm = precipitationDataList[todayDate()];
+        rainInMm = rainInMmRight;
     }
 
     let myOpacity = 0;
@@ -90,7 +91,7 @@ export function setRainOpacity(precipitationDataList, side){
         myOpacity = 1;
     }
 
-    // console.log("opacity" +myOpacity)
+    console.log("opacity" +myOpacity)
 
     //gets current stylesheet
     let sheet = document.styleSheets[0];

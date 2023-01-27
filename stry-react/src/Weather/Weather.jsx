@@ -20,6 +20,7 @@ import ripples from "jquery.ripples";
 import rightPage from "../RightPage";
 import leftPage from "../LeftPage";
 import {getWeatherDataDestination} from "../functions/destination-weather";
+import {rainInMmLeft, rainInMmRight} from "../DebugValues";
 
 //stores Timeout id to ensure that there's only 1 timeout waiting for execution
 let myTimeoutRight = null;
@@ -55,7 +56,7 @@ export const Weather = () => {
                     setPrecipitationDataListRight(await getPrecipitationData()); //awaits api data for precipitation
                     setWeatherDataListRight(await getWeatherData()); //awaits api data for temperature
                     setWeatherDataListLeft(await getWeatherDataDestination()); //awaits api data for temperature
-                    
+
                     setFetchTimestamp(todayDate())
 
                 } else {
@@ -76,17 +77,19 @@ export const Weather = () => {
                         //if there is precipitation, create ripples
                         //TODO: Check if multiple ripples are caused by use effect
                         if (precipitationDataListRight) {
+                            //ripple spawning:
+                            //console.log("its raining")
+                            $('div#right.right').ripples("drop", getRandomXRight(), getRandomYRight(), safeCalcSize(precipitationDataListRight, "right"), safeCalcTimeout(precipitationDataListRight, "right"));
 
-                            $('div#right.right').ripples("drop", getRandomXRight(), getRandomYRight(), safeCalcSize(precipitationDataListRight), safeCalcTimeout(precipitationDataListRight));
-
-                            if (!isNaN(precipitationDataListRight[todayDate()])) {
+                            if (!isNaN(precipitationDataListRight[arrivalDateRounded()])) {
                                 setRainOpacity(precipitationDataListRight, "right"); //sets background value according to rain intensity
+                                // console.log("its not raining")
                             }
                         }
 
                         //clears current timeout
                         myTimeoutRight = null;
-                    }, safeCalcTimeout(precipitationDataListRight))//sets the time in ms the function inside waits
+                    }, safeCalcTimeout(precipitationDataListRight, "right"))//sets the time in ms the function inside waits
                 }
             }
 
@@ -97,26 +100,28 @@ export const Weather = () => {
 }
 
 //uses isNaN check to make sure the value calculated is valid
-function safeCalcTimeout(precipitationDataList) {
-    if (!isNaN(calculateTimeout(precipitationDataList[todayDate()]))) {
-        let timeout = calculateTimeout(precipitationDataList[todayDate()]);
-
-        return timeout * 0.5;
+function safeCalcTimeout(precipitationDataList, side) {
+    let timeout
+    if (side === "left") {
+        timeout = calculateTimeout(rainInMmLeft);
     } else {
-        return 100;
+        timeout = calculateTimeout(rainInMmRight);
     }
+
+    return timeout;
 }
 
-function safeCalcSize(precipitationDataList) {
-    if (!isNaN(calculateSize(precipitationDataList[todayDate()]))) {
-        let size = calculateSize(precipitationDataList[todayDate()]);
+function safeCalcSize(precipitationDataList, side) {
+    let size
 
-        return size;
+    if (side === "left") {
+        size = calculateSize(rainInMmLeft);
     } else {
-        return 25;
+        size = calculateSize(rainInMmRight);
     }
-}
 
+    return size;
+}
 
 
 export const WeatherCairo = () => {
@@ -160,7 +165,7 @@ export const WeatherCairo = () => {
                         if (precipitationDataListLeft) {
                             //ripple spawning:
                             // console.log("its raining")
-                            $('div#left.left').ripples("drop", getRandomXLeft(), getRandomYLeft(), safeCalcSize(precipitationDataListLeft), safeCalcTimeout(precipitationDataListLeft));
+                            $('div#left.left').ripples("drop", getRandomXLeft(), getRandomYLeft(), safeCalcSize(precipitationDataListLeft, "left"), safeCalcTimeout(precipitationDataListLeft, "left"));
 
                             if (!isNaN(precipitationDataListLeft[arrivalDateRounded()])) {
                                 setRainOpacity(precipitationDataListLeft, "left"); //sets background value according to rain intensity
@@ -170,7 +175,7 @@ export const WeatherCairo = () => {
 
                         //clears current timeout
                         myTimeoutLeft = null;
-                    }, safeCalcTimeout(precipitationDataListLeft))//sets the time in ms the function inside waits
+                    }, safeCalcTimeout(precipitationDataListLeft, "left"))//sets the time in ms the function inside waits
                 }
             }
 

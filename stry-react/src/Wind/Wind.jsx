@@ -3,6 +3,7 @@ import React, {useEffect, useState} from "react";
 import {getWindData} from "../functions/bremen-wind";
 import {arrivalDateRounded, todayDate} from "../functions/times";
 import {getWindDataDestination} from "../functions/destination-wind";
+import {windInKmhLeft, windInKmhRight} from "../DebugValues";
 
 let windTimeout = null;
 
@@ -120,16 +121,14 @@ function getCurrentWind(windDataList, side) {
     let currentWindSpeed;
 
     if(side === "left"){
-        currentWindSpeed = windDataList[arrivalDateRounded()]
+        currentWindSpeed = windInKmhLeft
     } else{
-        currentWindSpeed = windDataList[todayDate()]
+        currentWindSpeed = windInKmhRight
     }
 
     //TODO Debug wind here
 
     if(isNaN(currentWindSpeed)){ return 0; }    //NaN-Check
-
-    console.log("Windspeed:" + currentWindSpeed);
 
     if (currentWindSpeed <= 5) { return 0; }    //Windstille & leiser Zug
     if (currentWindSpeed <= 11) { return 6; }   //leichte Brise
