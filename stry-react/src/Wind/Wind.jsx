@@ -129,7 +129,7 @@ function getCurrentWind(windDataList, side) {
 
     if(isNaN(currentWindSpeed)){ return 0; }    //NaN-Check
 
-    console.log("Windspeed:" + currentWindSpeed);
+    // console.log("Windspeed:" + currentWindSpeed);
 
     if (currentWindSpeed <= 5) { return 0; }    //Windstille & leiser Zug
     if (currentWindSpeed <= 11) { return 6; }   //leichte Brise

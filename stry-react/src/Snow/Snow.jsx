@@ -49,7 +49,7 @@ const mapSnowFall = (snowDataList) => {
 
     //TODO Debug snow here
 
-    console.log(snowValue)
+    // console.log(snowValue)
 
     if (!isNaN(snowValue)) {
 

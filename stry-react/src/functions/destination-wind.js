@@ -20,6 +20,7 @@ export const getWindDataDestination = () => {
         .then(apiData => (apiData["hourly"]))
         .then(apiDataHourly => getWindMapDestination(apiDataHourly))
         .then((WindMapData) => {
+            // console.log(WindMapData)
             return WindMapData;
         })
 }

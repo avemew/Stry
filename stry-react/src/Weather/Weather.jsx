@@ -13,7 +13,7 @@ import {getPrecipitationData} from "../functions/bremen-precipitation";
 import {arrivalDateRounded, todayDate} from "../functions/times";
 import {useEffect} from "react";
 import {getWeatherData} from "../functions/bremen-weather";
-import {setBackground, setBackgroundLeft, setRainOpacity} from "../functions/helpers";
+import {RainOpacity, setBackground, setBackgroundLeft, setRainOpacity} from "../functions/helpers";
 import {getPrecipitationDataDestination} from "../functions/destination-precipitation";
 import React from "react";
 import ripples from "jquery.ripples";
@@ -62,7 +62,7 @@ export const Weather = () => {
                     //reload useEffect in 250ms intervals
                     setTimeout(() => {
                         reset ? setReset(false) : setReset(true);
-                    }, 250)
+                    }, 250 )
                 }
 
                 setBackground(weatherDataListRight, weatherDataListLeft); //calculated hue value and adds css rule
@@ -77,16 +77,19 @@ export const Weather = () => {
                         //TODO: Check if multiple ripples are caused by use effect
                         if (precipitationDataListRight) {
 
-                            $('div#right.right').ripples("drop", getRandomXRight(), getRandomYRight(), safeCalcSize(precipitationDataListRight), safeCalcTimeout(precipitationDataListRight));
+                            $('div#right.right').ripples("drop", getRandomXRight(), getRandomYRight(), safeCalcSize(precipitationDataListRight), 1);
 
                             if (!isNaN(precipitationDataListRight[todayDate()])) {
-                                setRainOpacity(precipitationDataListRight, "right"); //sets background value according to rain intensity
+
+                                // setRainOpacity(precipitationDataListRight, "right"); //sets background value according to rain intensity
+                                // console.log(precipitationDataListRight[todayDate()])
+                                RainOpacity (precipitationDataListRight[todayDate()]);
                             }
                         }
 
                         //clears current timeout
                         myTimeoutRight = null;
-                    }, safeCalcTimeout(precipitationDataListRight))//sets the time in ms the function inside waits
+                    }, 10000)//sets the time in ms the function inside waits
                 }
             }
 
@@ -132,7 +135,7 @@ export const WeatherCairo = () => {
     const [reset, setReset] = useState(true);
     const [fetchTimestamp, setFetchTimestamp] = useState("");
 
-    //left use effect
+    // left use effect
     useEffect(() => {
             async function fetchData() {
 
@@ -160,17 +163,18 @@ export const WeatherCairo = () => {
                         if (precipitationDataListLeft) {
                             //ripple spawning:
                             // console.log("its raining")
-                            $('div#left.left').ripples("drop", getRandomXLeft(), getRandomYLeft(), safeCalcSize(precipitationDataListLeft), safeCalcTimeout(precipitationDataListLeft));
+                            $('div#left.left').ripples("drop", getRandomXLeft(), getRandomYLeft(), safeCalcSize(precipitationDataListLeft), 1);
 
                             if (!isNaN(precipitationDataListLeft[arrivalDateRounded()])) {
-                                setRainOpacity(precipitationDataListLeft, "left"); //sets background value according to rain intensity
+                                // setRainOpacity(precipitationDataListLeft, "left"); //sets background value according to rain intensity
                                 // console.log("its not raining")
+                                RainOpacity (precipitationDataListLeft[todayDate()])
                             }
                         }
 
                         //clears current timeout
                         myTimeoutLeft = null;
-                    }, safeCalcTimeout(precipitationDataListLeft))//sets the time in ms the function inside waits
+                    }, 500)//sets the time in ms the function inside waits
                 }
             }
 
