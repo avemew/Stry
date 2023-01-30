@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom'
 import Snowfall from 'react-snowfall'
 import {getSnowData} from "../functions/bremen-precipitation";
 import {todayDate} from "../functions/times";
+import {snowInMmRight} from "../DebugVariables";
 
 export const Snow = () => {
 
@@ -36,18 +37,17 @@ export const Snow = () => {
     // snowflakeCount={mapSnowFall(snowDataList)}
     return (
         <Snowfall snowflakeCount={mapSnowFall(snowDataList)} style={{
-            position: 'fixed',
+            position: 'absolute',
+            left: '50vw',
             width: '50vw',
-            height: '100vh',
+            height: '100vh'
         }}
         />
     )
 }
 
 const mapSnowFall = (snowDataList) => {
-    let snowValue = snowDataList[todayDate()];
-
-    //TODO Debug snow here
+    let snowValue = snowInMmRight;
 
     // console.log(snowValue)
 

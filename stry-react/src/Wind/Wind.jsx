@@ -3,6 +3,7 @@ import React, {useEffect, useState} from "react";
 import {getWindData} from "../functions/bremen-wind";
 import {arrivalDateRounded, todayDate} from "../functions/times";
 import {getWindDataDestination} from "../functions/destination-wind";
+import {windInKmhLeft, windInKmhRight} from "../DebugVariables";
 
 let windTimeout = null;
 
@@ -120,9 +121,9 @@ function getCurrentWind(windDataList, side) {
     let currentWindSpeed;
 
     if(side === "left"){
-        currentWindSpeed = windDataList[arrivalDateRounded()]
+        currentWindSpeed = windInKmhLeft
     } else{
-        currentWindSpeed = windDataList[todayDate()]
+        currentWindSpeed = windInKmhRight
     }
 
     //TODO Debug wind here

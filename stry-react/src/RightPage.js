@@ -23,9 +23,6 @@ function RightPage() {
             <Weather/>
             <Wind/>
             <ClockDisplayBremen/>
-            <div>
-                <Snow/>
-            </div>
         </div>
 
     );

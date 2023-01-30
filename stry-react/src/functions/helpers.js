@@ -2,6 +2,7 @@
 import {arrivalDate, arrivalDateRounded, todayDate} from "./times";
 import RightPage from "../RightPage";
 import LeftPage from "../LeftPage";
+import {temperatureInCLeft, temperatureInCRight} from "../DebugVariables";
 
 export const polynomialInterpolationRemap = (value) => {
     //calculated via https://www.wolframalpha.com/input?key=&i=interpolating+polynomial+%7B-10%2C240%7D%2C%7B15%2C100%7D%2C%7B30%2C20%7D%2C%7B40%2C0%7D
@@ -31,8 +32,8 @@ export const polynomialInterpolationRemap = (value) => {
 
 export const setBackground = (weatherDataListRight, weatherDataListLeft) => {
     //hue - color value - Color from Average Temp gets calculated via polynomialInterpolationRemap
-    let hueRight = polynomialInterpolationRemap(weatherDataListRight[todayDate()]);
-    let hueLeft = polynomialInterpolationRemap(weatherDataListLeft[arrivalDateRounded()]);
+    let hueRight = polynomialInterpolationRemap(temperatureInCRight);
+    let hueLeft = polynomialInterpolationRemap(temperatureInCLeft);
 
     let colorRight = 'hsl(' + [hueRight, '100%', '40%'] + ')';
     let colorLeft = 'hsl(' + [hueLeft, '100%', '40%'] + ')';
@@ -105,8 +106,8 @@ export const setBackgroundLeft = (weatherDataList) => {
 //         sheet.addRule(".jquery-ripples canvas", "filter: " + "opacity(" + myOpacity +") !important;", 0);
 //     }
 // }
-export function RainOpacity(rainInMm) {
-    let rainOpa = 1//set auf 0 when finish debugging
+export function RainOpacityLeft(rainInMm) {
+    let rainOpa = 0//set auf 0 when finish debugging
     let x = 1
     if (rainInMm === 0) {
         rainOpa = 0;
@@ -119,19 +120,43 @@ export function RainOpacity(rainInMm) {
     }
     if (rainInMm >= 25) {
         rainOpa = 1
-
     }
-    console.log(rainOpa)
+    console.log("opacity:"+ rainOpa)
+
+    let sheet = document.styleSheets[0]
+    if ("insertRule" in sheet) {
+        sheet.insertRule(".jquery-ripples.left canvas { filter: " + "opacity(" + rainOpa + ") !important; }", 0);
+    } else if ("addRule" in sheet) {
+        sheet.addRule(".jquery-ripples.left canvas", "filter: " + "opacity(" + rainOpa + ") !important;", 0);
+    }
+
+    return rainOpa
+}
+
+export function RainOpacityRight(rainInMm) {
+    let rainOpa = 0//set auf 0 when finish debugging
+    let x = 1
+    if (rainInMm === 0) {
+        rainOpa = 0;
+    }
+    if (rainInMm > 0 && rainInMm < 1) {
+        rainOpa = 0.222222 * x + 0.377778
+    }
+    if (rainInMm >= 1 && rainInMm < 25) {
+        rainOpa = 0.0166667 * x + 0.583333
+    }
+    if (rainInMm >= 25) {
+        rainOpa = 1
+    }
+    console.log("opacity:"+ rainOpa)
 
 
     let sheet = document.styleSheets[0]
     if ("insertRule" in sheet) {
-        sheet.insertRule(".jquery-ripples canvas { filter: " + "opacity(" + rainOpa + ") !important; }", 0);
+        sheet.insertRule(".jquery-ripples.right canvas { filter: " + "opacity(" + rainOpa + ") !important; }", 0);
     } else if ("addRule" in sheet) {
-        sheet.addRule(".jquery-ripples canvas", "filter: " + "opacity(" + rainOpa + ") !important;", 0);
+        sheet.addRule(".jquery-ripples.right canvas", "filter: " + "opacity(" + rainOpa + ") !important;", 0);
     }
 
     return rainOpa
-
-
 }

@@ -90,10 +90,6 @@ svg {
   display: none;
 }
 
-.jquery-ripples canvas {
-  filter: opacity(100%);
-}
-
 canvas{
   padding: 0;
 }
