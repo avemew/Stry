@@ -14,10 +14,10 @@ export const polynomialInterpolationRemap = (value) => {
 
     //Out of range protection
     if (value <= -10) {
-      return 240;
+        return 240;
     }
     if (value >= 40) {
-      return 0;
+        return 0;
     }
 
     //polynomial Interpolation Function
@@ -105,29 +105,30 @@ export const setBackgroundLeft = (weatherDataList) => {
 //         sheet.addRule(".jquery-ripples canvas", "filter: " + "opacity(" + myOpacity +") !important;", 0);
 //     }
 // }
-export function RainOpacity (rainInMm){
+export function RainOpacity(rainInMm) {
     let rainOpa = 1//set auf 0 when finish debugging
     let x = 1
-if(rainInMm === 0){
-    rainOpa = 0;
-}else if (rainInMm > 0 && rainInMm < 1) {
-    rainOpa = 0.222222 * x + 0.377778
-}else if (rainInMm > 1 && rainInMm < 25){
-    rainOpa =  0.0166667 * x + 0.583333
-}else if (rainInMm >= 25){
-    rainOpa = 1
-
-}
-console.log(rainOpa)
-
-
-
-let sheet = document.styleSheets[0]
-    if("insertRule" in sheet) {
-        sheet.insertRule(".jquery-ripples canvas { filter: " + "opacity(" + rainOpa +") !important; }", 0);
+    if (rainInMm === 0) {
+        rainOpa = 0;
     }
-    else if("addRule" in sheet) {
-        sheet.addRule(".jquery-ripples canvas", "filter: " + "opacity(" + rainOpa +") !important;", 0);
+    if (rainInMm > 0 && rainInMm < 1) {
+        rainOpa = 0.222222 * x + 0.377778
+    }
+    if (rainInMm >= 1 && rainInMm < 25) {
+        rainOpa = 0.0166667 * x + 0.583333
+    }
+    if (rainInMm >= 25) {
+        rainOpa = 1
+
+    }
+    console.log(rainOpa)
+
+
+    let sheet = document.styleSheets[0]
+    if ("insertRule" in sheet) {
+        sheet.insertRule(".jquery-ripples canvas { filter: " + "opacity(" + rainOpa + ") !important; }", 0);
+    } else if ("addRule" in sheet) {
+        sheet.addRule(".jquery-ripples canvas", "filter: " + "opacity(" + rainOpa + ") !important;", 0);
     }
 
     return rainOpa

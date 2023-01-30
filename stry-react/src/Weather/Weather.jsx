@@ -84,12 +84,14 @@ export const Weather = () => {
                                 // setRainOpacity(precipitationDataListRight, "right"); //sets background value according to rain intensity
                                 // console.log(precipitationDataListRight[todayDate()])
                                 RainOpacity (precipitationDataListRight[todayDate()]);
+                                // console.log(precipitationDataListRight)
+
                             }
                         }
 
                         //clears current timeout
                         myTimeoutRight = null;
-                    }, 10000)//sets the time in ms the function inside waits
+                    }, safeCalcTimeout(precipitationDataListRight))//sets the time in ms the function inside waits
                 }
             }
 
@@ -103,7 +105,7 @@ export const Weather = () => {
 function safeCalcTimeout(precipitationDataList) {
     if (!isNaN(calculateTimeout(precipitationDataList[todayDate()]))) {
         let timeout = calculateTimeout(precipitationDataList[todayDate()]);
-
+        console.log(timeout)
         return timeout * 0.5;
     } else {
         return 100;
