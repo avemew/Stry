@@ -121,9 +121,9 @@ function getCurrentWind(windDataList, side) {
     let currentWindSpeed;
 
     if(side === "left"){
-        currentWindSpeed = windInKmhLeft
+        currentWindSpeed = windDataList[arrivalDateRounded()]
     } else{
-        currentWindSpeed = windInKmhRight
+        currentWindSpeed = windDataList[todayDate()]
     }
 
     //TODO Debug wind here

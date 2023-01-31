@@ -47,7 +47,7 @@ export const Snow = () => {
 }
 
 const mapSnowFall = (snowDataList) => {
-    let snowValue = snowInMmRight;
+    let snowValue = snowDataList[todayDate()];
 
     // console.log(snowValue)
 
