@@ -1,4 +1,4 @@
-import $ from "jquery";
+// import $ from "jquery";
 import React, {useEffect, useRef, useState} from "react";
 import {getRandomXLeft, getRandomXRight, getRandomYLeft, getRandomYRight} from "../functions/random";
 import {calculateSize, calculateTimeout} from "../functions/calculate";
@@ -13,6 +13,11 @@ import {getWeatherDataDestination} from "../functions/destination-weather";
 let myTimeoutRight = null;
 let myTimeoutLeft = null;
 
+const $ = require("jquery");
+// window.$ = $;
+// window.jQuery = $;
+require("jquery.ripples");
+
 //main component of ../RightPage.js or the departure country
 export const Weather = () => {
 
@@ -23,7 +28,7 @@ export const Weather = () => {
      *     interactive: false, // disables mouse interaction with the water ripple effect
     // */
 
-        window.$('div#right.right').ripples({
+        $('div#right.right').ripples({
             resolution: 1024, perturbance: 0, interactive: false, //disables mouse interaction, keep off
         });
 
@@ -90,7 +95,7 @@ export const Weather = () => {
                             //at the position: randomX, randomY (these functions return a random value on the right side of the screen)
                             //with the size of: safeCalcSize (a relative value)
                             //with the set strength of 1*/
-                            window.$('div#right.right').ripples("drop", getRandomXRight(), getRandomYRight(), safeCalcSize(precipitationDataListRight), 1);
+                            $('div#right.right').ripples("drop", getRandomXRight(), getRandomYRight(), safeCalcSize(precipitationDataListRight), 1);
 
                             //if there is a valid value inside of the List
                             if (!isNaN(precipitationDataListRight[todayDate()])) {
@@ -135,7 +140,7 @@ export const WeatherCairo = () => {
 
 
 
-        window.$('div#left.left').ripples({
+       $('div#left.left').ripples({
             resolution: 1024, perturbance: 0, interactive: false,
 
         });
@@ -180,7 +185,7 @@ export const WeatherCairo = () => {
                             //at the position: randomX, randomY (these functions return a random value on the right side of the screen)
                             //with the size of: safeCalcSize (a relative value)
                             //with the set strength of 1*/
-                            window.$('div#left.left').ripples("drop", getRandomXLeft(), getRandomYLeft(), safeCalcSize(precipitationDataListLeft), 1);
+                            $('div#left.left').ripples("drop", getRandomXLeft(), getRandomYLeft(), safeCalcSize(precipitationDataListLeft), 1);
 
                             //if there is a valid value inside of the List
                             if (!isNaN(precipitationDataListLeft[arrivalDateRounded()])) {
