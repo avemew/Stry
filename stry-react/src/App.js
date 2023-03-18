@@ -3,8 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import LeftPage from "./LeftPage";
 import RightPage from "./RightPage";
 import React from "react";
-// import RightPage from "./LeftPage";
-// import LeftPage1 from "./RightPage";
+
 
 function App() {
 

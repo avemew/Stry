@@ -11,7 +11,6 @@ export const getTodaysUrl = () => {
 
 //precepetation rain api
 export const getTodayUrlRain = () => {
-    //const truncatedDateRain = todayDate().slice(0, 10); //cuts off the timestamp from todayDate
     let truncatedDate = todayDate().slice(0, 10); //cuts off the timestamp from todayDate
 
     //builds URL-String with BaseURL and the truncatedDate
@@ -20,7 +19,6 @@ export const getTodayUrlRain = () => {
 
 //wind data api
 export const getTodayUrlWind = () => {
-    //const truncatedDateRain = todayDate().slice(0, 10); //cuts off the timestamp from todayDate
     let truncatedDate = todayDate().slice(0, 10); //cuts off the timestamp from todayDate
 
     //builds URL-String with BaseURL and the truncatedDate
@@ -29,7 +27,6 @@ export const getTodayUrlWind = () => {
 
 //snow data api
 export const getTodayUrlSnow = () => {
-    //const truncatedDateRain = todayDate().slice(0, 10); //cuts off the timestamp from todayDate
     let truncatedDate = todayDate().slice(0, 10); //cuts off the timestamp from todayDate
 
     //builds URL-String with BaseURL and the truncatedDate

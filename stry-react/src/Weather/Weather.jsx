@@ -45,7 +45,7 @@ export const Weather = () => {
                     setPrecipitationDataListRight(await getPrecipitationData());    //rain
                     setWeatherDataListRight(await getWeatherData());    //perceived temperature - departure country
                     setWeatherDataListLeft(await getWeatherDataDestination());  //perceived temperature - arrival country
-                    
+
                     setFetchTimestamp(todayDate())  //stores timestamp of this fetch
 
                 } else {
@@ -77,7 +77,7 @@ export const Weather = () => {
 
                             //if there is a valid value inside of the List
                             if (!isNaN(precipitationDataListRight[todayDate()])) {
-                                RainOpacity (precipitationDataListRight[todayDate()]);  //set the opacity of the raindrops according to its intensity
+                                RainOpacity(precipitationDataListRight[todayDate()]);  //set the opacity of the raindrops according to its intensity
                             }
                         }
 
@@ -86,6 +86,7 @@ export const Weather = () => {
                     }, safeCalcTimeout(precipitationDataListRight)) //sets the time in ms the function inside has to wait
                 }
             }
+
             fetchData();
         }, [precipitationDataListRight, reset]  //useEffect gets called everytime one of these changes
     )
@@ -165,7 +166,7 @@ export const WeatherCairo = () => {
 
                             //if there is a valid value inside of the List
                             if (!isNaN(precipitationDataListLeft[arrivalDateRounded()])) {
-                                RainOpacity (precipitationDataListLeft[todayDate()])      //set the opacity of the raindrops according to its intensity
+                                RainOpacity(precipitationDataListLeft[todayDate()])      //set the opacity of the raindrops according to its intensity
                             }
                         }
 
@@ -174,6 +175,7 @@ export const WeatherCairo = () => {
                     }, 500)//sets the time in ms the function inside waits
                 }
             }
+
             fetchData()
         }, [precipitationDataListLeft, reset]  //useEffect gets called everytime one of these changes
     )
