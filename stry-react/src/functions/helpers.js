@@ -34,33 +34,16 @@ export const setBackground = (weatherDataListRight, weatherDataListLeft) => {
     let hueRight = polynomialInterpolationRemap(weatherDataListRight[todayDate()]);
     let hueLeft = polynomialInterpolationRemap(weatherDataListLeft[arrivalDateRounded()]);
 
+    //creates hsl value from calculated hue above
     let colorRight = 'hsl(' + [hueRight, '100%', '40%'] + ')';
     let colorLeft = 'hsl(' + [hueLeft, '100%', '40%'] + ')';
 
-    //gets current stylesheet
-    // let sheet = document.styleSheets[0]
+    //gets current stylesheet and sets the color
     let rightColor = document.getElementById('right')
     rightColor.style.backgroundColor = colorRight
-
-    let leftColor = document.getElementById('left')
-    leftColor.style.backgroundColor = colorLeft
-
-    //css version support checks
-    //--> dynamically adds css rule
-    // if("insertRule" in sheet) {
-    //     sheet.insertRule("body { background: " + myColor + " !important; }", 0);
-    // }
-    // else if("addRule" in sheet) {
-    //     sheet.addRule("body", "background: " + myColor + " !important;", 0);
-    // }
-}
-export const setBackgroundLeft = (weatherDataList) => {
-    let hueLeft = polynomialInterpolationRemap(weatherDataList[todayDate()]);
-    let colorLeft = 'hsl(' + [hueLeft, '100%', '40%'] + ')';
     let leftColor = document.getElementById('left')
     leftColor.style.backgroundColor = colorLeft
 }
-
 
 //sets background value according to rain intensity by inserting css rule
 //see: https://www.wolframalpha.com/input?i2d=true&i=interpolating+polynomial+%7B0.1%2C0.4%7D%5C%2844%29%7B50%2C1%7D
@@ -105,6 +88,9 @@ export const setBackgroundLeft = (weatherDataList) => {
 //         sheet.addRule(".jquery-ripples canvas", "filter: " + "opacity(" + myOpacity +") !important;", 0);
 //     }
 // }
+
+//sets background value according to rain intensity by inserting css rule
+//see: https://www.wolframalpha.com/input?i2d=true&i=interpolating+polynomial+%7B0.1%2C0.4%7D%5C%2844%29%7B50%2C1%7D
 export function RainOpacity(rainInMm) {
     let rainOpa = 1//set auf 0 when finish debugging
     let x = 1
@@ -119,19 +105,17 @@ export function RainOpacity(rainInMm) {
     }
     if (rainInMm >= 25) {
         rainOpa = 1
-
     }
-    console.log(rainOpa)
 
-
+    //gets current stylesheet
     let sheet = document.styleSheets[0]
+
+    //css version support checks
+    //--> dynamically adds css rule
     if ("insertRule" in sheet) {
         sheet.insertRule(".jquery-ripples canvas { filter: " + "opacity(" + rainOpa + ") !important; }", 0);
     } else if ("addRule" in sheet) {
         sheet.addRule(".jquery-ripples canvas", "filter: " + "opacity(" + rainOpa + ") !important;", 0);
     }
-
     return rainOpa
-
-
 }
