@@ -16,24 +16,38 @@ let myTimeoutLeft = null;
 //main component of ../RightPage.js or the departure country
 export const Weather = () => {
 
-    //JQUERY-RIPPLES SETTINGS
+    /**jQuery selector to apply the "ripples" effect to a specific HTML element
+     * initialize the ripples effect with these options'
+     *  resolution: 1024, // the resolution of the water ripple effect
+     *     perturbance: 0, // the amount of turbulence applied to the water ripple effect
+     *     interactive: false, // disables mouse interaction with the water ripple effect
+    // */
     $('div#right.right').ripples({
-        resolution: 1024,
-        perturbance: 0,
-        interactive: false, //disables mouse interaction, keep off
+        resolution: 1024, perturbance: 0, interactive: false, //disables mouse interaction, keep off
     });
 
-    //DATA LISTS - API pulls are stored here
-    //both temperatures are stored and used here because setting the background color only has to be executed once, not once for every side
-    const [weatherDataListRight, setWeatherDataListRight] = useState([]);   //weatherDataList = temperature in departure country
-    const [weatherDataListLeft, setWeatherDataListLeft] = useState([]); //weatherDataList = temperature in arrival country
-    const [precipitationDataListRight, setPrecipitationDataListRight] = useState({});   //precipitationDataList = rain in departure country
+    /**DATA LISTS - API pulls are stored here
+     * both temperatures are stored and used here because setting the background color
+     * only has to be executed once, not once for every side
+     */
+
+    //weatherDataList = temperature in departure country
+    const [weatherDataListRight, setWeatherDataListRight] = useState([]);
+
+    //weatherDataList = temperature in arrival country
+    const [weatherDataListLeft, setWeatherDataListLeft] = useState([]);
+
+    //precipitationDataList = rain in departure country
+    const [precipitationDataListRight, setPrecipitationDataListRight] = useState({});
 
     //failsafe and reload, no real data
     const [reset, setReset] = useState(true);   //used to semi-manually reload the site
-    const [fetchTimestamp, setFetchTimestamp] = useState("");   //stores the timestamp of the last fetch, prevents continuous fetching
 
-    const date = todayDate(); //Date in format: yy-MM-DDThh:00 - string
+    //stores the timestamp of the last fetch, prevents continuous fetching
+    const [fetchTimestamp, setFetchTimestamp] = useState("");
+
+    //Date in format: yy-MM-DDThh:00 - string
+    const date = todayDate();
 
     useEffect(() => {
 
@@ -69,10 +83,10 @@ export const Weather = () => {
                         //if there is data in the precipitationDataList, create ripples
                         if (precipitationDataListRight) {
 
-                            //creates ripples for the right div, called "drop"
+                            /**creates ripples for the right div, called "drop"
                             //at the position: randomX, randomY (these functions return a random value on the right side of the screen)
                             //with the size of: safeCalcSize (a relative value)
-                            //with the set strength of 1
+                            //with the set strength of 1*/
                             $('div#right.right').ripples("drop", getRandomXRight(), getRandomYRight(), safeCalcSize(precipitationDataListRight), 1);
 
                             //if there is a valid value inside of the List
@@ -118,9 +132,7 @@ export const WeatherCairo = () => {
 
     //JQUERY-RIPPLES SETTINGS
     $('div#left.left').ripples({
-        resolution: 1024,
-        perturbance: 0,
-        interactive: false,
+        resolution: 1024, perturbance: 0, interactive: false,
 
     });
 
@@ -158,10 +170,10 @@ export const WeatherCairo = () => {
                         //if there is data in the precipitationDataList, create ripples
                         if (precipitationDataListLeft) {
 
-                            //creates ripples for the right div, called "drop"
+                            /**creates ripples for the right div, called "drop"
                             //at the position: randomX, randomY (these functions return a random value on the right side of the screen)
                             //with the size of: safeCalcSize (a relative value)
-                            //with the set strength of 1
+                            //with the set strength of 1*/
                             $('div#left.left').ripples("drop", getRandomXLeft(), getRandomYLeft(), safeCalcSize(precipitationDataListLeft), 1);
 
                             //if there is a valid value inside of the List
