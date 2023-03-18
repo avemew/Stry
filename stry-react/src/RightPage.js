@@ -1,5 +1,5 @@
 import './App.css';
-import Weather, {WeatherCairo} from './Weather/Weather';
+import Weather from './Weather/Weather';
 import {ClockDisplayBremen} from "./ClockDisplay/ClockDisplay";
 import {Wind} from "./Wind/Wind";
 import {Snow} from "./Snow/Snow";

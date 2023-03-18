@@ -1,8 +1,6 @@
 import './App.css';
-import Weather from "./Weather/Weather";
 import {Wind} from "./Wind/Wind";
-import {ClockDisplay, ClockDisplayCairo} from "./ClockDisplay/ClockDisplay";
-import {Snow} from "./Snow/Snow";
+import { ClockDisplayCairo} from "./ClockDisplay/ClockDisplay";
 import {WeatherCairo} from "./Weather/Weather";
 
 function LeftPage() {

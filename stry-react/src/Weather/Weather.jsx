@@ -1,5 +1,5 @@
 import $ from "jquery";
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {getRandomXLeft, getRandomXRight, getRandomYLeft, getRandomYRight} from "../functions/random";
 import {calculateSize, calculateTimeout} from "../functions/calculate";
 import {getPrecipitationData} from "../functions/bremen-precipitation";
@@ -22,9 +22,12 @@ export const Weather = () => {
      *     perturbance: 0, // the amount of turbulence applied to the water ripple effect
      *     interactive: false, // disables mouse interaction with the water ripple effect
     // */
-    $('div#right.right').ripples({
-        resolution: 1024, perturbance: 0, interactive: false, //disables mouse interaction, keep off
-    });
+
+        window.$('div#right.right').ripples({
+            resolution: 1024, perturbance: 0, interactive: false, //disables mouse interaction, keep off
+        });
+
+
 
     /**DATA LISTS - API pulls are stored here
      * both temperatures are stored and used here because setting the background color
@@ -87,7 +90,7 @@ export const Weather = () => {
                             //at the position: randomX, randomY (these functions return a random value on the right side of the screen)
                             //with the size of: safeCalcSize (a relative value)
                             //with the set strength of 1*/
-                            $('div#right.right').ripples("drop", getRandomXRight(), getRandomYRight(), safeCalcSize(precipitationDataListRight), 1);
+                            window.$('div#right.right').ripples("drop", getRandomXRight(), getRandomYRight(), safeCalcSize(precipitationDataListRight), 1);
 
                             //if there is a valid value inside of the List
                             if (!isNaN(precipitationDataListRight[todayDate()])) {
@@ -130,11 +133,14 @@ function safeCalcSize(precipitationDataList) {
 //main component of ../LeftPage.js or the arrival country
 export const WeatherCairo = () => {
 
-    //JQUERY-RIPPLES SETTINGS
-    $('div#left.left').ripples({
-        resolution: 1024, perturbance: 0, interactive: false,
 
-    });
+
+        window.$('div#left.left').ripples({
+            resolution: 1024, perturbance: 0, interactive: false,
+
+        });
+
+
 
     //DATA LIST - API pulls are stored here
     const [precipitationDataListLeft, setPrecipitationDataListLeft] = useState({}); //precipitationDataList = rain in arrival country
@@ -174,7 +180,7 @@ export const WeatherCairo = () => {
                             //at the position: randomX, randomY (these functions return a random value on the right side of the screen)
                             //with the size of: safeCalcSize (a relative value)
                             //with the set strength of 1*/
-                            $('div#left.left').ripples("drop", getRandomXLeft(), getRandomYLeft(), safeCalcSize(precipitationDataListLeft), 1);
+                            window.$('div#left.left').ripples("drop", getRandomXLeft(), getRandomYLeft(), safeCalcSize(precipitationDataListLeft), 1);
 
                             //if there is a valid value inside of the List
                             if (!isNaN(precipitationDataListLeft[arrivalDateRounded()])) {

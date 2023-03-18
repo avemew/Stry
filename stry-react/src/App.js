@@ -5,6 +5,7 @@ import RightPage from "./RightPage";
 import React from "react";
 
 
+
 function App() {
 
     //setup page reload every 10 minutes
