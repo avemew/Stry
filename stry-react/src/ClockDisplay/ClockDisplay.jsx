@@ -1,6 +1,4 @@
-import styles from "./ClockDisplay.component.css"
 import Clock from 'react-live-clock';
-import moment from "moment/moment";
 import {arrivalDate} from "../functions/times";
 
 export const ClockDisplayBremen = () => {

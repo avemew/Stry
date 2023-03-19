@@ -1,4 +1,3 @@
-import {currentWindSpeed} from "../Weather/Weather";
 import React, {useEffect, useState} from "react";
 import {getWindData} from "../functions/bremen-wind";
 import {arrivalDateRounded, todayDate} from "../functions/times";

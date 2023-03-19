@@ -4,9 +4,11 @@ import {getTodayUrlWind} from "./bremen-dates";
 
 export const getWindMap = (windLists) => {
 
-    const timesArray = Array.from(windLists["time"]) //reads the api array of timestamps and creates an array
-    const windArray = Array.from(windLists["windspeed_10m"])  //reads the api array of apparent_temperature and creates an array
+    //reads the api array of timestamps and creates an array
+    const timesArray = Array.from(windLists["time"])
 
+    //reads the api array of apparent_temperature and creates an array
+    const windArray = Array.from(windLists["windspeed_10m"])
     //constructs map
     return timesArray.reduce((previousValue, currentValue, currentIndex) => {
         return Object.assign(previousValue, {[currentValue]: windArray.at(currentIndex)})

@@ -1,11 +1,8 @@
 import {arrivalDate, arrivalDateRounded, todayDate} from "./times";
-import {getTimeStamp} from "./times";
 
 //constructs URL Bremen from base string and todays date
 export const getTodaysUrlDestination = () => {
     let truncatedDate = arrivalDateRounded().slice(0, 10); //cuts off the timestamp from todayDate
-
-    // console.log(`https://api.open-meteo.com/v1/forecast?latitude=30.06&longitude=31.25&hourly=apparent_temperature&start_date=${truncatedDate}&end_date=${truncatedDate}`);
 
     //builds URL-String with BaseURL and the truncatedDate
     return `https://api.open-meteo.com/v1/forecast?latitude=30.06&longitude=31.25&hourly=apparent_temperature&start_date=${truncatedDate}&end_date=${truncatedDate}`;

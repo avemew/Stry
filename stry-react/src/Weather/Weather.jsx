@@ -12,6 +12,7 @@ import {getWeatherDataDestination} from "../functions/destination-weather";
 //stores Timeout id to ensure that there's only 1 timeout waiting for execution
 let myTimeoutRight = null;
 let myTimeoutLeft = null;
+
 //
 const $ = require("jquery");
 require("jquery.ripples");
