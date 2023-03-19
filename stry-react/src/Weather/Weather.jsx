@@ -88,7 +88,7 @@ export const Weather = () => {
                         //this block gets executed once the timer runs out:
 
                         //if there is data in the precipitationDataList, create ripples
-                        if (precipitationDataListRight[todayDate()] !== 0 ) {
+                        if (precipitationDataListRight[todayDate()] !== 0 && precipitationDataListRight !== null ) {
                             // console.log(precipitationDataListRight)
 
                             /**creates ripples for the right div, called "drop"
@@ -179,7 +179,7 @@ export const WeatherCairo = () => {
                         //this block gets executed once the timer runs out:
 
                         //if there is data in the precipitationDataList, create ripples
-                        if (precipitationDataListLeft[todayDate()] !== 0 ) {
+                        if (precipitationDataListLeft[todayDate()] !== 0 && precipitationDataListLeft !== null  ) {
 
                             // console.log(precipitationDataListLeft)
 
